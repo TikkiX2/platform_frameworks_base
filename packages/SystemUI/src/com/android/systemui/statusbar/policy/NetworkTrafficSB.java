@@ -20,8 +20,6 @@ import static com.android.systemui.statusbar.StatusBarIconView.STATE_DOT;
 import static com.android.systemui.statusbar.StatusBarIconView.STATE_HIDDEN;
 import static com.android.systemui.statusbar.StatusBarIconView.STATE_ICON;
 
-import java.text.DecimalFormat;
-
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -32,6 +30,7 @@ import android.database.ContentObserver;
 import android.graphics.drawable.Drawable;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.TrafficStats;
@@ -51,6 +50,8 @@ import com.android.systemui.R;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
 import com.android.systemui.statusbar.StatusIconDisplayable;
+
+import java.text.DecimalFormat;
 
 /*
 *
@@ -128,7 +129,6 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
 
             if (shouldHide(rxData, txData, timeDelta)) {
                 setText("");
-                mTrafficVisible = false;
             } else {
                 String output;
                 if (mTrafficType == UP){
@@ -187,7 +187,6 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
                     setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
                     setText(output);
                 }
-                mTrafficVisible = true;
             }
             updateVisibility();
             updateTextSize();
@@ -367,7 +366,6 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
                 lastUpdateTime = SystemClock.elapsedRealtime();
                 mTrafficHandler.sendEmptyMessage(1);
             }
-            updateTrafficDrawable();
             return;
         } else {
             clearHandlerCallbacks();
@@ -394,6 +392,10 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
         mNetTrafSize = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_FONT_SIZE, 21,
                 UserHandle.USER_CURRENT);
+        setGravity(Gravity.RIGHT);
+        setSpacingAndFonts();
+        updateTrafficDrawable();
+        updateVisibility();
     }
 
     private void clearHandlerCallbacks() {
@@ -450,25 +452,20 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
         setTextColor(mTintColor);
     }
 
-    private void updateTextSize() {
-        if (mTrafficType == BOTH) {
-            txtSize = getResources().getDimensionPixelSize(R.dimen.net_traffic_multi_text_size);
-        } else {
-            txtSize = mNetTrafSize;
-        }
-        setTextSize(TypedValue.COMPLEX_UNIT_PX, (float)txtSize);
+    private void setSpacingAndFonts() {
+        setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
+        setLineSpacing(0.80f, 0.80f);
     }
 
-    public void onDensityOrFontScaleChanged() {
+    private void updateTextSize() {
         final Resources resources = getResources();
         txtSize = (mTrafficType == BOTH)
 		    ? resources.getDimensionPixelSize(R.dimen.net_traffic_multi_text_size)
 		    : mNetTrafSize;
         txtImgPadding = resources.getDimensionPixelSize(R.dimen.net_traffic_txt_img_padding);
-        setCompoundDrawablePadding(txtImgPadding);
         setTextSize(TypedValue.COMPLEX_UNIT_PX, (float)txtSize);
-        setGravity(Gravity.RIGHT);
-        updateTextSize();
+        setCompoundDrawablePadding(txtImgPadding);
+        setSpacingAndFonts();
     }
 
     @Override
@@ -516,10 +513,17 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
     private void updateVisibility() {
         if (mIsEnabled && mTrafficVisible && mSystemIconVisible && !mTrafficInHeaderView) {
             setVisibility(View.VISIBLE);
+            mTrafficVisible = true;
         } else {
             setText("");
             setVisibility(View.GONE);
+            mTrafficVisible = false;
         }
+    }
+
+    public void onDensityOrFontScaleChanged() {
+        setSpacingAndFonts();
+        updateSettings();
     }
 
     @Override

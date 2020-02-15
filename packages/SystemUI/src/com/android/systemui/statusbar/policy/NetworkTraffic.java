@@ -16,8 +16,6 @@
 
 package com.android.systemui.statusbar.policy;
 
-import java.text.DecimalFormat;
-
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -28,6 +26,7 @@ import android.database.ContentObserver;
 import android.graphics.drawable.Drawable;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.TrafficStats;
@@ -44,6 +43,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.systemui.R;
+
+import java.text.DecimalFormat;
 
 /*
 *
@@ -82,7 +83,7 @@ public class NetworkTraffic extends TextView {
     private int mAutoHideThreshold;
     private int mNetTrafSize;
     private int mTintColor;
-    private boolean mTrafficVisible = false;
+    private boolean mTrafficVisible = true;
     private boolean mScreenOn = true;
     private boolean iBytes;
     private boolean oBytes;
@@ -117,7 +118,6 @@ public class NetworkTraffic extends TextView {
 
             if (shouldHide(rxData, txData, timeDelta)) {
                 setText("");
-                mTrafficVisible = false;
             } else {
                 String output;
                 if (mTrafficType == UP){
@@ -176,7 +176,6 @@ public class NetworkTraffic extends TextView {
                     setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
                     setText(output);
                 }
-                mTrafficVisible = true;
             }
             updateVisibility();
             updateTextSize();
@@ -206,13 +205,13 @@ public class NetworkTraffic extends TextView {
             long speedTxKB = (long)(txData / (timeDelta / 1000f)) / KB;
             long speedRxKB = (long)(rxData / (timeDelta / 1000f)) / KB;
            if (mTrafficType == UP) {
-             return !getConnectAvailable() || speedTxKB < mAutoHideThreshold;
+               return !getConnectAvailable() || speedTxKB < mAutoHideThreshold;
            } else if (mTrafficType == DOWN) {
-             return !getConnectAvailable() || speedRxKB < mAutoHideThreshold;
+               return !getConnectAvailable() || speedRxKB < mAutoHideThreshold;
            } else {
-             return !getConnectAvailable() ||
-                    (speedRxKB < mAutoHideThreshold &&
-                    speedTxKB < mAutoHideThreshold);
+               return !getConnectAvailable() ||
+                       (speedRxKB < mAutoHideThreshold &&
+                       speedTxKB < mAutoHideThreshold);
            }
         }
     };
@@ -260,6 +259,8 @@ public class NetworkTraffic extends TextView {
             updateSettings();
         }
     }
+
+
 
     /*
      *  @hide
@@ -354,7 +355,6 @@ public class NetworkTraffic extends TextView {
                 lastUpdateTime = SystemClock.elapsedRealtime();
                 mTrafficHandler.sendEmptyMessage(1);
             }
-            updateTrafficDrawable();
             return;
         } else {
             clearHandlerCallbacks();
@@ -381,6 +381,11 @@ public class NetworkTraffic extends TextView {
         mNetTrafSize = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_FONT_SIZE, 21,
                 UserHandle.USER_CURRENT);
+        setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+        setMaxLines(2);
+        setSpacingAndFonts();
+        updateTrafficDrawable();
+        updateVisibility();
     }
 
     private void clearHandlerCallbacks() {
@@ -437,25 +442,12 @@ public class NetworkTraffic extends TextView {
         setTextColor(mTintColor);
     }
 
+    private void setSpacingAndFonts() {
+        setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
+        setLineSpacing(0.80f, 0.80f);
+    }
+
     private void updateTextSize() {
-        if (mTrafficType == BOTH) {
-            txtSize = getResources().getDimensionPixelSize(R.dimen.net_traffic_multi_text_size);
-        } else {
-            txtSize = mNetTrafSize;
-        }
-        setTextSize(TypedValue.COMPLEX_UNIT_PX, (float)txtSize);
-    }
-
-    private void updateVisibility() {
-        if (mIsEnabled && mTrafficVisible && mTrafficInHeaderView) {
-            setVisibility(View.VISIBLE);
-        } else {
-            setText("");
-            setVisibility(View.GONE);
-        }
-    }
-
-    public void onDensityOrFontScaleChanged() {
         final Resources resources = getResources();
         txtSize = (mTrafficType == BOTH)
                     ? resources.getDimensionPixelSize(R.dimen.net_traffic_multi_text_size)
@@ -463,7 +455,23 @@ public class NetworkTraffic extends TextView {
         txtImgPadding = resources.getDimensionPixelSize(R.dimen.net_traffic_txt_img_padding);
         setTextSize(TypedValue.COMPLEX_UNIT_PX, (float)txtSize);
         setCompoundDrawablePadding(txtImgPadding);
-        updateTextSize();
+        setSpacingAndFonts();
+    }
+
+    private void updateVisibility() {
+        if (mIsEnabled && mTrafficVisible && mTrafficInHeaderView) {
+            setVisibility(View.VISIBLE);
+            mTrafficVisible = true;
+        } else {
+            setText("");
+            setVisibility(View.GONE);
+            mTrafficVisible = false;
+        }
+    }
+
+    public void onDensityOrFontScaleChanged() {
+        setSpacingAndFonts();
+        updateSettings();
     }
 }
 
