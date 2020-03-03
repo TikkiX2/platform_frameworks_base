@@ -801,6 +801,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.LOCKSCREEN_DATE_SELECTION),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BACK_GESTURE_HAPTIC),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -840,6 +843,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     uri.equals(Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_DATE_SELECTION))) {
                 updateKeyguardStatusSettings();
             }
+            update();
         }
 
         public void update() {
@@ -856,6 +860,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateTickerAnimation();
             updateTickerTickDuration();
             updateKeyguardStatusSettings();
+            setHapticFeedbackForBackGesture();
         }
     }
 
@@ -1413,6 +1418,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(DevicePolicyManager.ACTION_SHOW_DEVICE_MONITORING_DIALOG);
         filter.addAction(aosipUtils.ACTION_DISMISS_KEYGUARD);
+        filter.addAction(NotificationPanelView.CANCEL_NOTIFICATION_PULSE_ACTION);
         context.registerReceiverAsUser(mBroadcastReceiver, UserHandle.ALL, filter, null, null);
 
         IntentFilter demoFilter = new IntentFilter();
@@ -3389,6 +3395,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     startActivityDismissingKeyguard(launchIntent, true, true);
                 }
             }
+            else if (NotificationPanelView.CANCEL_NOTIFICATION_PULSE_ACTION.equals(action)) {
+                mNotificationPanel.stopNotificationPulse();
+            }
         }
     };
 
@@ -4623,6 +4632,12 @@ public class StatusBar extends SystemUI implements DemoMode,
     private void setHideArrowForBackGesture() {
         if (getNavigationBarView() != null) {
             getNavigationBarView().updateBackArrowForGesture();
+        }
+    }
+
+    private void setHapticFeedbackForBackGesture() {
+        if (getNavigationBarView() != null) {
+            getNavigationBarView().updateBackGestureHaptic();
         }
     }
 

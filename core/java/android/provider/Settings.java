@@ -671,6 +671,22 @@ public final class Settings {
             "android.settings.NIGHT_DISPLAY_SETTINGS";
 
     /**
+     * Activity Action: Show settings to allow configuration of Dark theme.
+     * <p>
+     * In some cases, a matching Activity may not exist, so ensure you
+     * safeguard against this.
+     * <p>
+     * Input: Nothing.
+     * <p>
+     * Output: Nothing.
+     *
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+    public static final String ACTION_DARK_THEME_SETTINGS =
+            "android.settings.DARK_THEME_SETTINGS";
+
+    /**
      * Activity Action: Show settings to allow configuration of locale.
      * <p>
      * In some cases, a matching Activity may not exist, so ensure you
@@ -6041,6 +6057,24 @@ public final class Settings {
         /** @hide */
         private static final Validator LOCKSCREEN_CLOCK_VALIDATOR = BOOLEAN_VALIDATOR;
 
+         /**
+         * Whether to use accent color for pulse
+         * @hide
+         */
+
+        public static final String OMNI_AMBIENT_NOTIFICATION_LIGHT_ACCENT = "ambient_notification_light_accent";
+
+        private static final Validator OMNI_AMBIENT_NOTIFICATION_LIGHT_ACCENT_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String OMNI_NOTIFICATION_PULSE_COLOR_AUTOMATIC = "ambient_notification_light_color_automatic";
+
+        private static final Validator OMNI_NOTIFICATION_PULSE_COLOR_AUTOMATIC_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
         /**
          * Whether to show the items underneath lockscreen clock
          * @hide
@@ -6068,6 +6102,15 @@ public final class Settings {
         /** @hide */
         private static final Validator FOD_PRESSED_STATE_VALIDATOR =
                 new SettingsValidators.InclusiveIntegerRangeValidator(0, 2);
+
+        /**
+         * Timeout for ambient pulse in seconds - 0 is no timeout
+         * @hide
+         */
+        public static final String OMNI_AOD_NOTIFICATION_PULSE_TIMEOUT = "ambient_notification_light_timeout";
+
+        private static final Validator OMNI_AOD_NOTIFICATION_PULSE_TIMEOUT_VALIDATOR =
+               ANY_INTEGER_VALIDATOR;
 
         /**
          * FOD recognizing animation
@@ -6116,6 +6159,40 @@ public final class Settings {
 
         /** @hide */
         private static final Validator TEXT_CLOCK_PADDING_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * Force expanded notifications on all apps that support it.
+         * @hide
+         */
+        public static final String FORCE_EXPANDED_NOTIFICATIONS = "force_expanded_notifications";
+
+        /** @hide */
+        private static final Validator FORCE_EXPANDED_NOTIFICATIONS_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * Whether to vibrate for back gesture
+         * @hide
+         */
+        public static final String BACK_GESTURE_HAPTIC = "back_gesture_haptic";
+
+        /** @hide */
+        private static final Validator BACK_GESTURE_HAPTIC_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String OMNI_AUTO_BRIGHTNESS_MIN_VALUE = "auto_brightness_min_value";
+
+        private static final Validator OMNI_AUTO_BRIGHTNESS_MIN_VALUE_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        /**
+         * IMPORTANT: If you add a new public settings you also have to add it to
+         * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
+         * it to PRIVATE_SETTINGS below. Also add a validator that can validate
+         * the setting value. See an example above.
+         */
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -6275,11 +6352,15 @@ public final class Settings {
             OMNI_STATUS_BAR_CUSTOM_HEADER_PROVIDER,
             OMNI_STATUS_BAR_CUSTOM_HEADER_IMAGE,
             OMNI_STATUS_BAR_FILE_HEADER_IMAGE,
+            OMNI_AOD_NOTIFICATION_PULSE_TIMEOUT,
             OMNI_PULSE_AMBIENT_LIGHT,
             OMNI_AMBIENT_NOTIFICATION_LIGHT,
             OMNI_AMBIENT_NOTIFICATION_LIGHT_ACTIVATED,
             OMNI_AMBIENT_NOTIFICATION_LIGHT_ENABLED,
             OMNI_AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD,
+            OMNI_AMBIENT_NOTIFICATION_LIGHT_ACCENT,
+            OMNI_NOTIFICATION_PULSE_COLOR_AUTOMATIC,
+            OMNI_AUTO_BRIGHTNESS_MIN_VALUE,
             PULSE_AMBIENT_LIGHT_COLOR,
             PULSE_AMBIENT_AUTO_COLOR,
             PULSE_AMBIENT_LIGHT_DURATION,
@@ -6338,6 +6419,8 @@ public final class Settings {
             FOD_ANIM,
             TEXT_CLOCK_ALIGNMENT,
             TEXT_CLOCK_PADDING,
+            FORCE_EXPANDED_NOTIFICATIONS,
+            BACK_GESTURE_HAPTIC,
         };
 
         /**
@@ -6523,6 +6606,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_STATUS_BAR_FILE_HEADER_IMAGE);
             PRIVATE_SETTINGS.add(OMNI_PULSE_AMBIENT_LIGHT);
             PRIVATE_SETTINGS.add(OMNI_AMBIENT_NOTIFICATION_LIGHT_ENABLED);
+            PRIVATE_SETTINGS.add(OMNI_NOTIFICATION_PULSE_COLOR_AUTOMATIC);
             PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_COLOR);
             PRIVATE_SETTINGS.add(PULSE_AMBIENT_AUTO_COLOR);
             PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_DURATION);
@@ -6564,6 +6648,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SCREENSHOT_SOUND);
             PRIVATE_SETTINGS.add(TEXT_CLOCK_ALIGNMENT);
             PRIVATE_SETTINGS.add(TEXT_CLOCK_PADDING);
+            PRIVATE_SETTINGS.add(BACK_GESTURE_HAPTIC);
         }
 
         /**
@@ -6756,11 +6841,16 @@ public final class Settings {
                     OMNI_STATUS_BAR_CUSTOM_HEADER_IMAGE_VALIDATOR);
             VALIDATORS.put(OMNI_STATUS_BAR_FILE_HEADER_IMAGE,
                     OMNI_STATUS_BAR_FILE_HEADER_IMAGE_VALIDATOR);
+            VALIDATORS.put(OMNI_AOD_NOTIFICATION_PULSE_TIMEOUT, OMNI_AOD_NOTIFICATION_PULSE_TIMEOUT_VALIDATOR);
             VALIDATORS.put(OMNI_PULSE_AMBIENT_LIGHT, OMNI_PULSE_AMBIENT_LIGHT_VALIDATOR);
             VALIDATORS.put(OMNI_AMBIENT_NOTIFICATION_LIGHT, OMNI_AMBIENT_NOTIFICATION_LIGHT_VALIDATOR);
             VALIDATORS.put(OMNI_AMBIENT_NOTIFICATION_LIGHT_ACTIVATED, OMNI_AMBIENT_NOTIFICATION_LIGHT_ACTIVATED_VALIDATOR);
             VALIDATORS.put(OMNI_AMBIENT_NOTIFICATION_LIGHT_ENABLED, OMNI_AMBIENT_NOTIFICATION_LIGHT_ENABLED_VALIDATOR);
             VALIDATORS.put(OMNI_AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD, OMNI_AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD_VALIDATOR);
+            VALIDATORS.put(OMNI_AMBIENT_NOTIFICATION_LIGHT_ACCENT, OMNI_AMBIENT_NOTIFICATION_LIGHT_ACCENT_VALIDATOR);
+            VALIDATORS.put(OMNI_NOTIFICATION_PULSE_COLOR_AUTOMATIC,
+                    OMNI_NOTIFICATION_PULSE_COLOR_AUTOMATIC_VALIDATOR);
+            VALIDATORS.put(OMNI_AUTO_BRIGHTNESS_MIN_VALUE, OMNI_AUTO_BRIGHTNESS_MIN_VALUE_VALIDATOR);
             VALIDATORS.put(PULSE_AMBIENT_LIGHT_COLOR, PULSE_AMBIENT_LIGHT_COLOR_VALIDATOR);
             VALIDATORS.put(PULSE_AMBIENT_AUTO_COLOR, PULSE_AMBIENT_AUTO_COLOR_VALIDATOR);
             VALIDATORS.put(PULSE_AMBIENT_LIGHT_DURATION, PULSE_AMBIENT_LIGHT_DURATION_VALIDATOR);
@@ -6827,6 +6917,8 @@ public final class Settings {
             VALIDATORS.put(FOD_ANIM, FOD_ANIM_VALIDATOR);
             VALIDATORS.put(TEXT_CLOCK_ALIGNMENT, TEXT_CLOCK_ALIGNMENT_VALIDATOR);
             VALIDATORS.put(TEXT_CLOCK_PADDING, TEXT_CLOCK_PADDING_VALIDATOR);
+            VALIDATORS.put(FORCE_EXPANDED_NOTIFICATIONS, FORCE_EXPANDED_NOTIFICATIONS_VALIDATOR);
+            VALIDATORS.put(BACK_GESTURE_HAPTIC, BACK_GESTURE_HAPTIC_VALIDATOR);
         }
 
         /**
@@ -11232,6 +11324,12 @@ public final class Settings {
         public static final String HIDE_LOCKICON = "hide_lockicon";
 
         private static final Validator HIDE_LOCKICON_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * Accent color
+         * @hide
+         */
+        public static final String ACCENT_COLOR_PROP = "accent_color_prop";
 
         /**
          * Whether tethering is allowed to use VPN upstreams
@@ -16220,6 +16318,14 @@ public final class Settings {
          * @hide
          */
         public static final String DEVICE_IDLE_CONSTANTS_USER = "device_idle_constants_user";
+
+        /**
+         * Whether applications can fake a signature.
+         * 1 = permit apps to fake signature
+         * 0 = disable this feature
+         * @hide
+         */
+        public static final String ALLOW_SIGNATURE_FAKE = "allow_signature_fake";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
