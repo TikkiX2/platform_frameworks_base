@@ -216,7 +216,7 @@ public class ScrimControllerTest extends SysuiTestCase {
     }
 
     @Test
-    public void transitionToPulsing_withFrontAlphaUpdates() {
+    public void transitionToPulsing() {
         // Pre-condition
         // Need to go to AoD first because PULSING doesn't change
         // the back scrim opacity - otherwise it would hide AoD wallpapers.
