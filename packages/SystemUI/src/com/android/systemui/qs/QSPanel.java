@@ -112,6 +112,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback,
     private ImageView mMaxBrightness;
 
     private boolean mBrightnessBottom;
+    private boolean mQSBrightnessSlider;
     private boolean mBrightnessVisible;
     private boolean mShowAutoBrightness;
     private boolean mShowMinMaxBrightness;
@@ -443,6 +444,16 @@ public class QSPanel extends LinearLayout implements Tunable, Callback,
         updateResources();
     }
 
+    public void updateBrightnessMirror() {
+        if (mBrightnessMirrorController != null && !mQSBrightnessSlider) {
+            ToggleSliderView brightnessSlider = findViewById(R.id.brightness_slider);
+            ToggleSliderView mirrorSlider = mBrightnessMirrorController.getMirror()
+                    .findViewById(R.id.brightness_slider);
+            brightnessSlider.setMirror(mirrorSlider);
+            brightnessSlider.setMirrorController(mBrightnessMirrorController);
+        }
+    }
+
     public void onCollapse() {
         if (mCustomizePanel != null && mCustomizePanel.isShown()) {
             mCustomizePanel.hide();
@@ -556,6 +567,51 @@ public class QSPanel extends LinearLayout implements Tunable, Callback,
 
     protected boolean shouldShowDetail() {
         return mExpanded;
+    }
+
+    private final class SettingObserver extends ContentObserver {
+        public SettingObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_BOTTOM_BRIGHTNESS),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED),
+                    false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            update();
+        }
+
+        public void update() {
+            boolean mBottomBrightnessSlider = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_BOTTOM_BRIGHTNESS, 0) != 0;
+            mQSBrightnessSlider = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED, 0) != 0;
+
+            if (!mBottomBrightnessSlider) {
+                removeView(mBrightnessView);
+                addView(mBrightnessView, 0);
+                mBrightnessBottom = false;
+            } else if (mBottomBrightnessSlider) {
+                removeView(mBrightnessView);
+                addView(mBrightnessView, getBrightnessViewPositionBottom());
+                mBrightnessBottom = true;
+            }
+
+            if (mQSBrightnessSlider) {
+                removeView(mBrightnessView);
+            }
+
+        }
     }
 
     protected TileRecord addTile(final QSTile tile, boolean collapsedView) {
