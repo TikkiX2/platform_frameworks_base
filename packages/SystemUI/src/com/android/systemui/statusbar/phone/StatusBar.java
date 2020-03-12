@@ -817,6 +817,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BACK_GESTURE_HAPTIC),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -855,6 +858,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_CLOCK)) ||
                     uri.equals(Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_DATE_SELECTION))) {
                 updateKeyguardStatusSettings();
+            } else if 
+(uri.equals(Settings.System.getUriFor(Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED))) {
+                updateBrightnessSliderOverlay();
             }
             update();
         }
@@ -4806,8 +4812,9 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (getNavigationBarView() != null) {
             getNavigationBarView().updateBackArrowForGesture();
         }
+}
 
-        void observe() {
+        /**void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DOUBLE_TAP_SLEEP_GESTURE),
@@ -4834,8 +4841,8 @@ public class StatusBar extends SystemUI implements DemoMode,
         public void update() {
             setStatusDoubleTapToSleep();
             updateHideNotchStatus();
-        }
-    }
+        }**/
+    
 
     private void setHapticFeedbackForBackGesture() {
         if (getNavigationBarView() != null) {

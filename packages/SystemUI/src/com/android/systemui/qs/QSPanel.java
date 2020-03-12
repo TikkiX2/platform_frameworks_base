@@ -42,6 +42,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.net.Uri;
+import android.database.ContentObserver;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
@@ -444,16 +446,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback,
         updateResources();
     }
 
-    public void updateBrightnessMirror() {
-        if (mBrightnessMirrorController != null && !mQSBrightnessSlider) {
-            ToggleSliderView brightnessSlider = findViewById(R.id.brightness_slider);
-            ToggleSliderView mirrorSlider = mBrightnessMirrorController.getMirror()
-                    .findViewById(R.id.brightness_slider);
-            brightnessSlider.setMirror(mirrorSlider);
-            brightnessSlider.setMirrorController(mBrightnessMirrorController);
-        }
-    }
-
     public void onCollapse() {
         if (mCustomizePanel != null && mCustomizePanel.isShown()) {
             mCustomizePanel.hide();
@@ -577,9 +569,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback,
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_BOTTOM_BRIGHTNESS),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED),
                     false, this, UserHandle.USER_ALL);
             update();
@@ -592,20 +581,8 @@ public class QSPanel extends LinearLayout implements Tunable, Callback,
         }
 
         public void update() {
-            boolean mBottomBrightnessSlider = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_BOTTOM_BRIGHTNESS, 0) != 0;
             mQSBrightnessSlider = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED, 0) != 0;
-
-            if (!mBottomBrightnessSlider) {
-                removeView(mBrightnessView);
-                addView(mBrightnessView, 0);
-                mBrightnessBottom = false;
-            } else if (mBottomBrightnessSlider) {
-                removeView(mBrightnessView);
-                addView(mBrightnessView, getBrightnessViewPositionBottom());
-                mBrightnessBottom = true;
-            }
 
             if (mQSBrightnessSlider) {
                 removeView(mBrightnessView);
