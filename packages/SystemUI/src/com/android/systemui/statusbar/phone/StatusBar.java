@@ -818,7 +818,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.BACK_GESTURE_HAPTIC),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.Secure.BRIGHTNESS_SLIDER_QS_UNEXPANDED),
+                    Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED),
                     false, this, UserHandle.USER_ALL);
         }
 
@@ -858,8 +858,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                     uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_CLOCK)) ||
                     uri.equals(Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_DATE_SELECTION))) {
                 updateKeyguardStatusSettings();
-            } else if
-(uri.equals(Settings.System.getUriFor(Settings.Secure.BRIGHTNESS_SLIDER_QS_UNEXPANDED))) {
+            } else if 
+(uri.equals(Settings.System.getUriFor(Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED))) {
                 updateBrightnessSliderOverlay();
             }
             update();
@@ -2294,7 +2294,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     public void updateBrightnessSliderOverlay() {
         boolean UnexpandedQSBrightnessSlider = Settings.System.getIntForUser(mContext.getContentResolver(),
-                        Settings.Secure.BRIGHTNESS_SLIDER_QS_UNEXPANDED, 0, UserHandle.USER_CURRENT) == 1;
+                        Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED, 0, UserHandle.USER_CURRENT) == 1;
         if (mUnexpandedQSBrightnessSlider != UnexpandedQSBrightnessSlider){
             mUnexpandedQSBrightnessSlider = UnexpandedQSBrightnessSlider;
             mUiOffloadThread.submit(() -> {
@@ -4813,6 +4813,36 @@ public class StatusBar extends SystemUI implements DemoMode,
             getNavigationBarView().updateBackArrowForGesture();
         }
 }
+
+        /**void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_GESTURE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HIDE_NOTCH),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED),
+                    false, this, UserHandle.USER_ALL);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            if (uri.equals(Settings.System.getUriFor(Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED))) {
+                updateBrightnessSliderOverlay();
+            }
+            update();
+        }
+
+        public void update() {
+            setStatusDoubleTapToSleep();
+            updateHideNotchStatus();
+        }**/
+    
 
     private void setHapticFeedbackForBackGesture() {
         if (getNavigationBarView() != null) {

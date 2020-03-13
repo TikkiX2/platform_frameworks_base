@@ -254,7 +254,7 @@ public class QSFragment extends LifecycleFragment implements QS, CommandQueue.Ca
                 }
             }
         });
-    }
+    } 
 
     @Override
     public void onDestroy() {
@@ -665,7 +665,7 @@ public class QSFragment extends LifecycleFragment implements QS, CommandQueue.Ca
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.Secure.BRIGHTNESS_SLIDER_QS_UNEXPANDED),
+                    Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SCREEN_BRIGHTNESS),
@@ -675,7 +675,7 @@ public class QSFragment extends LifecycleFragment implements QS, CommandQueue.Ca
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             super.onChange(selfChange, uri);
-            if (uri.equals(Settings.System.getUriFor(Settings.Secure.BRIGHTNESS_SLIDER_QS_UNEXPANDED))) {
+            if (uri.equals(Settings.System.getUriFor(Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED))) {
                 update();
             } if (mUnexpandedQSBrightnessSlider && uri.equals(Settings.System.getUriFor(Settings.System.SCREEN_BRIGHTNESS))) {
                 updateBrightnessSliderProgress(Settings.System.getInt(mContext.getContentResolver(),
@@ -685,7 +685,7 @@ public class QSFragment extends LifecycleFragment implements QS, CommandQueue.Ca
 
         public void update() {
             mUnexpandedQSBrightnessSlider = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.Secure.BRIGHTNESS_SLIDER_QS_UNEXPANDED, 0) != 0;
+                Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED, 0) != 0;
             updateBrightnessSliderVisibility(mUnexpandedQSBrightnessSlider);
         }
     }
