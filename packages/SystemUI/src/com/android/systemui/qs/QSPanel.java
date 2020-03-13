@@ -569,7 +569,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback,
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED),
+                    Settings.Secure.BRIGHTNESS_SLIDER_QS_UNEXPANDED),
                     false, this, UserHandle.USER_ALL);
             update();
         }
@@ -582,7 +582,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback,
 
         public void update() {
             mQSBrightnessSlider = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED, 0) != 0;
+                Settings.Secure.BRIGHTNESS_SLIDER_QS_UNEXPANDED, 0) != 0;
 
             if (mQSBrightnessSlider) {
                 removeView(mBrightnessView);
