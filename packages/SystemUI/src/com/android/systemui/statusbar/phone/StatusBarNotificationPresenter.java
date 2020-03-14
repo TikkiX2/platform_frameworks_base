@@ -24,8 +24,6 @@ import android.annotation.Nullable;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.os.Handler;
-import android.os.UserHandle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.service.notification.StatusBarNotification;
@@ -132,14 +130,6 @@ public class StatusBarNotificationPresenter implements NotificationPresenter,
     private int mMaxKeyguardNotifications;
 
     private StatusBar mStatusBar;
-
-    //Lockscreen Notifications
-    private int mMaxKeyguardNotifConfig;
-    private boolean mCustomMaxKeyguard;
-
-    ActivityManager mAm;
-    private ArrayList<String> mStoplist = new ArrayList<String>();
-    private ArrayList<String> mBlacklist = new ArrayList<String>();
 
     public StatusBarNotificationPresenter(Context context,
             NotificationPanelView panel,
@@ -460,22 +450,13 @@ public class StatusBarNotificationPresenter implements NotificationPresenter,
 
     @Override
     public int getMaxNotificationsWhileLocked(boolean recompute) {
-        mCustomMaxKeyguard = Settings.System.getIntForUser(mContext.getContentResolver(),
-            Settings.System.LOCK_SCREEN_CUSTOM_NOTIF, 0, UserHandle.USER_CURRENT) == 1;
-        mMaxKeyguardNotifConfig = Settings.System.getIntForUser(mContext.getContentResolver(),
-                 Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, 3, UserHandle.USER_CURRENT);
-        if (mCustomMaxKeyguard) {
-            return mMaxKeyguardNotifConfig;
-        } else {
-           if (recompute) {
-               mMaxKeyguardNotifications = Math.max(1,
-                       mNotificationPanel.computeMaxKeyguardNotifications(
-                               mMaxAllowedKeyguardNotifications));
-               return mMaxKeyguardNotifications;
-           } else {
-               return mMaxKeyguardNotifications;
-           }
+        if (recompute) {
+            mMaxKeyguardNotifications = Math.max(1,
+                    mNotificationPanel.computeMaxKeyguardNotifications(
+                            mMaxAllowedKeyguardNotifications));
+            return mMaxKeyguardNotifications;
         }
+        return mMaxKeyguardNotifications;
     }
 
     @Override
