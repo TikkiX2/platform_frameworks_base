@@ -36,10 +36,13 @@ import android.os.UserManager;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,13 +66,22 @@ import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserInfoController.OnUserInfoChangedListener;
 import com.android.systemui.tuner.TunerService;
 
+import com.android.systemui.settings.BrightnessController;
+import com.android.systemui.settings.ToggleSliderView;
+import com.android.systemui.statusbar.policy.BrightnessMirrorController;
+import com.android.systemui.statusbar.policy.BrightnessMirrorController.BrightnessMirrorListener;
+import com.android.systemui.tuner.TunerService.Tunable;
+import com.android.systemui.qs.QSHost.Callback;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
 public class QSFooterImpl extends FrameLayout implements QSFooter,
-        OnClickListener, OnLongClickListener, OnUserInfoChangedListener {
+        OnClickListener, OnLongClickListener, OnUserInfoChangedListener, Tunable, Callback, BrightnessMirrorListener {
 
     private static final String TAG = "QSFooterImpl";
+
+    public static final String QS_SHOW_BRIGHTNESS_BOTTOM = "qs_show_brightness_bottom";
 
     private final ActivityStarter mActivityStarter;
     private final UserInfoController mUserInfoController;
@@ -78,6 +90,15 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     protected View mSettingsContainer;
     private PageIndicator mPageIndicator;
     private View mRunningServicesButton;
+
+    protected final View mBrightnessView;
+    private BrightnessController mBrightnessController;
+    private BrightnessMirrorController mBrightnessMirrorController;
+    private boolean mBrightnessBottom;
+    private boolean mBrightnessVisible;
+    private View mBrightnessPlaceholder;
+    private FrameLayout mBrightnessHolder;
+    private int mGravityBrightness;
 
     private boolean mQsDisabled;
     private boolean isAlwaysShowSettings;
@@ -123,6 +144,10 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mActivityStarter = activityStarter;
         mUserInfoController = userInfoController;
         mDeviceProvisionedController = deviceProvisionedController;
+        mBrightnessView = LayoutInflater.from(mContext).inflate(
+            R.layout.quick_settings_brightness_dialog, mBrightnessHolder, true);
+        mBrightnessPlaceholder = LayoutInflater.from(mContext).inflate(
+            R.layout.quick_settings_brightness_placeholder, mBrightnessHolder, true);
     }
 
     @VisibleForTesting
@@ -154,6 +179,14 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mMultiUserSwitch = findViewById(R.id.multi_user_switch);
         mMultiUserAvatar = mMultiUserSwitch.findViewById(R.id.multi_user_avatar);
 
+        mBrightnessHolder = findViewById(R.id.brightness_holder);
+	        mBrightnessHolder.addView(mBrightnessPlaceholder);
+        mBrightnessHolder.addView(mBrightnessView);
+        ImageView brightnessIcon = findViewById(R.id.brightness_icon);
+        mBrightnessController = new BrightnessController(getContext(),
+                brightnessIcon,
+                findViewById(R.id.brightness_slider));
+
         mDragHandle = findViewById(R.id.qs_drag_handle_view);
         mActionsContainer = findViewById(R.id.qs_footer_actions_container);
         mEditContainer = findViewById(R.id.qs_footer_actions_edit_container);
@@ -173,6 +206,10 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         setDragHandle();
         setSettingsIcon();
         updateResources();
+    }
+
+    @Override
+    public void onTilesChanged() {
     }
 
     private void setBuildText() {
@@ -238,6 +275,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         setSettingsIcon();
         updateResources();
         updateEverything();
+        updateBrightnessMirror();
     }
 
     @Override
@@ -323,13 +361,23 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mContext.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.QS_ALWAYS_SHOW_SETTINGS), false,
                 mSettingsObserver, UserHandle.USER_ALL);
+
+        final TunerService tunerService = Dependency.get(TunerService.class);
+        tunerService.addTunable(this, QS_SHOW_BRIGHTNESS_BOTTOM);
+        if (mBrightnessMirrorController != null) {
+            mBrightnessMirrorController.addCallback(this);
+        }
     }
 
     @Override
     @VisibleForTesting
     public void onDetachedFromWindow() {
+        Dependency.get(TunerService.class).removeTunable(this);
         setListening(false);
         mContext.getContentResolver().unregisterContentObserver(mSettingsObserver);
+        if (mBrightnessMirrorController != null) {
+            mBrightnessMirrorController.removeCallback(this);
+        }
         super.onDetachedFromWindow();
     }
 
@@ -340,6 +388,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         }
         mListening = listening;
         updateListeners();
+        setBrightnessListening(listening);
     }
 
     @Override
@@ -486,4 +535,67 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         }
         mMultiUserAvatar.setImageDrawable(picture);
     }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        if (QS_SHOW_BRIGHTNESS_BOTTOM.equals(key)) {
+            updateViewVisibilityForTuningValue(newValue);
+        }
+    }
+
+    private void updateViewVisibilityForTuningValue(@Nullable String newValue) {
+        boolean visible = TunerService.parseIntegerSwitch(newValue, true);
+        if (visible) {
+            mBrightnessVisible = true;
+            mBrightnessView.setVisibility(View.VISIBLE);
+        } else {
+            mBrightnessVisible = false;
+            mBrightnessView.setVisibility(View.GONE);
+        }
+
+    }
+
+    public void setBrightnessMirror(BrightnessMirrorController c) {
+        if (mBrightnessMirrorController != null) {
+            mBrightnessMirrorController.removeCallback(this);
+        }
+        mBrightnessMirrorController = c;
+        if (mBrightnessMirrorController != null) {
+            mBrightnessMirrorController.addCallback(this);
+        }
+        updateBrightnessMirror();
+    }
+
+    @Override
+    public void onBrightnessMirrorReinflated(View brightnessMirror) {
+        updateBrightnessMirror();
+    }
+
+    View getBrightnessView() {
+        return mBrightnessView;
+    }
+
+    View getBrightnessPlaceholder() {
+        return mBrightnessPlaceholder;
+    }
+
+
+    public void updateBrightnessMirror() {
+        if (mBrightnessMirrorController != null) {
+            ToggleSliderView brightnessSlider = findViewById(R.id.brightness_slider);
+            ToggleSliderView mirrorSlider = mBrightnessMirrorController.getMirror()
+                    .findViewById(R.id.brightness_slider);
+            brightnessSlider.setMirror(mirrorSlider);
+            brightnessSlider.setMirrorController(mBrightnessMirrorController);
+        }
+    }
+
+    public void setBrightnessListening(boolean listening) {
+        if (listening) {
+            mBrightnessController.registerCallbacks();
+        } else {
+            mBrightnessController.unregisterCallbacks();
+        }
+    }
+
 }
