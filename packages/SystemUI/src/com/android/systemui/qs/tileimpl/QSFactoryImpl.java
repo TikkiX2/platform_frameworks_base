@@ -61,7 +61,6 @@ import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.SoundSearchTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.UserTile;
-import com.android.systemui.qs.tiles.WeatherTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.qs.tiles.DataSwitchTile;
@@ -274,10 +273,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new RebootTile(mHost);
             case "immersive":
                 return mImmersiveTileProvider.get();
-	        case "screenstabilization":
-		        return mScreenStabilizationTileProvider.get();
-            case "weather":
-                return new WeatherTile(mHost);
+	    case "screenstabilization":
+		return mScreenStabilizationTileProvider.get();
         }
 
         // Intent tiles.
