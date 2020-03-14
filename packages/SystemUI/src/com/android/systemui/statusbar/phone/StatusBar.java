@@ -487,6 +487,10 @@ public class StatusBar extends SystemUI implements DemoMode,
     protected final NotificationAlertingManager mNotificationAlertingManager =
             Dependency.get(NotificationAlertingManager.class);
 
+    //Lockscreen Notifications
+    private int mMaxKeyguardNotifConfig;
+    private boolean mCustomMaxKeyguard;
+
     private DisplayManager mDisplayManager;
 
     private int mMinBrightness;
