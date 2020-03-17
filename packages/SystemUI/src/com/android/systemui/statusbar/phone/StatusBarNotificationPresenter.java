@@ -22,6 +22,7 @@ import static com.android.systemui.statusbar.phone.StatusBar.SPEW;
 
 import android.annotation.Nullable;
 import android.app.KeyguardManager;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.RemoteException;

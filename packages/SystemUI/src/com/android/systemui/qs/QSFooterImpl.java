@@ -68,8 +68,6 @@ import com.android.systemui.tuner.TunerService;
 
 import com.android.systemui.settings.BrightnessController;
 import com.android.systemui.settings.ToggleSliderView;
-import com.android.systemui.statusbar.policy.BrightnessMirrorController;
-import com.android.systemui.statusbar.policy.BrightnessMirrorController.BrightnessMirrorListener;
 import com.android.systemui.tuner.TunerService.Tunable;
 import com.android.systemui.qs.QSHost.Callback;
 
@@ -77,7 +75,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 public class QSFooterImpl extends FrameLayout implements QSFooter,
-        OnClickListener, OnLongClickListener, OnUserInfoChangedListener, Tunable, Callback, BrightnessMirrorListener {
+        OnClickListener, OnLongClickListener, OnUserInfoChangedListener, Tunable, Callback {
 
     private static final String TAG = "QSFooterImpl";
 
@@ -93,7 +91,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     protected final View mBrightnessView;
     private BrightnessController mBrightnessController;
-    private BrightnessMirrorController mBrightnessMirrorController;
     private boolean mBrightnessBottom;
     private boolean mBrightnessVisible;
     private View mBrightnessPlaceholder;
@@ -275,7 +272,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         setSettingsIcon();
         updateResources();
         updateEverything();
-        updateBrightnessMirror();
     }
 
     @Override
@@ -364,9 +360,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, QS_SHOW_BRIGHTNESS_BOTTOM);
-        if (mBrightnessMirrorController != null) {
-            mBrightnessMirrorController.addCallback(this);
-        }
     }
 
     @Override
@@ -375,9 +368,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         Dependency.get(TunerService.class).removeTunable(this);
         setListening(false);
         mContext.getContentResolver().unregisterContentObserver(mSettingsObserver);
-        if (mBrightnessMirrorController != null) {
-            mBrightnessMirrorController.removeCallback(this);
-        }
         super.onDetachedFromWindow();
     }
 
@@ -555,21 +545,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     }
 
-    public void setBrightnessMirror(BrightnessMirrorController c) {
-        if (mBrightnessMirrorController != null) {
-            mBrightnessMirrorController.removeCallback(this);
-        }
-        mBrightnessMirrorController = c;
-        if (mBrightnessMirrorController != null) {
-            mBrightnessMirrorController.addCallback(this);
-        }
-        updateBrightnessMirror();
-    }
-
-    @Override
-    public void onBrightnessMirrorReinflated(View brightnessMirror) {
-        updateBrightnessMirror();
-    }
 
     View getBrightnessView() {
         return mBrightnessView;
@@ -579,16 +554,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         return mBrightnessPlaceholder;
     }
 
-
-    public void updateBrightnessMirror() {
-        if (mBrightnessMirrorController != null) {
-            ToggleSliderView brightnessSlider = findViewById(R.id.brightness_slider);
-            ToggleSliderView mirrorSlider = mBrightnessMirrorController.getMirror()
-                    .findViewById(R.id.brightness_slider);
-            brightnessSlider.setMirror(mirrorSlider);
-            brightnessSlider.setMirrorController(mBrightnessMirrorController);
-        }
-    }
 
     public void setBrightnessListening(boolean listening) {
         if (listening) {
