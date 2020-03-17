@@ -38,8 +38,8 @@
          android:visibility="gone" />
 
     <include
-        layout="@layout/keyguard_status_view"
-        android:visibility="gone" />
+        layout="@layout/keyguard_status_view" />
+        <!--android:visibility="gone" -->
 
     <com.android.systemui.statusbar.phone.NotificationsQuickSettingsContainer
         android:layout_width="match_parent"
@@ -81,17 +81,17 @@
         <include
             layout="@layout/keyguard_status_bar"
             android:visibility="invisible" />
-        
-        <ImageButton 
+
+        <ImageButton
             android:layout_gravity="bottom|center_vertical|center_horizontal|center"
             android:id="@+id/clear_notifications"
             android:background="@drawable/oos_dismiss_all_bcg"
             android:visibility="gone"
             android:layout_width="@dimen/dismiss_all_button_width"
-            android:layout_height="@dimen/dismiss_all_button_height" 
-            android:layout_marginBottom="@dimen/dismiss_all_button_margin_bottom" 
-            android:src="@drawable/recents_dismiss_all_icon" 
-            android:scaleType="centerInside" 
+            android:layout_height="@dimen/dismiss_all_button_height"
+            android:layout_marginBottom="@dimen/dismiss_all_button_margin_bottom"
+            android:src="@drawable/recents_dismiss_all_icon"
+            android:scaleType="centerInside"
             android:elevation="@dimen/dismiss_all_button_elevation"/>
 
         <Button
