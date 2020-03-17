@@ -6194,6 +6194,14 @@ public final class Settings {
 
         private static final Validator OMNI_AUTO_BRIGHTNESS_MIN_VALUE_VALIDATOR =
                 ANY_INTEGER_VALIDATOR;
+        /**
+         * Whether to use new QS panel bg tint or not
+         * @hide
+         */
+        public static final String QS_PANEL_BG_USE_NEW_TINT = "qs_panel_bg_use_new_tint";
+
+        /** @hide */
+        private static final Validator QS_PANEL_BG_USE_NEW_TINT_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
@@ -6435,6 +6443,7 @@ public final class Settings {
             TEXT_CLOCK_PADDING,
             FORCE_EXPANDED_NOTIFICATIONS,
             BACK_GESTURE_HAPTIC,
+            QS_PANEL_BG_USE_NEW_TINT,
         };
 
         /**
@@ -6935,6 +6944,7 @@ public final class Settings {
             VALIDATORS.put(FORCE_EXPANDED_NOTIFICATIONS, FORCE_EXPANDED_NOTIFICATIONS_VALIDATOR);
             VALIDATORS.put(BACK_GESTURE_HAPTIC, BACK_GESTURE_HAPTIC_VALIDATOR);
             VALIDATORS.put(BRIGHTNESS_SLIDER_QS_UNEXPANDED, BRIGHTNESS_SLIDER_QS_UNEXPANDED_VALIDATOR);
+            VALIDATORS.put(QS_PANEL_BG_USE_NEW_TINT, QS_PANEL_BG_USE_NEW_TINT_VALIDATOR);
         }
 
         /**
@@ -10997,11 +11007,17 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_CLOCK_SELECTION = "lockscreen_clock_selection";
 
+        private static final Validator LOCKSCREEN_CLOCK_SELECTION_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 11);
+
         /**
          * Select which lockscreen date style to display
          * @hide
          */
         public static final String LOCKSCREEN_DATE_SELECTION = "lockscreen_date_selection";
+
+        private static final Validator LOCKSCREEN_DATE_SELECTION_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 8);
 
         /**
          * Whether the Lockdown button should be shown in the power menu.
@@ -11532,6 +11548,8 @@ public final class Settings {
             LOCKSCREEN_SOLID_UNITS_COUNT,
             LOCKSCREEN_SOLID_FUDGE_FACTOR,
             LOCKSCREEN_SOLID_UNITS_OPACITY,
+            LOCKSCREEN_CLOCK_SELECTION,
+            LOCKSCREEN_DATE_SELECTION,
             VOLUME_LINK_NOTIFICATION,
             SYSUI_ROUNDED_FWVALS,
             SYSUI_ROUNDED_SIZE,
@@ -11747,6 +11765,8 @@ public final class Settings {
             VALIDATORS.put(LOCKSCREEN_SOLID_UNITS_COUNT, LOCKSCREEN_SOLID_UNITS_COUNT_VALIDATOR);
             VALIDATORS.put(LOCKSCREEN_SOLID_FUDGE_FACTOR, LOCKSCREEN_SOLID_FUDGE_FACTOR_VALIDATOR);
             VALIDATORS.put(LOCKSCREEN_SOLID_UNITS_OPACITY, LOCKSCREEN_SOLID_UNITS_OPACITY_VALIDATOR);
+            VALIDATORS.put(LOCKSCREEN_CLOCK_SELECTION, LOCKSCREEN_CLOCK_SELECTION_VALIDATOR);
+            VALIDATORS.put(LOCKSCREEN_DATE_SELECTION,LOCKSCREEN_DATE_SELECTION_VALIDATOR);
             VALIDATORS.put(VOLUME_LINK_NOTIFICATION, VOLUME_LINK_NOTIFICATION_VALIDATOR);
             VALIDATORS.put(QUICK_SETTINGS_TILES_VIBRATE, QUICK_SETTINGS_TILES_VIBRATE_VALIDATOR);
             VALIDATORS.put(SYSUI_ROUNDED_FWVALS, SYSUI_ROUNDED_FWVALS_VALIDATOR);
