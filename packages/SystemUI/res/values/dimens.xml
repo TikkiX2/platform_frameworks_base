@@ -147,7 +147,7 @@
     <dimen name="notification_max_heads_up_height_increased">188dp</dimen>
 
     <!-- Side padding on the lockscreen on the side of notifications -->
-    <dimen name="notification_side_paddings">0dp</dimen>
+    <dimen name="notification_side_paddings">8dp</dimen>
 
     <!-- padding between the heads up and the statusbar -->
     <dimen name="heads_up_status_bar_padding">8dp</dimen>
@@ -570,7 +570,7 @@
     <dimen name="z_distance_between_notifications">0.5dp</dimen>
 
     <!-- The height of the divider between the individual notifications. -->
-    <dimen name="notification_divider_height">0dp</dimen>
+    <dimen name="notification_divider_height">0.5dp</dimen>
 
     <!-- The corner radius of the shadow behind the notification. -->
     <dimen name="notification_shadow_radius">0dp</dimen>
@@ -589,7 +589,7 @@
     <dimen name="notification_header_height">53dp</dimen>
 
     <!-- The height of the divider between the individual notifications when the notification wants it to be increased. This is currently the case for notification groups -->
-    <dimen name="notification_divider_height_increased">0dp</dimen>
+    <dimen name="notification_divider_height_increased">6dp</dimen>
 
     <!-- The height of the gap between adjacent notification sections. -->
     <dimen name="notification_section_divider_height">@dimen/notification_side_paddings</dimen>
@@ -648,7 +648,7 @@
     <dimen name="edge_tap_area_width">48dp</dimen>
 
     <!-- The padding between notification children when collapsed -->
-    <dimen name="notification_children_padding">0dp</dimen>
+    <dimen name="notification_children_padding">4dp</dimen>
 
     <!-- The padding on top of the first notification to the children container -->
     <dimen name="notification_children_container_top_padding">8dp</dimen>
