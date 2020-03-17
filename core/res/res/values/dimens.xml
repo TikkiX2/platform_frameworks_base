@@ -775,6 +775,7 @@
     <dimen name="extra_qs_footer_height">48dp</dimen>
     <dimen name="qs_background_inset">0dp</dimen>
     <dimen name="qs_drag_handle_margin_bottom">-12dp</dimen>
-    <dimen name="qs_notification_padding">20dp</dimen>
+    <!-- 20dp default value -->
+    <dimen name="qs_notification_padding">0dp</dimen>
 
 </resources>
