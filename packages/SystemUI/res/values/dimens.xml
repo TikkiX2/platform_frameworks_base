@@ -77,6 +77,9 @@
     <!-- The font size for the clock in the status bar. -->
     <dimen name="status_bar_clock_size">14sp</dimen>
 
+    <!-- The font size for the BIG clock in the status bar. -->
+    <dimen name="status_bar_bigclock_size">28sp</dimen>
+
     <!-- The starting padding for the clock in the status bar. -->
     <dimen name="status_bar_clock_starting_padding">8dp</dimen>
 
