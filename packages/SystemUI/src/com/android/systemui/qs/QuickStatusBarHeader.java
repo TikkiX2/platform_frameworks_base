@@ -121,7 +121,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private DualToneHandler mDualToneHandler;
 
     private View mSystemIconsView;
-    private View mQuickQsStatusIcons;
     private View mHeaderTextContainerView;
 
     private int mRingerMode = AudioManager.RINGER_MODE_NORMAL;
@@ -230,7 +229,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
         mHeaderQsPanel = findViewById(R.id.quick_qs_panel);
         mSystemIconsView = findViewById(R.id.quick_status_bar_system_icons);
-        mQuickQsStatusIcons = findViewById(R.id.quick_qs_status_icons);
         StatusIconContainer iconContainer = findViewById(R.id.statusIcons);
         iconContainer.setShouldRestrictIcons(false);
         mIconManager = new TintedIconManager(iconContainer);
@@ -261,12 +259,13 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 android.R.attr.colorForeground);
         float intensity = getColorIntensity(colorForeground);
         int fillColor = mDualToneHandler.getSingleColor(intensity);
+        int iconcolor = mContext.getResources().getColor(R.color.light_mode_icon_color_single_tone);
 
         // Set light text on the header icons because they will always be on a black background
         applyDarkness(R.id.clock, tintArea, 0, DarkIconDispatcher.DEFAULT_ICON_TINT);
 
         // Set the correct tint for the status icons so they contrast
-        mIconManager.setTint(fillColor);
+        mIconManager.setTint(iconcolor);
         mNextAlarmIcon.setImageTintList(ColorStateList.valueOf(fillColor));
         mRingerModeIcon.setImageTintList(ColorStateList.valueOf(fillColor));
 
@@ -446,12 +445,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mClockView.setClockVisibleByUser(show == 1);
     }
 
-    private void updateStatusIconAlphaAnimator() {
-        mStatusIconsAlphaAnimator = new TouchAnimator.Builder()
-                .addFloat(mQuickQsStatusIcons, "alpha", 1, 0, 0)
-                .build();
-    }
-
     private void updateHeaderTextContainerAlphaAnimator() {
         mHeaderTextContainerAlphaAnimator = new TouchAnimator.Builder()
                 .addFloat(mHeaderTextContainerView, "alpha", 0, 0, 1)
@@ -504,7 +497,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mQsDisabled = disabled;
         mHeaderQsPanel.setDisabledByPolicy(disabled);
         mHeaderTextContainerView.setVisibility(mQsDisabled ? View.GONE : View.VISIBLE);
-        mQuickQsStatusIcons.setVisibility(mQsDisabled ? View.GONE : View.VISIBLE);
         updateResources();
     }
 
@@ -639,8 +631,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             View v = getChildAt(i);
             // Prevents these views from getting set a margin.
             // The Icon views all have the same padding set in XML to be aligned.
-            if (v == mSystemIconsView || v == mQuickQsStatusIcons || v == mHeaderQsPanel
-                    || v == mHeaderTextContainerView) {
+            if (v == mSystemIconsView || v == mHeaderQsPanel) {
                 continue;
             }
             RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) v.getLayoutParams();
