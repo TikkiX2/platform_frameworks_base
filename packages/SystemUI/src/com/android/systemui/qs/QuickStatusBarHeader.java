@@ -406,7 +406,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
         setLayoutParams(lp);
 
-        updateStatusIconAlphaAnimator();
         updateHeaderTextContainerAlphaAnimator();
     }
 
