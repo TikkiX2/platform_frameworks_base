@@ -319,18 +319,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 !Objects.equals(originalRingerText, mRingerModeTextView.getText());
     }
 
-    public void updateExtendedStatusBarTint(Context context) {
-      @ColorInt int textColor = Utils.getColorAttrDefaultColor(context,
-        R.attr.wallpaperTextColor);
-        float intensity = textColor == Color.WHITE ? 0 : 1;
-        if (mIconManager != null) {
-          mIconManager.setTint(textColor);
-        }
-
-        mClockView.setTextColor(textColor);
-        mDateView.setTextColor(textColor);
-      }
-
     private boolean updateAlarmStatus() {
         boolean isOriginalVisible = mNextAlarmTextView.getVisibility() == View.VISIBLE;
         CharSequence originalAlarmText = mNextAlarmTextView.getText();
@@ -653,6 +641,19 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             lp.rightMargin = sideMargins;
         }
     }
+
+    public void updateExtendedStatusBarTint(Context context) {
+      @ColorInt int textColor = Utils.getColorAttrDefaultColor(context,
+        R.attr.wallpaperTextColor);
+        float intensity = textColor == Color.WHITE ? 0 : 1;
+        if (mIconManager != null) {
+          mIconManager.setTint(textColor);
+        }
+
+        mClockView.setTextColor(textColor);
+        mDateView.setTextColor(textColor);
+      }
+
 
     private void updateSettings() {
         mHeaderImageEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
