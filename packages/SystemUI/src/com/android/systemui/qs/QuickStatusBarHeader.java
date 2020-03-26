@@ -278,6 +278,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mRingerModeTextView.setSelected(true);
         mNextAlarmTextView.setSelected(true);
         updateSettings();
+
+        updateExtendedStatusBarTint(mContext);
+
     }
 
     private void updateStatusText() {
@@ -307,13 +310,24 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 mRingerModeTextView.setText(R.string.qs_status_phone_muted);
                 ringerVisible = true;
             }
+            
+    public void updateExtendedStatusBarTint(Context context) {
+        @ColorInt int textColor = Utils.getColorAttrDefaultColor(context,
+                R.attr.wallpaperTextColor);
+        float intensity = textColor == Color.WHITE ? 0 : 1;
+        if (mIconManager != null) {
+            mIconManager.setTint(textColor);
         }
+
         mRingerModeIcon.setVisibility(ringerVisible ? View.VISIBLE : View.GONE);
         mRingerModeTextView.setVisibility(ringerVisible ? View.VISIBLE : View.GONE);
         mRingerContainer.setVisibility(ringerVisible ? View.VISIBLE : View.GONE);
 
         return isOriginalVisible != ringerVisible ||
                 !Objects.equals(originalRingerText, mRingerModeTextView.getText());
+
+        mClockView.setTextColor(textColor);
+        mDateView.setTextColor(textColor);
     }
 
     private boolean updateAlarmStatus() {

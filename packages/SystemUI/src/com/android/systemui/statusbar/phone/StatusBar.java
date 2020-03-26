@@ -198,6 +198,7 @@ import com.android.systemui.plugins.statusbar.NotificationSwipeActionHelper.Snoo
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.qs.QSFragment;
 import com.android.systemui.qs.QSPanel;
+import com.android.systemui.qs.QuickStatusBarHeader;
 import com.android.systemui.qs.QuickQSPanel;
 import com.android.systemui.recents.Recents;
 import com.android.systemui.recents.ScreenPinningRequest;
@@ -456,6 +457,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     // settings
     private QSPanel mQSPanel;
     private QuickQSPanel mQuickQSPanel;
+    private QuickStatusBarHeader mHeader;
 
     KeyguardIndicationController mKeyguardIndicationController;
 
@@ -862,7 +864,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_CLOCK)) ||
                     uri.equals(Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_DATE_SELECTION))) {
                 updateKeyguardStatusSettings();
-            } else if 
+            } else if
 (uri.equals(Settings.System.getUriFor(Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED))) {
                 updateBrightnessSliderOverlay();
             }
@@ -1747,6 +1749,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 QS qs = (QS) f;
                 if (qs instanceof QSFragment) {
                     mQSPanel = ((QSFragment) qs).getQsPanel();
+                    mHeader = ((QSFragment) qs).getHeader();
                 }
             });
         }
@@ -1839,6 +1842,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             ((AutoReinflateContainer) mAmbientIndicationContainer).inflateLayout();
         }
         mNotificationIconAreaController.onThemeChanged();
+
+        if (mHeader != null) {
+            mHeader.updateExtendedStatusBarTint(mContext);
+        }
     }
 
     @Override
@@ -4846,7 +4853,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setStatusDoubleTapToSleep();
             updateHideNotchStatus();
         }**/
-    
+
 
     private void setHapticFeedbackForBackGesture() {
         if (getNavigationBarView() != null) {
