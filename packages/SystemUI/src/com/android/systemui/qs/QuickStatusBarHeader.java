@@ -318,6 +318,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         return isOriginalVisible != ringerVisible ||
                 !Objects.equals(originalRingerText, mRingerModeTextView.getText());
     }
+  }
 
     private boolean updateAlarmStatus() {
         boolean isOriginalVisible = mNextAlarmTextView.getVisibility() == View.VISIBLE;
