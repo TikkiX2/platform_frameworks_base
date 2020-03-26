@@ -254,7 +254,7 @@ public class QSFragment extends LifecycleFragment implements QS, CommandQueue.Ca
                 }
             }
         });
-    } 
+    }
 
     @Override
     public void onDestroy() {
@@ -286,8 +286,7 @@ public class QSFragment extends LifecycleFragment implements QS, CommandQueue.Ca
         return mQsExpanded;
     }
 
-    @Override
-    public View getHeader() {
+    public QuickStatusBarHeader getHeader() {
         return mHeader;
     }
 

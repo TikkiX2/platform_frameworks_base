@@ -98,7 +98,7 @@
     </style>
 
     <style name="TextAppearance.StatusBar.BigClock" parent="@*android:style/TextAppearance.StatusBar.Icon">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">38sp</item>
         <item name="android:fontFamily">@*android:string/config_headlineFontFamilyMedium</item>
     </style>
 

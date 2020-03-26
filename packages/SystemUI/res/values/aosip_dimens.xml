@@ -23,9 +23,9 @@
 
     <!-- Custom header -->
     <dimen name="qs_header_image_offset">25dp</dimen>
-    <dimen name="qs_header_image_side_margin">0dp</dimen>
-    <dimen name="qs_header_image_top_margin">0dp</dimen>
-    <dimen name="qs_header_image_bottom_margin">12dp</dimen>
+    <dimen name="qs_header_image_side_margin">8dp</dimen>
+    <dimen name="qs_header_image_top_margin">8dp</dimen>
+    <dimen name="qs_header_image_bottom_margin">8dp</dimen>
 
     <!-- Network traffic monitor -->
     <dimen name="net_traffic_multi_text_size">8dp</dimen>
@@ -55,5 +55,5 @@
     <!-- Volume panel -->
     <dimen name="volume_dialog_panel_transparent_padding_left">20dp</dimen>
 
-   <dimen name="fod_animation_size">280dp</dimen>  
+   <dimen name="fod_animation_size">280dp</dimen>
 </resources>
