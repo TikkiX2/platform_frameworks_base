@@ -34,17 +34,11 @@
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
     <com.android.systemui.statusbar.policy.Clock
         android:id="@+id/clock"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:minWidth="48dp"
-        android:paddingStart="@dimen/status_bar_left_clock_starting_padding"
-        android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.StatusBar.BigClock"
         systemui:showDark="false" />
@@ -52,18 +46,12 @@
     <com.android.systemui.statusbar.policy.DateView
         android:id="@+id/date"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="start|bottom"
         android:gravity="center_vertical"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.StatusBar.Clock"
         systemui:datePattern="@string/abbrev_wday_month_day_no_year_alarm" />
-
-    <android.widget.Space
-        android:layout_width="1dp"
-        android:layout_height="24dp"/>
-
-    </LinearLayout>
 
     </LinearLayout>
 
@@ -104,12 +92,19 @@
 
     </LinearLayout>
 
-    <com.android.systemui.statusbar.phone.StatusIconContainer
-        android:id="@+id/statusIcons"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:paddingEnd="@dimen/signal_cluster_battery_padding" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <com.android.systemui.statusbar.phone.StatusIconContainer
+            android:id="@+id/statusIcons"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingEnd="@dimen/signal_cluster_battery_padding" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -1842,10 +1842,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             ((AutoReinflateContainer) mAmbientIndicationContainer).inflateLayout();
         }
         mNotificationIconAreaController.onThemeChanged();
-
-        if (mHeader != null) {
-            mHeader.updateExtendedStatusBarTint(mContext);
-        }
     }
 
     @Override
