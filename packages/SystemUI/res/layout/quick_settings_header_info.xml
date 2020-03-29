@@ -28,6 +28,7 @@
             android:id="@+id/status_container"
             android:layout_width="match_parent"
             android:layout_weight="1"
+            android:visibility="invisible"
             android:layout_height="match_parent">
 
             <LinearLayout
@@ -36,6 +37,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:focusable="true"
+                android:visibility="invisible"
                 android:clickable="true">
 
                 <ImageView
