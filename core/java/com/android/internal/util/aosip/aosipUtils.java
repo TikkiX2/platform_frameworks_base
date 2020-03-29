@@ -61,6 +61,18 @@ public class aosipUtils {
     private static final int DEVICE_HYBRID = 1;
     private static final int DEVICE_TABLET = 2;
 
+    private static IStatusBarService mStatusBarService = null;
+
+    private static IStatusBarService getStatusBarService() {
+        synchronized (aosipUtils.class) {
+            if (mStatusBarService == null) {
+                mStatusBarService = IStatusBarService.Stub.asInterface(
+                        ServiceManager.getService("statusbar"));
+            }
+            return mStatusBarService;
+        }
+    }
+
     public static boolean isChineseLanguage() {
        return Resources.getSystem().getConfiguration().locale.getLanguage().startsWith(
                Locale.CHINESE.getLanguage());
@@ -87,7 +99,16 @@ public class aosipUtils {
         }
         return false;
     }
-
+    // Partial screenshots
+    public static void setPartialScreenshot(boolean active) {
+        IStatusBarService service = getStatusBarService();
+        if (service != null) {
+            try {
+                service.setPartialScreenshot(active);
+            } catch (RemoteException e) {}
+        }
+    }
+    // Check to see if device is WiFi only
     public static boolean isWifiOnly(Context context) {
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
