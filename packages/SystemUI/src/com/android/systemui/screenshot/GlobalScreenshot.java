@@ -28,6 +28,8 @@ import static com.android.systemui.statusbar.phone.StatusBar.SYSTEM_DIALOG_REASO
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
+import android.animation.LayoutTransition;
+import android.animation.LayoutTransition.TransitionListener;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.ActivityManager;
@@ -63,6 +65,8 @@ import android.graphics.PixelFormat;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.media.MediaActionSound;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -86,14 +90,17 @@ import android.view.MotionEvent;
 import android.view.SurfaceControl;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.config.sysui.SystemUiDeviceConfigFlags;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
+import com.android.internal.util.aosip.aosipUtils;
 import com.android.systemui.R;
 import com.android.systemui.SysUiServiceProvider;
 import com.android.systemui.SystemUI;
@@ -628,7 +635,10 @@ class GlobalScreenshot {
 
     private Bitmap mScreenBitmap;
     private View mScreenshotLayout;
+    private LinearLayout mScreenshotButtonsLayout;
     private ScreenshotSelectorView mScreenshotSelectorView;
+    private View mCaptureButton;
+    private View mCancelButton;
     private ImageView mBackgroundView;
     private ImageView mScreenshotView;
     private ImageView mScreenshotFlash;
@@ -641,8 +651,7 @@ class GlobalScreenshot {
 
     private AsyncTask<Void, Void, Void> mSaveInBgTask;
 
-    private MediaActionSound mCameraSound;
-
+    private Ringtone mScreenshotSound;
 
     /**
      * @param context everything needs a context :(
@@ -655,11 +664,14 @@ class GlobalScreenshot {
 
         // Inflate the screenshot layout
         mScreenshotLayout = layoutInflater.inflate(R.layout.global_screenshot, null);
+        mScreenshotButtonsLayout = mScreenshotLayout.findViewById(R.id.global_screenshot_buttons);
         mBackgroundView = (ImageView) mScreenshotLayout.findViewById(R.id.global_screenshot_background);
         mScreenshotView = (ImageView) mScreenshotLayout.findViewById(R.id.global_screenshot);
         mScreenshotFlash = (ImageView) mScreenshotLayout.findViewById(R.id.global_screenshot_flash);
         mScreenshotSelectorView = (ScreenshotSelectorView) mScreenshotLayout.findViewById(
                 R.id.global_screenshot_selector);
+        mCaptureButton = mScreenshotLayout.findViewById(R.id.global_screenshot_selector_capture);
+        mCancelButton = mScreenshotLayout.findViewById(R.id.global_screenshot_selector_cancel);
         mScreenshotLayout.setFocusable(true);
         mScreenshotSelectorView.setFocusable(true);
         mScreenshotSelectorView.setFocusableInTouchMode(true);
@@ -709,9 +721,9 @@ class GlobalScreenshot {
         mPreviewWidth = panelWidth;
         mPreviewHeight = r.getDimensionPixelSize(R.dimen.notification_max_height);
 
-        // Setup the Camera shutter sound
-        mCameraSound = new MediaActionSound();
-        mCameraSound.load(MediaActionSound.SHUTTER_CLICK);
+        // Setup the Screenshot sound
+        mScreenshotSound= RingtoneManager.getRingtone(mContext,
+                    Uri.parse("file://" + "/product/media/audio/ui/camera_click.ogg"));
     }
 
     /**
@@ -760,6 +772,11 @@ class GlobalScreenshot {
     }
 
     void takeScreenshot(Consumer<Uri> finisher, boolean statusBarVisible, boolean navBarVisible) {
+        if (mScreenshotLayout.getParent() != null) {
+            finisher.accept(null);
+            return;
+        }
+
         mDisplay.getRealMetrics(mDisplayMetrics);
         takeScreenshot(finisher, statusBarVisible, navBarVisible,
                 new Rect(0, 0, mDisplayMetrics.widthPixels, mDisplayMetrics.heightPixels));
@@ -770,46 +787,52 @@ class GlobalScreenshot {
      */
     void takeScreenshotPartial(final Consumer<Uri> finisher, final boolean statusBarVisible,
             final boolean navBarVisible) {
+        if (mScreenshotLayout.getParent() != null) {
+            finisher.accept(null);
+            return;
+        }
+
         mWindowManager.addView(mScreenshotLayout, mWindowLayoutParams);
-        mScreenshotSelectorView.setOnTouchListener(new View.OnTouchListener() {
+        aosipUtils.setPartialScreenshot(true);
+        mScreenshotSelectorView.setSelectionListener(
+                new ScreenshotSelectorView.OnSelectionListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                ScreenshotSelectorView view = (ScreenshotSelectorView) v;
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        view.startSelection((int) event.getX(), (int) event.getY());
-                        return true;
-                    case MotionEvent.ACTION_MOVE:
-                        view.updateSelection((int) event.getX(), (int) event.getY());
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        view.setVisibility(View.GONE);
-                        mWindowManager.removeView(mScreenshotLayout);
-                        final Rect rect = view.getSelectionRect();
-                        if (rect != null) {
-                            if (rect.width() != 0 && rect.height() != 0) {
-                                // Need mScreenshotLayout to handle it after the view disappears
-                                mScreenshotLayout.post(new Runnable() {
-                                    public void run() {
-                                        takeScreenshot(finisher, statusBarVisible, navBarVisible,
-                                                rect);
-                                    }
-                                });
-                            }
-                        }
-
-                        view.stopSelection();
-                        return true;
+            public void onSelectionChanged(Rect rect, boolean firstSelection) {
+                if (firstSelection) {
+                    mScreenshotLayout.post(() -> {
+                        mCaptureButton.setVisibility(View.VISIBLE);
+                    });
                 }
-
-                return false;
             }
         });
-        mScreenshotLayout.post(new Runnable() {
+        mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                mScreenshotSelectorView.setVisibility(View.VISIBLE);
-                mScreenshotSelectorView.requestFocus();
+            public void onClick(View v) {
+                mScreenshotLayout.post(() -> {
+                    finisher.accept(null);
+                    hideScreenshotSelector();
+                });
+            }
+        });
+        mCaptureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Rect rect = mScreenshotSelectorView.getSelectionRect();
+                LayoutTransition layoutTransition = mScreenshotButtonsLayout.getLayoutTransition();
+                layoutTransition.addTransitionListener(new TransitionListener() {
+                    @Override
+                    public void startTransition(LayoutTransition transition, ViewGroup container,
+                            View view, int transitionType) {
+                    }
+
+                    @Override
+                    public void endTransition(LayoutTransition transition, ViewGroup container,
+                            View view, int transitionType) {
+                        takeScreenshot(finisher, statusBarVisible, navBarVisible, rect);
+                        transition.removeTransitionListener(this);
+                    }
+                });
+                mScreenshotLayout.post(() -> hideScreenshotSelector());
             }
         });
         mScreenshotLayout.post(() -> {
@@ -819,9 +842,11 @@ class GlobalScreenshot {
     }
 
     void hideScreenshotSelector() {
+        aosipUtils.setPartialScreenshot(false);
         mWindowManager.removeView(mScreenshotLayout);
         mScreenshotSelectorView.stopSelection();
         mScreenshotSelectorView.setVisibility(View.GONE);
+        mCaptureButton.setVisibility(View.GONE);
     }
 
     /**
@@ -833,6 +858,8 @@ class GlobalScreenshot {
             mWindowManager.removeView(mScreenshotLayout);
             mScreenshotSelectorView.stopSelection();
         }
+        // called when unbinding screenshot service
+        aosipUtils.setPartialScreenshot(false);
     }
 
     /**
@@ -881,9 +908,10 @@ class GlobalScreenshot {
             @Override
             public void run() {
                 // Play the shutter sound to notify that we've taken a screenshot
-                if (Settings.System.getInt(mContext.getContentResolver(),
-                        Settings.System.SCREENSHOT_SOUND, 0) == 1) {
-                    mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
+                if (Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.SCREENSHOT_SOUND, 1, UserHandle.USER_CURRENT) == 1) {
+                    if (mScreenshotSound != null) {
+                        mScreenshotSound.play();
+                    }
                 }
 
                 mScreenshotView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
@@ -918,8 +946,9 @@ class GlobalScreenshot {
         };
 
         Resources r = mContext.getResources();
-        if ((r.getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
-                == Configuration.UI_MODE_NIGHT_YES) {
+        boolean isDarkMode = (r.getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
+                == Configuration.UI_MODE_NIGHT_YES;
+        if (isDarkMode) {
             mScreenshotView.getBackground().setTint(Color.BLACK);
         } else {
             mScreenshotView.getBackground().setTintList(null);
@@ -938,12 +967,16 @@ class GlobalScreenshot {
                 mScreenshotView.setScaleX(SCREENSHOT_SCALE + mBgPaddingScale);
                 mScreenshotView.setScaleY(SCREENSHOT_SCALE + mBgPaddingScale);
                 mScreenshotView.setVisibility(View.VISIBLE);
-                mScreenshotFlash.setAlpha(0f);
-                mScreenshotFlash.setVisibility(View.VISIBLE);
+                if (!isDarkMode) {
+                    mScreenshotFlash.setAlpha(0f);
+                    mScreenshotFlash.setVisibility(View.VISIBLE);
+                }
             }
             @Override
             public void onAnimationEnd(android.animation.Animator animation) {
-                mScreenshotFlash.setVisibility(View.GONE);
+                if (!isDarkMode) {
+                    mScreenshotFlash.setVisibility(View.GONE);
+                }
             }
         });
         anim.addUpdateListener(new AnimatorUpdateListener() {
@@ -957,7 +990,9 @@ class GlobalScreenshot {
                 mScreenshotView.setAlpha(t);
                 mScreenshotView.setScaleX(scaleT);
                 mScreenshotView.setScaleY(scaleT);
-                mScreenshotFlash.setAlpha(flashAlphaInterpolator.getInterpolation(t));
+                if (!isDarkMode) {
+                    mScreenshotFlash.setAlpha(flashAlphaInterpolator.getInterpolation(t));
+                }
             }
         });
         return anim;

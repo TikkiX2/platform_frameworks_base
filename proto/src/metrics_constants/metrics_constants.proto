@@ -7432,5 +7432,12 @@ message MetricsEvent {
 
     // OwlsNest
     OWLSNEST = 10001;
+
+    TILE_LOCATION_DETAIL = 2001;
+
+    // Panel for Mobile Data
+    PANEL_MOBILE_DATA = 2002;
+    // Panel for Bluetooth
+    PANEL_BLUETOOTH = 2003;
   }
 }
