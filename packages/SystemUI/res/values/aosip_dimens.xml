@@ -72,4 +72,10 @@
     <!-- The margin between clock and date in QS -->
     <dimen name="qs_clock_date_margin">3sp</dimen>
 
+    <!-- OmniWeather image size -->
+    <dimen name="current_weather_image_size">30dp</dimen>
+
+    <!-- Weather condition icon  -->
+    <dimen name="weather_icon_size">24dp</dimen>
+
 </resources>
