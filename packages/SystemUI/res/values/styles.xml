@@ -97,7 +97,7 @@
         <item name="android:textColor">@color/status_bar_clock_color</item>
     </style>
 
-    <style name="TextAppearance.QS.BigClock" parent="@*android:style/TextAppearance.StatusBar.Clock">
+    <style name="TextAppearance.QS.BigClock" parent="TextAppearance.StatusBar.Clock">
         <item name="android:textSize">@dimen/qs_big_clock_size</item>
         <item name="android:fontFamily">@*android:string/config_headlineFontFamilyMedium</item>
         <item name="android:minHeight">@dimen/min_qs_clock_container_size</item>
