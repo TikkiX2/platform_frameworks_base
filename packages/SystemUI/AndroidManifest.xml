@@ -734,13 +734,6 @@
                   android:enabled="false">
         </provider>
 
-        <provider android:name="com.google.android.systemui.keyguard.KeyguardSliceProviderGoogle"
-                  android:authorities="com.android.systemui.keyguard"
-                  android:grantUriPermissions="true"
-                  tools:replace="android:authorities"
-                  android:exported="true">
-        </provider>
-
 
         <!-- Provides list and realistic previews of clock faces for the picker app. -->
         <provider
