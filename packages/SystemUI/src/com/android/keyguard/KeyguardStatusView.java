@@ -967,11 +967,22 @@ public class KeyguardStatusView extends GridLayout implements
 
         if (mClockSelection >= 5 && mClockSelection <= 9)
             mDefaultClockView.setLineSpacing(0, 0.8f);
+            mDefaultClockView.setBackgroundResource(0);
+            mDefaultClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+            getResources().getDimensionPixelSize(R.dimen.widget_big_font_size));
+            mDefaultClockView.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
+            mDefaultClockView.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            mDefaultClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+            getResources().getDimensionPixelSize(R.dimen.widget_big_font_size));
+            mKeyguardSlice.setPadding(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
+    getResources().getDimensionPixelSize(R.dimen.widget_clock_normal_clock_padding),
+    getResources().getDisplayMetrics()),0,0);
 
         if (mClockSelection != 10 && mClockSelection != 11) {
             mTextClock.setVisibility(View.GONE);
             mSmallClockView.setVisibility(View.VISIBLE);
             params.addRule(RelativeLayout.BELOW, R.id.clock_view);
+            mDefaultClockView.setBackgroundResource(0);
         } else {
             mTextClock.setVisibility(View.VISIBLE);
             mSmallClockView.setVisibility(View.GONE);
@@ -1051,7 +1062,7 @@ public class KeyguardStatusView extends GridLayout implements
         getResources().getDisplayMetrics()),0,0
                 );
         }
-        
+
             final Resources res = getContext().getResources();
             mShowWeather = Settings.System.getIntForUser(resolver,
                     Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED, 0,
