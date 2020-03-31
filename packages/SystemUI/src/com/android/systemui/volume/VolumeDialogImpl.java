@@ -1212,6 +1212,21 @@ public class VolumeDialogImpl implements VolumeDialog,
         if (isActive) {
             row.slider.requestFocus();
         }
+        boolean useActiveColoring = isActive && row.slider.isEnabled();
+        final ColorStateList tint = useActiveColoring
+                ? Utils.getColorAccent(mContext)
+                : Utils.getColorAttr(mContext, android.R.attr.colorForeground);
+        final int alpha = useActiveColoring
+                ? Color.alpha(tint.getDefaultColor())
+                : getAlphaAttr(android.R.attr.secondaryContentAlpha);
+        final ColorStateList progressTint = useActiveColoring ? null : tint;
+        if (tint == row.cachedTint) return;
+        row.slider.setProgressTintList(progressTint);
+        row.slider.setThumbTintList(tint);
+        row.slider.setAlpha(((float) alpha) / 255);
+        row.icon.setImageTintList(tint);
+        row.icon.setImageAlpha(alpha);
+        row.cachedTint = tint;
     }
 
     private void updateVolumeRowSliderH(VolumeRow row, boolean enable, int vlevel, boolean maxChanged) {
