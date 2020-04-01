@@ -151,8 +151,8 @@ public class KeyguardSliceProvider extends SliceProvider implements
     private OmniJawsClient mWeatherClient;
     private OmniJawsClient.WeatherInfo mWeatherInfo;
     private OmniJawsClient.PackageInfo mPackageInfo;
-    private boolean mWeatherEnabled;
-    private boolean mShowWeatherSlice;
+    public boolean mWeatherEnabled;
+    public boolean mShowWeatherSlice;
 
     /**
      * Receiver responsible for time ticking and updating the date format.

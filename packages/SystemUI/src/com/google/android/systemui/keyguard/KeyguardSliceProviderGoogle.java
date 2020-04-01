@@ -39,7 +39,6 @@ public class KeyguardSliceProviderGoogle extends KeyguardSliceProvider implement
         private final float mBlurRadius;
         private final WeakReference<KeyguardSliceProviderGoogle> mProviderReference;
         private final SmartSpaceCard mWeatherCard;
-        private boolean mShowWeatherSlice;
 
         AddShadowTask(KeyguardSliceProviderGoogle keyguardSliceProviderGoogle, SmartSpaceCard smartSpaceCard) {
             mProviderReference = new WeakReference<>(keyguardSliceProviderGoogle);
@@ -158,10 +157,8 @@ public class KeyguardSliceProviderGoogle extends KeyguardSliceProvider implement
     }
 
     public void addWeatherGoogle(ListBuilder listBuilder) {
-        mContentResolver = getContext().getContentResolver();
-        mShowWeatherSlice = Settings.System.getIntForUser(mContentResolver, Settings.System.LOCKSCREEN_WEATHER_STYLE, 1, UserHandle.USER_CURRENT) != 0;
         SmartSpaceCard weatherCard = mSmartSpaceData.getWeatherCard();
-        if (weatherCard != null && !weatherCard.isExpired() || !mShowWeatherSlice) {
+        if (weatherCard != null && !weatherCard.isExpired() || !mWeatherEnabled || !mShowWeatherSlice) {
             RowBuilder rowBuilder = new RowBuilder(mWeatherUri);
             rowBuilder.setTitle(weatherCard.getTitle());
             Bitmap icon = weatherCard.getIcon();
