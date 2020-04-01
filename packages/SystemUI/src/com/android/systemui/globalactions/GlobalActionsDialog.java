@@ -278,6 +278,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         mRebootMenu = false;
         mCurrentMenuActions = mRootMenuActions;
         if (mDialog != null) {
+            mDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
             mDialog.dismiss();
             mDialog = null;
             // Show delayed, so that the dismiss of the previous dialog completes
@@ -321,7 +322,10 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             WindowManager.LayoutParams attrs = mDialog.getWindow().getAttributes();
             attrs.setTitle("ActionsDialog");
             attrs.layoutInDisplayCutoutMode = LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
+            attrs.alpha = setPowerMenuAlpha();
             mDialog.getWindow().setAttributes(attrs);
+            mDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            mDialog.getWindow().setDimAmount(setPowerMenuDialogDim());
             mDialog.show();
             mWindowManagerFuncs.onGlobalActionsShown();
         }
@@ -336,6 +340,22 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         } else {
             mRootMenuActions = mDefaultMenuActions;
         }
+    }
+
+    private float setPowerMenuAlpha() {
+        int mPowerMenuAlpha = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.TRANSPARENT_POWER_MENU, 100);
+        double dAlpha = mPowerMenuAlpha / 100.0;
+        float alpha = (float) dAlpha;
+        return alpha;
+    }
+
+    private float setPowerMenuDialogDim() {
+        int mPowerMenuDialogDim = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.TRANSPARENT_POWER_DIALOG_DIM, 50);
+        double dDim = mPowerMenuDialogDim / 100.0;
+        float dim = (float) dDim;
+        return dim;
     }
 
     private boolean advancedRebootEnabled(Context context) {
@@ -556,7 +576,10 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                                 new GlobalActionsPanelPlugin.Callbacks() {
                                     @Override
                                     public void dismissGlobalActionsMenu() {
-                                        dismissDialog();
+                                        if (mDialog != null) {
+                                            mDialog.dismiss();
+					    mDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                                        }
                                     }
 
                                     @Override
@@ -1843,6 +1866,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                         if (SYSTEM_DIALOG_REASON_DREAM.equals(msg.obj)) {
                             mDialog.dismissImmediately();
                         } else {
+                            mDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
                             mDialog.dismiss();
                         }
                         mDialog = null;
