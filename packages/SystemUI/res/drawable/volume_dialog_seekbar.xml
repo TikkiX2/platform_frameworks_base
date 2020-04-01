@@ -35,9 +35,9 @@
                         <size android:height="@dimen/custom_volume_dialog_seekbar_width" />
                         <solid android:color="?android:attr/colorAccent" />
                         <gradient
-                            android:startColor="@color/gradient_start"
-                            android:endColor="@color/gradient_end"
-                            android:angle="45"/>
+                            android:startColor="@*android:color/gradient_start"
+                            android:endColor="@*android:color/gradient_end"
+                            android:angle="45" />
                     </shape>
                 </item>
             </selector>
