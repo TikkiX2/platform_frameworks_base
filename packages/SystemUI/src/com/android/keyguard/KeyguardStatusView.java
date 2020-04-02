@@ -997,12 +997,8 @@ public class KeyguardStatusView extends GridLayout implements
         if (mClockSelection >= 5 && mClockSelection <= 9)
             mDefaultClockView.setLineSpacing(0, 0.8f);
             mDefaultClockView.setBackgroundResource(0);
-            mDefaultClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-            getResources().getDimensionPixelSize(R.dimen.widget_big_font_size));
             mDefaultClockView.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
             mDefaultClockView.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            mDefaultClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-            getResources().getDimensionPixelSize(R.dimen.widget_big_font_size));
             mKeyguardSlice.setPadding(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
     getResources().getDimensionPixelSize(R.dimen.widget_clock_normal_clock_padding),
     getResources().getDisplayMetrics()),0,0);
@@ -1023,32 +1019,24 @@ public class KeyguardStatusView extends GridLayout implements
                 mDefaultClockView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
                 mDefaultClockView.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
                 mDefaultClockView.setPadding(20,20,20,20);
-                mDefaultClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.widget_shishu_accent_font_size));
                 mDefaultClockView.setLineSpacing(0,1f);
         } else if (mClockSelection == 13) {
                 mDefaultClockView.setBackground(getResources().getDrawable(R.drawable.clock_shishu_diamondbg));
                 mDefaultClockView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
                 mDefaultClockView.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
                 mDefaultClockView.setLineSpacing(0,1f);
-                mDefaultClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.widget_shishu_inmensity_font_size));
                 mDefaultClockView.setPadding(20,20,20,20);
         } else if (mClockSelection == 14) {
                 mDefaultClockView.setBackground(getResources().getDrawable(R.drawable.clock_shishu_nerves_bg));
                 mDefaultClockView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_nerves_width);
                 mDefaultClockView.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_nerves_height);
                 mDefaultClockView.setLineSpacing(0,1f);
-                mDefaultClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_nerves_font_size));
                 mDefaultClockView.setPadding(0,20,0,20);
         } else if (mClockSelection == 15) {
                 mDefaultClockView.setBackground(getResources().getDrawable(R.drawable.clock_bootleg_gradient));
                 mDefaultClockView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
                 mDefaultClockView.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
                 mDefaultClockView.setLineSpacing(0,1f);
-                mDefaultClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.widget_shishu_accent_font_size));
                 mDefaultClockView.setPadding(0,20,0,20);
                 mKeyguardSlice.setPadding(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
         getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_date_padding),
@@ -1059,8 +1047,6 @@ public class KeyguardStatusView extends GridLayout implements
                 mDefaultClockView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
                 mDefaultClockView.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
                 mDefaultClockView.setLineSpacing(0,1f);
-                mDefaultClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.widget_shishu_accent_font_size));
                 mDefaultClockView.setPadding(0,20,0,20);
                 mKeyguardSlice.setPadding(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
         getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_date_padding),
@@ -1071,8 +1057,6 @@ public class KeyguardStatusView extends GridLayout implements
                 mDefaultClockView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
                 mDefaultClockView.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
                 mDefaultClockView.setLineSpacing(0,1f);
-                mDefaultClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_nerves_font_size));
                 mDefaultClockView.setPadding(0,20,0,20);
                 mKeyguardSlice.setPadding(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
         getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_date_padding),
@@ -1083,8 +1067,6 @@ public class KeyguardStatusView extends GridLayout implements
                 mDefaultClockView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
                 mDefaultClockView.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
                 mDefaultClockView.setLineSpacing(0,1f);
-                mDefaultClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_nerves_font_size));
                 mDefaultClockView.setPadding(0,20,0,20);
                 mKeyguardSlice.setPadding(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
         getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_date_padding),
