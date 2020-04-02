@@ -158,7 +158,7 @@ public class KeyguardSliceProviderGoogle extends KeyguardSliceProvider implement
 
     public void addWeatherGoogle(ListBuilder listBuilder) {
         SmartSpaceCard weatherCard = mSmartSpaceData.getWeatherCard();
-        if (!mWeatherEnabled || mShowWeatherSlice) {
+        if (!mWeatherEnabled || !mShowWeatherSlice) {
             return;
         }
         if (weatherCard != null && !weatherCard.isExpired()) {
