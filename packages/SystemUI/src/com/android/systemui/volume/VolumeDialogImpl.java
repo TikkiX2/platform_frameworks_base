@@ -1223,7 +1223,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         if (tint == row.cachedTint) return;
         //row.slider.setProgressTintList(progressTint);
         row.slider.setThumbTintList(tint);
-        row.slider.setAlpha(((float) alpha) / 255)
+        row.slider.setAlpha(((float) alpha) / 255);
         row.icon.setImageAlpha(alpha);
         row.cachedTint = tint;
     }
