@@ -181,4 +181,15 @@
         android:layout_gravity="center_horizontal|bottom"
         android:background="@drawable/qs_footer_drag_handle" />
 
+    <TextView
+        android:id="@+id/footer_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:gravity="center_vertical|center_horizontal|center"
+        android:focusable="true"
+        android:textAppearance="@style/TextAppearance.QS.Status"
+        android:textColor="?android:attr/textColorSecondary"
+        android:visibility="gone"/>
+
 </com.android.systemui.qs.QSFooterImpl>
