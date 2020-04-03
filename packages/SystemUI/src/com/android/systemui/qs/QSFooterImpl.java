@@ -25,6 +25,9 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.graphics.PorterDuff.Mode;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
+import android.graphics.Shader.TileMode;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.net.Uri;
@@ -101,6 +104,8 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     private View mActionsContainer;
     private View mDragHandle;
 
+    private TextView mFooterText;
+
     private OnClickListener mExpandClickListener;
 
     private final ContentObserver mSettingsObserver = new ContentObserver(
@@ -158,6 +163,10 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mActionsContainer = findViewById(R.id.qs_footer_actions_container);
         mEditContainer = findViewById(R.id.qs_footer_actions_edit_container);
 
+        //qs footer text by.tikkiX2
+
+        mFooterText = findViewById(R.id.footer_text);
+
         // RenderThread is doing more harm than good when touching the header (to expand quick
         // settings), so disable it for this view
         ((RippleDrawable) mSettingsButton.getBackground()).setForceSoftware(true);
@@ -170,9 +179,40 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
         updateEverything();
         setBuildText();
+        setFooterText();
         setDragHandle();
         setSettingsIcon();
         updateResources();
+    }
+
+    private void setFooterText() {
+
+      boolean isShow = Settings.System.getIntForUser(mContext.getContentResolver(),
+                      Settings.System.TIKKIUI_FOOTER_TEXT_SHOW, 1,
+                      UserHandle.USER_CURRENT) == 1;
+
+      String text = Settings.System.getStringForUser(mContext.getContentResolver(),
+                      Settings.System.TIKKIUI_FOOTER_TEXT_STRING,
+                      UserHandle.USER_CURRENT);
+
+
+      mFooterText.getPaint().setShader(new LinearGradient(0, 0, mFooterText.getWidth(), mFooterText.getHeight(),
+                      mContext.getResources().getColor(com.android.internal.R.color.gradient_start),
+                      mContext.getResources().getColor(com.android.internal.R.color.gradient_end),
+                      Shader.TileMode.CLAMP));
+
+      if (isShow) {
+          if (text == null || text == "") {
+              mFooterText.setText("#Derpfest TikkiBuild");
+              mFooterText.setVisibility(View.VISIBLE);
+          } else {
+              mFooterText.setText(text);
+              mFooterText.setVisibility(View.VISIBLE);
+          }
+      } else {
+            mFooterText.setVisibility(View.GONE);
+      }
+
     }
 
     private void setBuildText() {
@@ -263,6 +303,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                 .addFloat(mActionsContainer, "alpha", 0, 1) // contains mRunningServicesButton
                 .addFloat(mEditContainer, "alpha", 0, 1)
                 .addFloat(mDragHandle, "alpha", 1, 0, 0)
+                .addFloat(mFooterText, "alpha", 1, 0, 0)
                 .addFloat(mPageIndicator, "alpha", 0, 1)
                 .setStartDelay(0.15f)
                 .build();
@@ -272,6 +313,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                 .addFloat(mActionsContainer, "alpha", 1, 1)
                 .addFloat(mEditContainer, "alpha", 0, 1)
                 .addFloat(mDragHandle, "alpha", 1, 0, 0)
+                .addFloat(mFooterText, "alpha", 1, 0, 0)
                 .addFloat(mPageIndicator, "alpha", 0, 1)
                 .setStartDelay(0.15f)
                 .build();
@@ -322,6 +364,14 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
         mContext.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.QS_ALWAYS_SHOW_SETTINGS), false,
+                mSettingsObserver, UserHandle.USER_ALL);
+
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.TIKKIUI_FOOTER_TEXT_SHOW), false,
+                mSettingsObserver, UserHandle.USER_ALL);
+
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.TIKKIUI_FOOTER_TEXT_STRING), false,
                 mSettingsObserver, UserHandle.USER_ALL);
     }
 

@@ -6405,6 +6405,24 @@ public final class Settings {
                new SettingsValidators.InclusiveIntegerRangeValidator(0, 100);
 
         /**
+         * Whether footer #DerpFest TikkiBuild text shows
+         * @hide
+         */
+        public static final String TIKKIUI_FOOTER_TEXT_SHOW = "tikkiui_footer_text_show";
+        /** @hide */
+        private static final Validator TIKKIUI_FOOTER_TEXT_SHOW_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * QS footer text
+         * @hide
+         */
+        public static final String TIKKIUI_FOOTER_TEXT_STRING = "tikkiui_footer_text_string";
+        /** @hide */
+        public static final Validator TIKKIUI_FOOTER_TEXT_STRING_VALIDATOR =
+                ANY_STRING_VALIDATOR;
+
+        /**
          * Color of the weather condition icons on the lock screen
          * @hide
          */
