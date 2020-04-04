@@ -96,7 +96,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/qs_header_tooltip_height"
             android:orientation="horizontal">
 
         <com.android.systemui.statusbar.policy.NetworkTraffic
