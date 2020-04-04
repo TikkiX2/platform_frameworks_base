@@ -49,7 +49,9 @@ import android.view.ContextThemeWrapper;
 import android.view.DisplayCutout;
 import android.view.View;
 import android.view.WindowInsets;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -123,6 +125,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private View mSystemIconsView;
     private View mQuickQsStatusIcons;
     private View mHeaderTextContainerView;
+
+    private LinearLayout mClockDateContainer, mStatusIconsContainer;
 
     private int mRingerMode = AudioManager.RINGER_MODE_NORMAL;
     private AlarmManager.AlarmClockInfo mNextAlarm;
@@ -231,6 +235,21 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mHeaderQsPanel = findViewById(R.id.quick_qs_panel);
         mSystemIconsView = findViewById(R.id.quick_status_bar_system_icons);
         mQuickQsStatusIcons = findViewById(R.id.quick_qs_status_icons);
+
+        mClockDateContainer = findViewById(R.id.clock_date_container);
+        mStatusIconsContainer = findViewById(R.id.status_icons_container);
+        // Make mStatusIconsContainer the same height of mClockDateContainer
+        mClockDateContainer.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mClockDateContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)
+                        mStatusIconsContainer.getLayoutParams();
+                lp.height = mClockDateContainer.getHeight();
+                mStatusIconsContainer.setLayoutParams(lp);
+            }
+        });
+
         StatusIconContainer iconContainer = findViewById(R.id.statusIcons);
         iconContainer.setShouldRestrictIcons(false);
         mIconManager = new TintedIconManager(iconContainer);

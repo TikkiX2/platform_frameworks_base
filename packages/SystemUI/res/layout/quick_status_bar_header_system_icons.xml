@@ -28,30 +28,36 @@
     android:background="@android:color/transparent" >
 
     <LinearLayout
+        android:id="@+id/clock_date_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|start"
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
-    <com.android.systemui.statusbar.policy.Clock
-        android:id="@+id/clock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="66dp"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.StatusBar.BigClock"
-        systemui:showDark="false" />
+            <com.android.systemui.statusbar.policy.Clock
+                android:id="@+id/clock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48dp"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.QS.BigClock"
+                systemui:showDark="false" />
 
-    <com.android.systemui.statusbar.policy.DateView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start|bottom"
-        android:gravity="center_vertical"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.StatusBar.Clock"
-        systemui:datePattern="@string/abbrev_wday_month_day_no_year_alarm" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qs_clock_date_margin">
+
+            <com.android.systemui.statusbar.policy.DateView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.QS.Clock"
+                systemui:datePattern="@string/abbrev_wday_month_day_no_year_alarm" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -70,20 +76,16 @@
         android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/status_icons_container"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="horizontal">
 
-    <com.android.systemui.statusbar.policy.NetworkTraffic
-        android:id="@+id/networkTraffic"
-        android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
-        android:layout_width="wrap_content"
+    <com.android.systemui.statusbar.phone.StatusIconContainer
+        android:id="@+id/statusIcons"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="2dp"
-        android:singleLine="false"
-        android:lineSpacingMultiplier="1.2"
-        systemui:showDark="false"/>
+        android:layout_weight="1" />
 
     <com.android.systemui.BatteryMeterView
         android:id="@+id/battery"
@@ -94,15 +96,19 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/qs_header_tooltip_height"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-        <com.android.systemui.statusbar.phone.StatusIconContainer
-            android:id="@+id/statusIcons"
-            android:layout_width="0dp"
+        <com.android.systemui.statusbar.policy.NetworkTraffic
+            android:id="@+id/networkTraffic"
+            android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:paddingEnd="@dimen/signal_cluster_battery_padding" />
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:singleLine="false"
+            android:lineSpacingMultiplier="1.2"
+            systemui:showDark="false"/>
 
         </LinearLayout>
 
