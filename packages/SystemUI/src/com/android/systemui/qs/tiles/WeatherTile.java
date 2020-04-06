@@ -194,14 +194,14 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
         if (DEBUG) Log.d(TAG, "getLongClickIntent");
         PackageManager pm = mContext.getPackageManager();
         for (String app: ALTERNATIVE_WEATHER_APPS) {
-            if (aosipUtils.isPackageAvailable(app, mContext)) {
+            if (aosipUtils.isPackageInstalled(mContext, app)) {
                 Intent intent = pm.getLaunchIntentForPackage(app);
                 if (intent != null) {
                     return intent;
                 }
             }
         }
-        if (aosipUtils.isPackageAvailable("com.google.android.googlequicksearchbox", mContext)) {
+        if (aosipUtils.isPackageInstalled(mContext, "com.google.android.googlequicksearchbox")) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse("dynact://velour/weather/ProxyActivity"));
             intent.setComponent(new ComponentName("com.google.android.googlequicksearchbox",
