@@ -196,7 +196,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                       UserHandle.USER_CURRENT);
 
 
-      mFooterText.getPaint().setShader(new LinearGradient(0, 0, getWidth(), getHeight(),
+      mFooterText.getPaint().setShader(new LinearGradient(0, getHeight(), getWidth(), 0,
                       mContext.getResources().getColor(com.android.internal.R.color.gradient_start),
                       mContext.getResources().getColor(com.android.internal.R.color.gradient_end),
                       Shader.TileMode.CLAMP));
