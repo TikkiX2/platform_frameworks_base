@@ -62,6 +62,15 @@
              />
     </FrameLayout>
 
+    <View
+        android:id="@+id/cool_divider"
+        android:layout_width="38dp"
+        android:layout_height="6dp"
+        android:layout_gravity="center_horizontal|center"
+        android:layout_marginTop="@dimen/date_owner_info_margin"
+        android:layout_marginBottom="@dimen/date_owner_info_margin"
+        android:background="@drawable/cool_divider" />
+
     <include layout="@layout/current_weather_view"
         android:id="@+id/weather_container"
         android:layout_width="wrap_content"
