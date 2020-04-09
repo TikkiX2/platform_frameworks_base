@@ -109,6 +109,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     private TextView mFooterText;
     private MediaMetadata mMediaMetaData;
+    private String mInfo;
 
     private OnClickListener mExpandClickListener;
 
@@ -212,9 +213,9 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
 
       if (mMediaMetaData != null) {
-          CharSequence artist = mediaMetaData.getText(MediaMetadata.METADATA_KEY_ARTIST);
-          CharSequence title = mediaMetaData.getText(MediaMetadata.METADATA_KEY_TITLE);
-          String mInfo = artist.toString() + " - " + title.toString();
+          CharSequence artist = mMediaMetaData.getText(MediaMetadata.METADATA_KEY_ARTIST);
+          CharSequence title = mMediaMetaData.getText(MediaMetadata.METADATA_KEY_TITLE);
+          mInfo = artist.toString() + " - " + title.toString();
       }
       if (isShow) {
           if (text == null || text == "") {
@@ -336,7 +337,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                 .setStartDelay(0.15f)
                 .build();
       }
-      setFooterText();
     }
 
     @Override
