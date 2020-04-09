@@ -30,6 +30,7 @@ import android.graphics.Shader;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
+import android.media.MediaMetadata;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,6 +38,8 @@ import android.os.Handler;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
+import android.text.TextUtils;
+import android.text.TextUtils.TruncateAt;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -105,6 +108,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     private View mDragHandle;
 
     private TextView mFooterText;
+    private MediaMetadata mMediaMetaData;
 
     private OnClickListener mExpandClickListener;
 
@@ -114,6 +118,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         public void onChange(boolean selfChange, Uri uri) {
             super.onChange(selfChange, uri);
             setBuildText();
+            setFooterText();
             setDragHandle();
             setSettingsIcon();
             updateResources();
@@ -191,6 +196,10 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                       Settings.System.TIKKIUI_FOOTER_TEXT_SHOW, 1,
                       UserHandle.USER_CURRENT) == 1;
 
+      boolean musicalize = Settings.System.getIntForUser(mContext.getContentResolver(),
+                      Settings.System.TIKKIUI_FOOTER_TEXT_MUSICALIZE, 1,
+                      UserHandle.USER_CURRENT) == 1;
+
       String text = Settings.System.getStringForUser(mContext.getContentResolver(),
                       Settings.System.TIKKIUI_FOOTER_TEXT_STRING,
                       UserHandle.USER_CURRENT);
@@ -201,9 +210,18 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                       mContext.getResources().getColor(com.android.internal.R.color.gradient_end),
                       Shader.TileMode.REPEAT));
 
+
+      if (mMediaMetaData != null) {
+          CharSequence artist = mediaMetaData.getText(MediaMetadata.METADATA_KEY_ARTIST);
+          CharSequence title = mediaMetaData.getText(MediaMetadata.METADATA_KEY_TITLE);
+          String mInfo = artist.toString() + " - " + title.toString();
+
       if (isShow) {
           if (text == null || text == "") {
               mFooterText.setText("#Derpfest TikkiBuild");
+              mFooterText.setVisibility(View.VISIBLE);
+          } else if (musicalize) {
+              mFooterText.setText(mInfo);
               mFooterText.setVisibility(View.VISIBLE);
           } else {
               mFooterText.setText(text);
@@ -318,6 +336,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                 .setStartDelay(0.15f)
                 .build();
       }
+      setFooterText();
     }
 
     @Override
@@ -442,6 +461,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         else
           mSettingsButton.setVisibility(View.VISIBLE);
         mRunningServicesButton.setVisibility(isRunningServicesEnabled() ? !isDemo && mExpanded ? View.VISIBLE : View.INVISIBLE : View.GONE);
+        setFooterText();
     }
 
     private boolean showUserSwitcher() {

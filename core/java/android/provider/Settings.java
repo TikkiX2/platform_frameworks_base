@@ -6367,6 +6367,15 @@ public final class Settings {
                 ANY_STRING_VALIDATOR;
 
         /**
+         * Musicalize QS footer text?
+         * @hide
+         */
+        public static final String TIKKIUI_FOOTER_TEXT_MUSICALIZE = "tikkiui_footer_text_musicalize";
+        /** @hide */
+        public static final Validator TIKKIUI_FOOTER_TEXT_MUSICALIZE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Color of the weather condition icons on the lock screen
          * @hide
          */
