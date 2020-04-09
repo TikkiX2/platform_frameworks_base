@@ -6375,6 +6375,16 @@ public final class Settings {
         public static final Validator TIKKIUI_FOOTER_TEXT_MUSICALIZE_VALIDATOR =
                 BOOLEAN_VALIDATOR;
 
+         /**
+          * Whether cool divider in lockscreen shows
+          * by.tikkiX2
+          * @hide
+          */
+         public static final String TIKKIUI_LOCK_COOL_DIVIDER_SHOW = "tikkiui_lock_cool_divider_show";
+         /** @hide */
+         private static final Validator TIKKIUI_LOCK_COOL_DIVIDER_SHOW_VALIDATOR =
+                 BOOLEAN_VALIDATOR;
+
         /**
          * Color of the weather condition icons on the lock screen
          * @hide
