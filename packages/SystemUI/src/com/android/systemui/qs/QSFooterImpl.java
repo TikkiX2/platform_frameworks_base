@@ -215,7 +215,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
           CharSequence artist = mediaMetaData.getText(MediaMetadata.METADATA_KEY_ARTIST);
           CharSequence title = mediaMetaData.getText(MediaMetadata.METADATA_KEY_TITLE);
           String mInfo = artist.toString() + " - " + title.toString();
-
+      }
       if (isShow) {
           if (text == null || text == "") {
               mFooterText.setText("#Derpfest TikkiBuild");
