@@ -188,7 +188,7 @@
         android:clickable="true"
         android:layout_gravity="center_horizontal|top"
         android:focusable="true"
-        android:textAppearance="@style/TextAppearance.QS.BigClock"
+        android:textAppearance="@style/TextAppearance.QS.Status"
         android:visibility="gone"/>
 
 </com.android.systemui.qs.QSFooterImpl>
