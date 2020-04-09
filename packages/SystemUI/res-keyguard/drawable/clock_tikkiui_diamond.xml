@@ -5,7 +5,7 @@
     <item>
         <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
             android:gravity="fill"
-            android:alpha="0.40"
+            android:alpha="0.80"
             android:tint="@color/clock_gradient_general_gradient_start"
             android:src="@*android:drawable/tikkiui_diamond_clock_bg" />
     </item>
