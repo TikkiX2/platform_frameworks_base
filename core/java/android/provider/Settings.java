@@ -103,6 +103,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Set;
 
 /**
@@ -5360,6 +5362,28 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * Color to change battery precentage text when charging
+         * @hide
+         */
+        public static final String STATUS_BAR_BATTERY_TEXT_CHARGING_COLOR = "status_bar_battery_text_charging_color";
+        /** @hide */
+        private static final Validator STATUS_BAR_BATTERY_TEXT_CHARGING_COLOR_VALIDATOR =
+                new Validator() {
+                    @Override
+                    public boolean validate(@Nullable String value) {
+                        // Validate that the color value is valid
+                        try {
+                            final String HEX_PATTERN = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
+                            Pattern pat = Pattern.compile(HEX_PATTERN);
+                            Matcher match = pat.matcher(value);
+                            return match.matches();
+                        } catch (Exception e) {
+                            return false;
+                        }
+                    }
+                };
+
+        /**
          * Disable dashboard conditions in settings
          * @hide
          */
@@ -6387,6 +6411,7 @@ public final class Settings {
             STATUS_BAR_BATTERY_STYLE,
             STATUS_BAR_SHOW_BATTERY_PERCENT,
             STATUS_BAR_BATTERY_TEXT_CHARGING,
+            STATUS_BAR_BATTERY_TEXT_CHARGING_COLOR,
             STATUS_BAR_LOGO,
             STATUS_BAR_LOGO_STYLE,
             STATUS_BAR_SHOW_CARRIER,
@@ -6876,6 +6901,7 @@ public final class Settings {
             VALIDATORS.put(STATUS_BAR_QUICK_QS_PULLDOWN, STATUS_BAR_QUICK_QS_PULLDOWN_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_BATTERY_STYLE, STATUS_BAR_BATTERY_STYLE_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_BATTERY_TEXT_CHARGING, STATUS_BAR_BATTERY_TEXT_CHARGING_VALIDATOR);
+            VALIDATORS.put(STATUS_BAR_BATTERY_TEXT_CHARGING_COLOR, STATUS_BAR_BATTERY_TEXT_CHARGING_COLOR_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_LOGO, STATUS_BAR_LOGO_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_LOGO_STYLE, STATUS_BAR_LOGO_STYLE_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_SHOW_CARRIER, STATUS_BAR_SHOW_CARRIER_VALIDATOR);

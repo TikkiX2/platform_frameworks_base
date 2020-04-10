@@ -37,6 +37,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.ContentObserver;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Handler;
@@ -106,6 +107,7 @@ public class BatteryMeterView extends LinearLayout implements
     private boolean mCharging;
     private int mBatteryStyle;
     private int mShowBatteryPercent;
+    private int mChargingColor;
     private boolean mBatteryPercentCharging;
     private final Handler mHandler = new Handler();
 
@@ -137,7 +139,10 @@ public class BatteryMeterView extends LinearLayout implements
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.STATUS_BAR_BATTERY_TEXT_CHARGING), false,
                     this, UserHandle.USER_ALL);
-            }
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.STATUS_BAR_BATTERY_TEXT_CHARGING_COLOR), false,
+                    this, UserHandle.USER_ALL);
+        }
 
         @Override
         public void onChange(boolean selfChange) {
@@ -323,8 +328,19 @@ public class BatteryMeterView extends LinearLayout implements
     }
 
     private void updateSBBarBatteryStyle() {
+        String hexColor = Settings.System.getString(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_BATTERY_TEXT_CHARGING_COLOR);
+        if (hexColor != null) {
+            try {
+                mChargingColor = Color.parseColor("#" + hexColor);
+            } catch (Exception e) {
+                mChargingColor = Color.WHITE;
+            }
+        } else {
+            mChargingColor = Color.WHITE;
+        }
         mBatteryStyle = Settings.System.getInt(mContext.getContentResolver(),
-        Settings.System.STATUS_BAR_BATTERY_STYLE, 0);
+                Settings.System.STATUS_BAR_BATTERY_STYLE, 0);
         updateBatteryStyle();
         updatePercentView();
         updateVisibility();
@@ -332,7 +348,7 @@ public class BatteryMeterView extends LinearLayout implements
 
     private void updateSBBarShowBatteryPercent() {
         mShowBatteryPercent = Settings.System.getInt(mContext.getContentResolver(),
-        Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, 0);
+                Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, 0);
         updatePercentView();
     }
 
@@ -346,7 +362,7 @@ public class BatteryMeterView extends LinearLayout implements
 
     private void updateSBBarBatteryTextCharging() {
         mBatteryPercentCharging = Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.STATUS_BAR_BATTERY_TEXT_CHARGING, 0) == 1;
+                Settings.System.STATUS_BAR_BATTERY_TEXT_CHARGING, 0) == 1;
         updatePercentView();
     }
 
@@ -423,6 +439,7 @@ public class BatteryMeterView extends LinearLayout implements
         }
 
         if (mBatteryPercentView != null) {
+            mBatteryPercentView.setTextColor(mCharging ? mChargingColor : Color.WHITE);
             if (mShowPercentMode == MODE_ESTIMATE && !mCharging) {
                 mBatteryController.getEstimatedTimeRemainingString((String estimate) -> {
                     if (estimate != null) {
