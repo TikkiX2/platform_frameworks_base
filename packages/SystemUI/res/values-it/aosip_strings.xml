@@ -19,29 +19,29 @@
     <!-- DerpQuest Settings Tile -->
     <string name="quick_settings_derp_label">DerpQuest</string>
 
-    <string name="statusbar_items_title">Statusbar icon</string>
+    <string name="statusbar_items_title">Icona barra di stato</string>
     <string name="lockscreen_default">Default</string>
-    <string name="lockscreen_hidden">None</string>
+    <string name="lockscreen_hidden">Nessuna</string>
 
     <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
-    <string name="custom_hint">Swipe from icon to launch</string>
+    <string name="custom_hint">Swipe sull\'icona per avviare</string>
 
     <!-- Power Menu -->
-    <string name="global_action_reboot">Restart</string>
-    <string name="global_action_reboot_more">Restart\u2026</string>
+    <string name="global_action_reboot">Riavvia</string>
+    <string name="global_action_reboot_more">Riavvia\u2026</string>
     <string name="global_action_reboot_sub">System</string>
     <string name="global_action_reboot_recovery">Recovery</string>
     <string name="global_action_reboot_bootloader">Bootloader</string>
-    <string name="global_action_dismissable_dialog_text">Advanced restart is disabled.\nDo you want to restart\u003f</string>
-    <string name="global_action_dnaa">Do not show again</string>
-    <string name="global_action_settings">Settings</string>
+    <string name="global_action_dismissable_dialog_text">Riavvio avanzato disabilitato.\nVuoi riavviare\u003f</string>
+    <string name="global_action_dnaa">Non mostrare ancora</string>
+    <string name="global_action_settings">Impostazioni</string>
     <string name="global_action_restart_sysui">SystemUI</string>
 
     <!-- QS Config -->
-    <string name="qs_menu_item_columns">Columns</string>
-    <string name="qs_menu_item_columns_landscape">Columns landscape</string>
-    <string name="qs_menu_item_rows">Rows</string>
-    <string name="qs_menu_item_rows_landscape">Rows landscape</string>
+    <string name="qs_menu_item_columns">Colonne</string>
+    <string name="qs_menu_item_columns_landscape">Colonne orizzontali</string>
+    <string name="qs_menu_item_rows">Righe</string>
+    <string name="qs_menu_item_rows_landscape">Righe orizzontali</string>
     <string name="qs_menu_item_columns_one">1</string>
     <string name="qs_menu_item_columns_two">2</string>
     <string name="qs_menu_item_columns_three">3</string>
@@ -52,10 +52,10 @@
     <string name="qs_menu_item_columns_eight">8</string>
     <string name="qs_menu_item_columns_nine">9</string>
     <string name="qs_menu_item_reset">Reset</string>
-    <string name="qs_menu_item_titles">Show labels</string>
-    <string name="qs_menu_item_qs_columns">Quickbar columns</string>
-    <string name="qs_menu_item_columns_auto">Automatic</string>
-    <string name="qs_footer_text">Footer text</string>
+    <string name="qs_menu_item_titles">Mostra etichette</string>
+    <string name="qs_menu_item_qs_columns">Colonne Quickbar</string>
+    <string name="qs_menu_item_columns_auto">Automatico</string>
+    <string name="qs_footer_text">Testo piè di pagina</string>
 
     <!-- LTE QS Tile -->
     <string name="qs_lte_label">LTE</string>
@@ -63,10 +63,10 @@
     <string name="lte_off">LTE OFF</string>
 
     <!-- Sound QS Tile -->
-    <string name="quick_settings_sound_label">Sound</string>
-    <string name="quick_settings_sound_ring">Ring</string>
-    <string name="quick_settings_sound_vibrate">Vibrate</string>
-    <string name="quick_settings_sound_dnd">Do not disturb</string>
+    <string name="quick_settings_sound_label">Suono</string>
+    <string name="quick_settings_sound_ring">Suoneria</string>
+    <string name="quick_settings_sound_vibrate">Vibrazione</string>
+    <string name="quick_settings_sound_dnd">Non disturbare</string>
 
     <!-- Caffeine QS tile -->
     <string name="quick_settings_caffeine_label">Caffeine</string>
@@ -77,8 +77,8 @@
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">Screenshot</string>
     <string name="quick_settings_full_screenshot_label">Full</string>
-    <string name="quick_settings_region_screenshot_label">Partial</string>
-    <string name="delete_screenshot_toast">Screenshot deleted</string>
+    <string name="quick_settings_region_screenshot_label">Parziale</string>
+    <string name="delete_screenshot_toast">Screenshot eliminato</string>
 
     <!-- HW Keys Tile -->
     <string name="accessibility_quick_settings_hwkeys_on">HW keys on</string>
@@ -90,8 +90,8 @@
     <string name="global_action_screenrecord">Screenrecord</string>
 
     <!-- 4G LTE switch -->
-    <string name="show_fourg_title">Show 4G instead of LTE</string>
-    <string name="show_fourg_summary">Replaces LTE statusbar indicators with 4G</string>
+    <string name="show_fourg_title">Mostra 4G invece di LTE</string>
+    <string name="show_fourg_summary">Sostiuisci indicatore LTE nella barra di stato con 4G</string>
 
     <!-- Old MobileType style switch -->
     <string name="use_old_mobiletype_title">Use old mobile type style</string>
@@ -110,8 +110,8 @@
     <string name="status_bar_roaming">Roaming</string>
 
     <!-- Language toggle tile -->
-    <string name="quick_settings_locale_label">Language</string>
-    <string name="quick_settings_locale_more_locales_toast">Please configure multiple languages to enable toggle functionality</string>
+    <string name="quick_settings_locale_label">Lingua</string>
+    <string name="quick_settings_locale_more_locales_toast">Abilita più di una lingua per abilitare la funzionalità di toggle</string>
 
     <!-- Data disabled icon -->
     <string name="data_disabled_icon_title">Data disabled icon</string>
@@ -142,13 +142,13 @@
     <string name="quick_settings_sound_search_no_app">Sorry, but this doesn\'t work if you don\'t have a Sound search app.</string>
 
     <!-- Compass QS Tile -->
-    <string name="quick_settings_compass_label">Compass</string>
+    <string name="quick_settings_compass_label">Bussola</string>
     <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
-    <string name="quick_settings_compass_init">Initializing\u2026</string>
-    <string name="accessibility_quick_settings_compass_off">Compass off</string>
-    <string name="accessibility_quick_settings_compass_on">Compass on</string>
-    <string name="accessibility_quick_settings_compass_changed_off">Compass turned off</string>
-    <string name="accessibility_quick_settings_compass_changed_on">Compass turned on</string>
+    <string name="quick_settings_compass_init">Inizializzazione\u2026</string>
+    <string name="accessibility_quick_settings_compass_off">Bussola off</string>
+    <string name="accessibility_quick_settings_compass_on">Bussola on</string>
+    <string name="accessibility_quick_settings_compass_changed_off">Bussola spenta</string>
+    <string name="accessibility_quick_settings_compass_changed_on">Bussola accesa</string>
     <string name="quick_settings_compass_N">N</string>
     <string name="quick_settings_compass_NE">NE</string>
     <string name="quick_settings_compass_E">E</string>
@@ -159,23 +159,23 @@
     <string name="quick_settings_compass_NW">NW</string>
 
     <!-- StatusBar tuner categories -->
-    <string name="status_bar_icons_category">Icon Toggles</string>
+    <string name="status_bar_icons_category">Toggles icone</string>
     <string name="status_bar_signal_category">Signal Icon Tweaks</string>
     <string name="status_bar_volte_category">VoLTE</string>
     <string name="status_bar_etc_category">ETC</string>
 
     <!-- DataSwitch Tile -->
-    <string name="qs_data_switch_label">Switch data card</string>
-    <string name="qs_data_switch_toast_0">Currently no SIM card is inserted</string>
-    <string name="qs_data_switch_toast_1">Currently only one SIM card is inserted</string>
-    <string name="qs_data_switch_changed_1">Switch data card to SIM 1.</string>
-    <string name="qs_data_switch_changed_2">Switch data card to SIM 2.</string>
+    <string name="qs_data_switch_label">Cambia SIM card dati</string>
+    <string name="qs_data_switch_toast_0">Nessuna SIM card inserita</string>
+    <string name="qs_data_switch_toast_1">Attualmente solo una SIM card è inserita</string>
+    <string name="qs_data_switch_changed_1">Cambio card dati in SIM 1.</string>
+    <string name="qs_data_switch_changed_2">Cambio card dati in SIM 2.</string>
 
     <!-- Show VoLTE icon on statusbar -->
-    <string name="volte_icon_asus">VoLTE Asus Icon</string>
-    <string name="volte_icon_title">VoLTE icon</string>
-    <string name="volte_icon_summary">Display VoLTE icon</string>
-    <string name="volte_icon_style_title">Select VoLTE Icon</string>
+    <string name="volte_icon_asus">Icona VoLTE Asus</string>
+    <string name="volte_icon_title">Icona VoLTE</string>
+    <string name="volte_icon_summary">Mostra icona VoLTE</string>
+    <string name="volte_icon_style_title">Seleziona icona VoLTE</string>
     <string name="volte_icon_vo">Vo Only Icon</string>
     <string name="volte_icon_volte">VoLTE Icon</string>
     <string name="volte_icon_oos">VoLTE OOS Icon</string>
@@ -224,7 +224,7 @@
     <string name="accessibility_quick_settings_running_services">Open Running Services screen.</string>
 
     <!-- Reboot/Recovery/PowerOff QS tile -->
-    <string name="quick_settings_reboot_label">Reboot</string>
+    <string name="quick_settings_reboot_label">Riavvia</string>
     <string name="quick_settings_reboot_recovery_label">Recovery</string>
     <string name="quick_settings_poweroff_label">Power off</string>
 
@@ -247,33 +247,22 @@
     <string name="stabilization_position_friction">Position Friction</string>
 
     <!-- Location Tile -->
-    <string name="accessibility_quick_settings_location_battery_saving">Location reporting: battery saving mode.</string>
-    <string name="accessibility_quick_settings_location_gps_only">Location reporting: sensors only mode.</string>
-    <string name="accessibility_quick_settings_location_high_accuracy">Location reporting: high accuracy mode.</string>
-    <string name="quick_settings_location_battery_saving_label">Battery saving</string>
-    <string name="quick_settings_location_battery_saving_label_twoline">Battery\nsaving</string>
-    <string name="quick_settings_location_gps_only_label">GPS only</string>
-    <string name="quick_settings_location_gps_only_label_twoline">GPS only</string>
-    <string name="quick_settings_location_high_accuracy_label">High accuracy</string>
-    <string name="quick_settings_location_high_accuracy_label_twoline">High\naccuracy</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Segnalazione posizione: modalità risparmio batteria.</string>
+    <string name="accessibility_quick_settings_location_gps_only">Segnalazione posizione: modalità solo sensori.</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Segnalazione posizione: modalità alta precisione.</string>
+    <string name="quick_settings_location_battery_saving_label">Risparmio batteria</string>
+    <string name="quick_settings_location_battery_saving_label_twoline">Risparmio\nbatteria</string>
+    <string name="quick_settings_location_gps_only_label">Solo GPS</string>
+    <string name="quick_settings_location_gps_only_label_twoline">Solo GPS</string>
+    <string name="quick_settings_location_high_accuracy_label">Alta precisione</string>
+    <string name="quick_settings_location_high_accuracy_label_twoline">Alta\nprecisione</string>
     <string name="quick_settings_location_detail_title">Location</string>
-    <string name="quick_settings_location_detail_menu_title">Select mode:</string>
-    <string name="quick_settings_location_detail_mode_high_accuracy_title">High accuracy</string>
+    <string name="quick_settings_location_detail_menu_title">Seleziona modalità:</string>
+    <string name="quick_settings_location_detail_mode_high_accuracy_title">Alta precisione</string>
     <string name="quick_settings_location_detail_mode_battery_saving_title">Battery saving</string>
-    <string name="quick_settings_location_detail_mode_sensors_only_title">Device only</string>
-    <string name="quick_settings_location_detail_mode_high_accuracy_description">Use GPS, Wi\u2011Fi, Bluetooth, or cellular networks to determine location </string>
-    <string name="quick_settings_location_detail_mode_battery_saving_description">Use Wi\u2011Fi, Bluetooth, or cellular networks to determine location</string>
-    <string name="quick_settings_location_detail_mode_sensors_only_description">Use GPS to determine your location</string>
-
-    <!-- Omnijaws Weather -->
-    <string name="omnijaws_service_error">Error</string>
-    <string name="omnijaws_service_unkown">No weather data</string>
-    <string name="omnijaws_service_error_long">Error loading weather data</string>
-    <string name="omnijaws_service_disabled">Service is disabled</string>
-    <string name="omnijaws_detail_header">Weather</string>
-    <string name="omnijaws_label_default">Weather</string>
-    <string name="omnijaws_current_text">Now</string>
-    <string name="omnijaws_package_not_available">OmniJaws not available</string>
-    <string name="omnijaws_service_last_update">Last update:</string>
+    <string name="quick_settings_location_detail_mode_sensors_only_title">Solo dispositivo</string>
+    <string name="quick_settings_location_detail_mode_high_accuracy_description">Usa GPS, Wi\u2011Fi, Bluetooth, o reti cellulari per determinare la posizione </string>
+    <string name="quick_settings_location_detail_mode_battery_saving_description">Usa Wi\u2011Fi, Bluetooth, o reti cellulari per determinare la posizione</string>
+    <string name="quick_settings_location_detail_mode_sensors_only_description">Usa GPS per determinare la posizione</string>
 
 </resources>

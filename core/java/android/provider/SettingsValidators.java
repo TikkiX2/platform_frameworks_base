@@ -27,6 +27,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This class provides both interface for validation and common validators
@@ -176,6 +178,21 @@ public class SettingsValidators {
             return true;
         } catch (JSONException e) {
             return false;
+        }
+    };
+
+    /** Validates a color HEX code saved as a string */
+    public static final Validator COLOR_VALIDATOR = new Validator() {
+        @Override
+        public boolean validate(@Nullable String value) {
+            try {
+                final String HEX_PATTERN = "^([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
+                Pattern pat = Pattern.compile(HEX_PATTERN);
+                Matcher match = pat.matcher(value);
+                return match.matches();
+            } catch (Exception e) {
+                return false;
+            }
         }
     };
 
