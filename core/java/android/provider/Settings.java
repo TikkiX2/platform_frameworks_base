@@ -19,6 +19,7 @@ package android.provider;
 import static android.provider.SettingsValidators.ANY_INTEGER_VALIDATOR;
 import static android.provider.SettingsValidators.ANY_STRING_VALIDATOR;
 import static android.provider.SettingsValidators.BOOLEAN_VALIDATOR;
+import static android.provider.SettingsValidators.COLOR_VALIDATOR;
 import static android.provider.SettingsValidators.COMPONENT_NAME_VALIDATOR;
 import static android.provider.SettingsValidators.LENIENT_IP_ADDRESS_VALIDATOR;
 import static android.provider.SettingsValidators.LOCALE_VALIDATOR;
@@ -5368,20 +5369,7 @@ public final class Settings {
         public static final String STATUS_BAR_BATTERY_TEXT_CHARGING_COLOR = "status_bar_battery_text_charging_color";
         /** @hide */
         private static final Validator STATUS_BAR_BATTERY_TEXT_CHARGING_COLOR_VALIDATOR =
-                new Validator() {
-                    @Override
-                    public boolean validate(@Nullable String value) {
-                        // Validate that the color value is valid
-                        try {
-                            final String HEX_PATTERN = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
-                            Pattern pat = Pattern.compile(HEX_PATTERN);
-                            Matcher match = pat.matcher(value);
-                            return match.matches();
-                        } catch (Exception e) {
-                            return false;
-                        }
-                    }
-                };
+                COLOR_VALIDATOR;
 
         /**
          * Disable dashboard conditions in settings
