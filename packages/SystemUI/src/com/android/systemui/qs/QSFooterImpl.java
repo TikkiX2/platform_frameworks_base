@@ -108,6 +108,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     private View mDragHandle;
 
     private TextView mFooterText;
+    private View mContainerFooterText;
     private MediaMetadata mMediaMetaData;
     private String mInfo;
 
@@ -172,6 +173,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         //qs footer text by.tikkiX2
 
         mFooterText = findViewById(R.id.footer_text);
+        mContainerFooterText = findViewById(R.id.footer_text_container);
 
         // RenderThread is doing more harm than good when touching the header (to expand quick
         // settings), so disable it for this view
@@ -220,16 +222,16 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
       if (isShow) {
           if (text == null || text == "") {
               mFooterText.setText("#Derpfest TikkiBuild");
-              mFooterText.setVisibility(View.VISIBLE);
+              mContainerFooterText.setVisibility(View.VISIBLE);
           } else if (musicalize) {
               mFooterText.setText(mInfo);
-              mFooterText.setVisibility(View.VISIBLE);
+              mContainerFooterText.setVisibility(View.VISIBLE);
           } else {
               mFooterText.setText(text);
-              mFooterText.setVisibility(View.VISIBLE);
+              mContainerFooterText.setVisibility(View.VISIBLE);
           }
       } else {
-            mFooterText.setVisibility(View.GONE);
+            mContainerFooterText.setVisibility(View.GONE);
       }
 
     }
