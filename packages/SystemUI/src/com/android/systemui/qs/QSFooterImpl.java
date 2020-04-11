@@ -223,15 +223,19 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
           if (text == null || text == "") {
               mFooterText.setText("#Derpfest TikkiBuild");
               mContainerFooterText.setVisibility(View.VISIBLE);
+              mFooterText.setVisibility(View.VISIBLE);
           } else if (musicalize) {
               mFooterText.setText(mInfo);
               mContainerFooterText.setVisibility(View.VISIBLE);
+              mFooterText.setVisibility(View.VISIBLE);
           } else {
               mFooterText.setText(text);
               mContainerFooterText.setVisibility(View.VISIBLE);
+              mFooterText.setVisibility(View.VISIBLE);
           }
       } else {
             mContainerFooterText.setVisibility(View.GONE);
+            mFooterText.setVisibility(View.GONE);
       }
 
     }

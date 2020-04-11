@@ -186,8 +186,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/qs_footer_action_button_size"
         android:layout_gravity="top"
-        android:visibility="visible"
-        android:gravity="gone" >
+        android:visibility="gone"
+        android:gravity="top" >
 
         <TextView
             android:id="@+id/footer_text"
