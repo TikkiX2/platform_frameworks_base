@@ -36,12 +36,14 @@
         android:layout_height="126dp"
         android:clipToPadding="false"
         android:clipChildren="false"
-        android:background="@drawable/qs_bg_gradient" />
+        android:visibility="invisible"
+        android:background="#00000000" />
 
     <!-- Black part behind the status bar -->
     <LinearLayout
         android:id="@+id/quick_settings_status_bar_background"
         android:layout_width="match_parent"
+        android:elevation="4dp"
         android:layout_height="@*android:dimen/quick_qs_offset_height"
         android:background="@color/quick_settings_status_bar_background_color" >
 
