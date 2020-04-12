@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2017 The Android Open Source Project
+     Copyright (C) 2020 TikkiUI
+     Copyright (C) 2020 Ancient OS
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,17 +16,79 @@
      limitations under the License.
 -->
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:systemui="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/quick_qs_status_icons"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/quick_status_bar_system_icons"
-    android:clipChildren="false"
-    android:clipToPadding="false"
-    android:clickable="false"
-    android:focusable="true"
-    android:theme="@style/QSHeaderTheme"
-    android:visibility="gone">
+	android:theme="@style/QSHeaderTheme"
+	android:orientation="vertical"
+	android:id="@+id/quick_qs_status_icons"
+	android:focusable="true"
+	android:clickable="false"
+	android:clipChildren="false"
+	android:clipToPadding="false"
+	android:layout_width="fill_parent"
+	android:layout_height="@dimen/ancient_headerimg_size"
+	android:layout_marginTop="5.0dip"
+	android:minHeight="20.0dip"
+	android:layout_alignParentTop="true"
+	android:paddingStart="@dimen/status_bar_padding_start"
+	android:paddingEnd="@dimen/status_bar_padding_end"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:systemui="http://schemas.android.com/apk/res-auto">
+
+        <LinearLayout
+		          android:layout_width="fill_parent"
+		          android:layout_height="25.0dip">
+
+              <com.android.systemui.statusbar.policy.DateView
+			               android:textAppearance="@style/TextAppearance.QS.Status"
+                     android:gravity="center_vertical"
+                     android:layout_gravity="start|center"
+                     android:id="@+id/date"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:singleLine="true"
+                     systemui:datePattern="@string/abbrev_wday_month_day_no_year_alarm" />
+
+              <com.android.systemui.statusbar.phone.StatusIconContainer
+                     android:id="@+id/statusIcons"
+                     android:layout_width="0.0dip"
+                     android:layout_height="fill_parent"
+                     android:layout_weight="1.0"
+                     android:layout_gravity="end|center"
+                     android:paddingEnd="@dimen/signal_cluster_battery_padding" />
+
+              <com.android.systemui.BatteryMeterView
+			               android:id="@+id/battery"
+                     android:layout_width="wrap_content"
+                     android:layout_height="fill_parent"
+                     android:layout_gravity="end|center"
+                     android:paddingEnd="2.0dip"
+                     systemui:textAppearance="@style/TextAppearance.QS.Status" />
+
+        </LinearLayout>
+
+    <LinearLayout
+		      android:gravity="bottom|start"
+		      android:layout_gravity="bottom|start"
+		      android:orientation="horizontal"
+		      android:layout_width="fill_parent"
+		      android:layout_height="wrap_content"
+		      android:layout_marginTop="80.0dip"
+		      android:layout_alignParentBottom="true">
+
+          <com.android.systemui.statusbar.policy.Clock
+                android:id="@+id/clock"
+                android:textSize="20.0dip"
+                android:textStyle="normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_alignParentBottom="true"
+                android:gravity="bottom|start"
+                android:paddingStart="@dimen/status_bar_left_clock_starting_padding"
+                android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.QS.Status"
+                systemui:showDark="false" />
+
+    </LinearLayout>
 
 </LinearLayout>

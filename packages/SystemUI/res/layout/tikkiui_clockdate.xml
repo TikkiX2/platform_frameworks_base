@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2020 Ancient OS -->
+<!-- Copyright (C) 2020 TikkiUI -->
+
+<LinearLayout
+	android:gravity="bottom|center"
+	android:id="@+id/tikki_clock"
+	android:layout_gravity="bottom|center"
+	android:orientation="horizontal"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_alignParentBottom="true"
+	android:layout_alignParentStart="true"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <LinearLayout
+	    android:gravity="center"
+		android:layout_gravity="center"
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="0.0dip"
+		android:layout_alignParentBottom="true">
+                <RelativeLayout
+			android:gravity="center"
+			android:layout_gravity="center"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:layout_alignParentStart="true">
+                        <LinearLayout
+				android:gravity="center"
+				android:layout_gravity="center"
+				android:orientation="horizontal"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="-15.0dip"
+				android:layout_alignParentBottom="true">
+                     <TextClock
+					android:textAppearance="@style/TextAppearance.QS.Status"
+					android:textSize="30.0dip"
+					android:textStyle="bold"
+					android:id="@+id/tikki_clock"
+					android:gravity="bottom|center"
+		  		android:layout_gravity="bottom|center"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentBottom="true"
+					android:format12Hour="hh : mm a"
+					android:format24Hour="HH : mm" />
+                    </LinearLayout>
+             </RelativeLayout>
+             <LinearLayout
+			android:gravity="bottom|center"
+			android:layout_gravity="bottom|center"
+			android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="24.0dip"
+			android:layout_alignParentBottom="true">
+                       <TextClock
+				android:textAppearance="@style/TextAppearance.QS.Status"
+				android:textSize="14.0dip"
+				android:textStyle="normal"
+				android:id="@+id/tikki_date"
+				android:gravity="center"
+				android:layout_gravity="center"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="2.0dip"
+				android:format12Hour="EEEE | d MMM yyy"
+				android:format24Hour="EEEE | d MMM yyy" />
+                        </LinearLayout>
+                        <LinearLayout
+			android:layout_gravity="top|center"
+			android:orientation="horizontal"
+			android:layout_width="wrap_content"
+			android:layout_height="24.0dip"
+			android:layout_alignParentTop="true"
+			android:layout_centerInParent="true">
+                        <include
+			layout="@layout/tikkiui_carrier"
+			android:visibility="gone"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
