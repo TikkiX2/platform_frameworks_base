@@ -45,12 +45,12 @@
         android:id="@+id/quick_settings_status_bar_background"
         android:layout_width="match_parent"
         android:elevation="4dp"
-        android:layout_height="@dimen/ancient_headerimg_size"
+        android:layout_height="@*android:dimen/quick_qs_offset_height"
         android:background="#00000000" >
 
         <ImageView android:id="@+id/qs_header_image_view"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ancient_headerimg_size"
+            android:layout_height="match_parent"
             android:elevation="4dp"
             android:layout_marginTop="@dimen/qs_header_image_top_margin"
             android:layout_marginBottom="@dimen/qs_header_image_bottom_margin"
@@ -61,7 +61,7 @@
 
     <com.android.systemui.qs.QSPanel
         android:id="@+id/quick_settings_panel"
-        android:layout_marginTop="@dimen/ancient_qs_margintop"
+        android:layout_marginTop="@*android:dimen/quick_qs_offset_height"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@*android:dimen/extra_qs_footer_height"

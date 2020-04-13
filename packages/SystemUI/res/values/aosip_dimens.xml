@@ -87,7 +87,7 @@
     <dimen name="ancient_qs_margintop">1dp</dimen>
     <dimen name="ancient_qs_margintoptop">50dp</dimen>
     <dimen name="ancient_headerimg_size">224dp</dimen>
-    <dimen name="ancient_minimal_height">25dp</dimen>
+    <dimen name="ancient_minimal_height">96dp</dimen>
 
     <!-- Custom header -->
     <dimen name="qs_header_image_offset">25dp</dimen>
