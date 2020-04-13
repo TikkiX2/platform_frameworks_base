@@ -208,6 +208,7 @@ public class VolumeDialogImpl implements VolumeDialog,
              isBTSCOShowing = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.AUDIO_PANEL_VIEW_BT_SCO, 0, UserHandle.USER_CURRENT) == 1;
              mHideThings = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.TIKKIUI_HIDE_THINGS_VOLUMEPANEL, 1, UserHandle.USER_CURRENT) == 1;
              updateRowsH(getActiveRow());
+             hideThings();
         }
     }
 
@@ -376,15 +377,7 @@ public class VolumeDialogImpl implements VolumeDialog,
 
         mBackgroundThings = mDialog.findViewById(R.id.things);
 
-        if (mHideThings){
-          mSettingsView.setVisibility(View.GONE);
-          mRinger.setVisibility(View.GONE);
-          mBackgroundThings.setVisibility(View.GONE);
-        } else {
-          mSettingsView.setVisibility(View.VISIBLE);
-          mRinger.setVisibility(View.VISIBLE);
-          mBackgroundThings.setVisibility(View.VISIBLE);
-        }
+        hideThings();
 
         updateRowsH(getActiveRow());
         initRingerH();
@@ -392,6 +385,18 @@ public class VolumeDialogImpl implements VolumeDialog,
         initODICaptionsH();
         settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
+    }
+
+    private void hideThings() {
+      if (mHideThings){
+        mSettingsView.setVisibility(View.GONE);
+        mRinger.setVisibility(View.GONE);
+        mBackgroundThings.setVisibility(View.GONE);
+      } else {
+        mSettingsView.setVisibility(View.VISIBLE);
+        mRinger.setVisibility(View.VISIBLE);
+        mBackgroundThings.setVisibility(View.VISIBLE);
+      }
     }
 
     protected ViewGroup getDialogView() {
