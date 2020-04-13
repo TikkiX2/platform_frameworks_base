@@ -86,11 +86,11 @@
     <!-- adding the ancient custom dimens -->
     <dimen name="ancient_qs_margintop">1dp</dimen>
     <dimen name="ancient_qs_margintoptop">50dp</dimen>
-    <dimen name="ancient_headerimg_size">152dp</dimen>
+    <dimen name="ancient_headerimg_size">224dp</dimen>
     <dimen name="ancient_minimal_height">25dp</dimen>
 
     <!-- Custom header -->
-    <dimen name="qs_header_image_offset">1dp</dimen>
+    <dimen name="qs_header_image_offset">25dp</dimen>
     <dimen name="qs_header_image_side_margin">1dp</dimen>
     <dimen name="qs_header_image_top_margin">8dp</dimen>
     <dimen name="qs_header_image_bottom_margin">0dp</dimen>
