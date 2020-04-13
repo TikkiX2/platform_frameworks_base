@@ -168,6 +168,8 @@ public class VolumeDialogImpl implements VolumeDialog,
     private View mODICaptionsTooltipView = null;
 
     private boolean mLeftVolumeRocker;
+    private boolean mHideThings;
+    private View mBackgroundThings;
 
     private boolean isMediaShowing = true;
     private boolean isRingerShowing = false;
@@ -188,6 +190,7 @@ public class VolumeDialogImpl implements VolumeDialog,
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.AUDIO_PANEL_VIEW_ALARM), false, this, UserHandle.USER_ALL);
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.AUDIO_PANEL_VIEW_VOICE), false, this, UserHandle.USER_ALL);
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.AUDIO_PANEL_VIEW_BT_SCO), false, this, UserHandle.USER_ALL);
+            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.TIKKIUI_HIDE_THINGS_VOLUMEPANEL), false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -203,7 +206,9 @@ public class VolumeDialogImpl implements VolumeDialog,
              isAlarmShowing = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.AUDIO_PANEL_VIEW_ALARM, 0, UserHandle.USER_CURRENT) == 1;
              isVoiceShowing = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.AUDIO_PANEL_VIEW_VOICE, 0, UserHandle.USER_CURRENT) == 1;
              isBTSCOShowing = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.AUDIO_PANEL_VIEW_BT_SCO, 0, UserHandle.USER_CURRENT) == 1;
+             mHideThings = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.TIKKIUI_HIDE_THINGS_VOLUMEPANEL, 1, UserHandle.USER_CURRENT) == 1;
              updateRowsH(getActiveRow());
+             hideThings();
         }
     }
 
@@ -370,12 +375,28 @@ public class VolumeDialogImpl implements VolumeDialog,
             addExistingRows();
         }
 
+        mBackgroundThings = mDialog.findViewById(R.id.things);
+
+        hideThings();
+
         updateRowsH(getActiveRow());
         initRingerH();
         initSettingsH();
         initODICaptionsH();
         settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
+    }
+
+    private void hideThings() {
+      if (mHideThings){
+        mSettingsView.setVisibility(View.GONE);
+        mRinger.setVisibility(View.GONE);
+        mBackgroundThings.setVisibility(View.GONE);
+      } else {
+        mSettingsView.setVisibility(View.VISIBLE);
+        mRinger.setVisibility(View.VISIBLE);
+        mBackgroundThings.setVisibility(View.VISIBLE);
+      }
     }
 
     protected ViewGroup getDialogView() {

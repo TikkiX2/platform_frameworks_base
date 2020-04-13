@@ -6432,6 +6432,15 @@ public final class Settings {
          private static final Validator TIKKIUI_LOCK_COOL_DIVIDER_SHOW_VALIDATOR =
                  BOOLEAN_VALIDATOR;
 
+          /**
+           * Whether show/hide things in volume panel by.tikkiX2
+           * @hide
+           */
+          public static final String TIKKIUI_HIDE_THINGS_VOLUMEPANEL = "tikkiui_hide_things_volumepanel";
+          /** @hide */
+          private static final Validator TIKKIUI_HIDE_THINGS_VOLUMEPANEL_VALIDATOR =
+                  BOOLEAN_VALIDATOR;
+
         /**
          * Color of the weather condition icons on the lock screen
          * @hide
