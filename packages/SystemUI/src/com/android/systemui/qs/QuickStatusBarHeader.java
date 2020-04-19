@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2017 The Android Open Source Project
+ * Copyright (C) 2020 Ancient OS
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
  * except in compliance with the License. You may obtain a copy of the License at
@@ -392,7 +393,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 (mCustomHeaderImage != null || mCustomHeaderFile != null);
 
         int topMargin = resources.getDimensionPixelSize(
-                com.android.internal.R.dimen.quick_qs_offset_height) + (headerImageSelected ?
+                R.dimen.ancient_minimal_height) + (mHeaderImageEnabled ?
                 resources.getDimensionPixelSize(R.dimen.qs_header_image_offset) : 0);
 
         mSystemIconsView.getLayoutParams().height = topMargin;
@@ -403,7 +404,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             lp.height = topMargin;
         } else {
             int qsHeight = resources.getDimensionPixelSize(
-                    com.android.internal.R.dimen.quick_qs_total_height);
+                    R.dimen.ancient_minimal_height);
 
             if (headerImageSelected) {
                 qsHeight += resources.getDimensionPixelSize(R.dimen.qs_header_image_offset);
