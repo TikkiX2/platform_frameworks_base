@@ -877,18 +877,10 @@ public class QSPanel extends LinearLayout implements Callback,
         if (mTileLayout != null) {
             v.setHideLabel(!mTileLayout.isShowTitles());
             if (t.isDualTarget()) {
-                if (!mTileLayout.isShowTitles()) {
-                    v.setOnLongClickListener(view -> {
-                        t.secondaryClick();
-                        mHost.openPanels();
-                        return true;
-                    });
-                } else {
-                    v.setOnLongClickListener(view -> {
-                        t.longClick();
-                        return true;
-                    });
-                }
+                v.setOnLongClickListener(view -> {
+                    t.longClick();
+                    return true;
+                });
             }
         }
     }
