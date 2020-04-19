@@ -21,12 +21,6 @@
     <dimen name="horizontal_max_swift">3.0dp</dimen>
     <dimen name="vertical_max_swift">1.0dp</dimen>
 
-    <!-- Custom header -->
-    <dimen name="qs_header_image_offset">25dp</dimen>
-    <dimen name="qs_header_image_side_margin">4dp</dimen>
-    <dimen name="qs_header_image_top_margin">4dp</dimen>
-    <dimen name="qs_header_image_bottom_margin">4dp</dimen>
-
     <!-- Network traffic monitor -->
     <dimen name="net_traffic_multi_text_size">8dp</dimen>
     <dimen name="net_traffic_txt_img_padding">4dp</dimen>
@@ -52,7 +46,7 @@
     <!-- Volume panel -->
     <dimen name="volume_dialog_panel_transparent_padding_left">20dp</dimen>
 
-   <dimen name="fod_animation_size">280dp</dimen>  
+   <dimen name="fod_animation_size">280dp</dimen>
 
     <!-- Pixel navbar -->
     <dimen name="halo_diameter">22dp</dimen>
