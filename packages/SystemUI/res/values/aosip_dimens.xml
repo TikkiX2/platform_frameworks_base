@@ -82,17 +82,18 @@
     <dimen name="opa_line_x_trans_bg">30dp</dimen>
     <dimen name="opa_line_x_trans_ry">15dp</dimen>
     <dimen name="opa_line_y_translation">16dp</dimen>
-    
+
     <!-- QS header image -->
     <dimen name="qs_header_image_offset">1dp</dimen>
-    <dimen name="qs_header_image_top_margin">4dp</dimen>
-    <dimen name="qs_header_image_side_margin">4dp</dimen>
+    <dimen name="qs_header_image_top_margin">8dp</dimen>
+    <dimen name="qs_header_image_side_margin">8dp</dimen>
     <dimen name="qs_header_image_bottom_margin">0dp</dimen>
 
     <!-- adding the ancient custom dimens -->
-    <dimen name="ancient_qs_margintop">150dp</dimen>
+    <dimen name="ancient_qs_margintop">206.95dp</dimen>
     <dimen name="ancient_qs_margintoptop">50dp</dimen>
-    <dimen name="ancient_headerimg_size">150.95dp</dimen>
-    <dimen name="ancient_minimal_height">25dp</dimen>
+    <dimen name="ancient_headerimg_size">198.95dp</dimen>
+    <dimen name="ancient_minimal_height">206.95dp</dimen>
+    <dimen name="extra_qs_footer_height">48dp</dimen>
 
 </resources>
