@@ -299,7 +299,7 @@ public class QSContainerImpl extends FrameLayout implements
     private void updateResources() {
         int topMargin = mContext.getResources().getDimensionPixelSize(
                 R.dimen.ancient_qs_margintop) + (mHeaderImageEnabled ?
-                mContext.getResources().getDimensionPixelSize(R.dimen.qs_header_image_offset) : 0);
+                mContext.getResources().getDimensionPixelSize(R.dimen.qs_header_image_offset) : 4);
 
         int statusBarSideMargin = mHeaderImageEnabled ? mContext.getResources().getDimensionPixelSize(
                 R.dimen.qs_header_image_side_margin) : 0;
@@ -324,7 +324,8 @@ public class QSContainerImpl extends FrameLayout implements
             mStatusBarBackground.setBackgroundColor(Color.TRANSPARENT);
         } else {
             mQsBackgroundAlpha = true;
-            mStatusBarBackground.setBackgroundColor(getResources().getColor(R.color.quick_settings_status_bar_background_color));
+            //mStatusBarBackground.setBackgroundColor(getResources().getColor(R.color.quick_settings_status_bar_background_color));
+            mStatusBarBackground.setBackgroundColor(Color.TRANSPARENT);
         }
     }
 
