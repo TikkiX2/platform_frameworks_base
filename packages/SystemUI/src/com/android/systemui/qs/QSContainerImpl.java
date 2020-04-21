@@ -93,8 +93,6 @@ public class QSContainerImpl extends FrameLayout implements
 
     private IOverlayManager mOverlayManager;
 
-    private boolean mExpanded;
-
     public QSContainerImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
         mOverlayManager = IOverlayManager.Stub.asInterface(
@@ -296,15 +294,12 @@ public class QSContainerImpl extends FrameLayout implements
         mQsDisabled = disabled;
         setBackgroundGradientVisibility(getResources().getConfiguration());
         mBackground.setVisibility(mQsDisabled ? View.GONE : View.VISIBLE);
-        mStatusBarBackground.setVisibility(mQsDisabled ? View.GONE : View.VISIBLE);
-        mBackgroundImage.setVisibility(mQsDisabled ? View.GONE : View.VISIBLE);
     }
 
     private void updateResources() {
-
         int topMargin = mContext.getResources().getDimensionPixelSize(
                 R.dimen.ancient_qs_margintop) + (mHeaderImageEnabled ?
-                mContext.getResources().getDimensionPixelSize(R.dimen.qs_header_image_offset) : 8);
+                mContext.getResources().getDimensionPixelSize(R.dimen.qs_header_image_offset) : 4);
 
         int statusBarSideMargin = mHeaderImageEnabled ? mContext.getResources().getDimensionPixelSize(
                 R.dimen.qs_header_image_side_margin) : 0;
@@ -375,7 +370,6 @@ public class QSContainerImpl extends FrameLayout implements
     public void setExpansion(float expansion) {
         mQsExpansion = expansion;
         updateExpansion();
-        updateResources();
     }
 
     private void setMargins() {
