@@ -42,6 +42,7 @@ import android.text.TextUtils;
 import android.text.TextUtils.TruncateAt;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -468,6 +469,10 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
           mSettingsButton.setVisibility(View.VISIBLE);
         mRunningServicesButton.setVisibility(isRunningServicesEnabled() ? !isDemo && mExpanded ? View.VISIBLE : View.INVISIBLE : View.GONE);
         setFooterText();
+        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) mQsPanel.getLayoutParams();
+        lp.topMargin = lp.topMargin + (mExpanded ? mContext.getResources().getDimensionPixelSize(
+                R.dimen.extra_qs_footer_height) : 0);
+        mQsPanel.setLayoutParams(lp);
     }
 
     private boolean showUserSwitcher() {
