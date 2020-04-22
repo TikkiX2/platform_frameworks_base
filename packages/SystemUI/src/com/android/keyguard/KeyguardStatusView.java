@@ -1051,16 +1051,6 @@ public class KeyguardStatusView extends GridLayout implements
         mSmallClockView = findViewById(R.id.clock_view);
         mTextClock = findViewById(R.id.custom_text_clock_view);
 
-        if (mShowDividers){
-            mCoolDividerOne.setVisibility(View.VISIBLE);
-            mCoolDividerTwo.setVisibility(View.VISIBLE);
-            mCoolDividerThree.setVisibility(View.VISIBLE);
-        } else {
-            mCoolDividerOne.setVisibility(View.GONE);
-            mCoolDividerTwo.setVisibility(View.GONE);
-            mCoolDividerThree.setVisibility(View.GONE);
-        }
-
         if (mClockSelection >= 5 && mClockSelection <= 9)
             mDefaultClockView.setLineSpacing(0, 0.8f);
             mDefaultClockView.setBackgroundResource(0);
@@ -1181,6 +1171,8 @@ public class KeyguardStatusView extends GridLayout implements
                     Settings.System.LOCKSCREEN_WEATHER_STYLE, 1,
                     UserHandle.USER_CURRENT) == 0;
 
+            boolean hasText = !TextUtils.isEmpty(mOwnerInfo.getText());
+
             if (mWeatherView != null) {
                 if (mShowWeather && mOmniStyle) {
                     mWeatherView.setVisibility(View.VISIBLE);
@@ -1191,6 +1183,21 @@ public class KeyguardStatusView extends GridLayout implements
                     mWeatherView.disableUpdates();
                 }
             }
+
+            if (mShowDividers){
+                mCoolDividerOne.setVisibility(View.VISIBLE);
+                mCoolDividerTwo.setVisibility(View.VISIBLE);
+                if (mOmniStyle||hasText){
+                    mCoolDividerThree.setVisibility(View.VISIBLE);
+                } else {
+                    mCoolDividerThree.setVisibility(View.GONE);
+                }
+            } else {
+                mCoolDividerOne.setVisibility(View.GONE);
+                mCoolDividerTwo.setVisibility(View.GONE);
+                mCoolDividerThree.setVisibility(View.GONE);
+            }
+
 
         updateDateStyles();
     }
