@@ -41,6 +41,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.TextUtils.TruncateAt;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -200,6 +201,10 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                       Settings.System.TIKKIUI_FOOTER_TEXT_SHOW, 1,
                       UserHandle.USER_CURRENT) == 1;
 
+      boolean center = Settings.System.getIntForUser(mContext.getContentResolver(),
+                      Settings.System.TIKKIUI_FOOTER_TEXT_CENTER, 1,
+                      UserHandle.USER_CURRENT) == 1;
+
       boolean musicalize = Settings.System.getIntForUser(mContext.getContentResolver(),
                       Settings.System.TIKKIUI_FOOTER_TEXT_MUSICALIZE, 1,
                       UserHandle.USER_CURRENT) == 1;
@@ -219,6 +224,8 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
           CharSequence artist = mMediaMetaData.getText(MediaMetadata.METADATA_KEY_ARTIST);
           CharSequence title = mMediaMetaData.getText(MediaMetadata.METADATA_KEY_TITLE);
           mInfo = artist.toString() + " - " + title.toString();
+      } else {
+          mInfo = text;
       }
       if (isShow) {
           if (text == null || text == "") {
@@ -238,6 +245,19 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
             mContainerFooterText.setVisibility(View.GONE);
             mFooterText.setVisibility(View.GONE);
       }
+
+      ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) mFooterText.getLayoutParams();
+
+      if (center){
+        mFooterText.setGravity(Gravity.CENTER_VERTICAL);
+        lp.setMarginStart(0);
+      } else {
+        mFooterText.setGravity(Gravity.START);
+        lp.setMarginStart(mContext.getResources().getDimensionPixelSize(
+                R.dimen.notification_section_header_padding_left));
+      }
+
+      mFooterText.setLayoutParams(lp);
 
     }
 
