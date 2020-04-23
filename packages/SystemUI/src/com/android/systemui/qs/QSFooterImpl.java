@@ -49,6 +49,7 @@ import android.view.View.OnLongClickListener;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
@@ -246,15 +247,17 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
             mFooterText.setVisibility(View.GONE);
       }
 
-      ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) mFooterText.getLayoutParams();
+      FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mFooterText.getLayoutParams();
 
       if (center){
-        mFooterText.setGravity(Gravity.CENTER_VERTICAL);
+        mFooterText.setGravity(Gravity.CENTER);
         lp.setMarginStart(0);
+        lp.gravity = Gravity.CENTER;
       } else {
         mFooterText.setGravity(Gravity.START);
         lp.setMarginStart(mContext.getResources().getDimensionPixelSize(
                 R.dimen.notification_section_header_padding_left));
+        lp.gravity = Gravity.START;
       }
 
       mFooterText.setLayoutParams(lp);
