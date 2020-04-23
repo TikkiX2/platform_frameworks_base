@@ -6444,6 +6444,15 @@ public final class Settings {
                 ANY_STRING_VALIDATOR;
 
         /**
+         * Center QS footer text
+         * @hide
+         */
+        public static final String TIKKIUI_FOOTER_TEXT_CENTER = "tikkiui_footer_text_center";
+        /** @hide */
+        public static final Validator TIKKIUI_FOOTER_TEXT_CENTER_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+         /**
           * Whether cool divider in lockscreen shows
           * by.tikkiX2
           * @hide

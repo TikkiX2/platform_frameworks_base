@@ -38,6 +38,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -45,6 +46,7 @@ import android.view.View.OnLongClickListener;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
@@ -194,6 +196,10 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                       Settings.System.TIKKIUI_FOOTER_TEXT_SHOW, 1,
                       UserHandle.USER_CURRENT) == 1;
 
+      boolean center = Settings.System.getIntForUser(mContext.getContentResolver(),
+                      Settings.System.TIKKIUI_FOOTER_TEXT_CENTER, 1,
+                      UserHandle.USER_CURRENT) == 1;
+
       String text = Settings.System.getStringForUser(mContext.getContentResolver(),
                       Settings.System.TIKKIUI_FOOTER_TEXT_STRING,
                       UserHandle.USER_CURRENT);
@@ -218,6 +224,21 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
             mContainerFooterText.setVisibility(View.GONE);
             mFooterText.setVisibility(View.GONE);
       }
+
+      FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mFooterText.getLayoutParams();
+
+      if (center){
+        mFooterText.setGravity(Gravity.CENTER);
+        lp.setMarginStart(0);
+        lp.gravity = Gravity.CENTER;
+      } else {
+        mFooterText.setGravity(Gravity.START);
+        lp.setMarginStart(mContext.getResources().getDimensionPixelSize(
+                R.dimen.notification_section_header_padding_left));
+        lp.gravity = Gravity.START;
+      }
+
+      mFooterText.setLayoutParams(lp);
 
     }
 
