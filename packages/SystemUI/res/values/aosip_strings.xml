@@ -276,4 +276,8 @@
     <string name="omnijaws_package_not_available">OmniJaws not available</string>
     <string name="omnijaws_service_last_update">Last update:</string>
 
+    <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Peeking notifications are snoozing for 1 minute.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Peeking notifications are snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
+
 </resources>
