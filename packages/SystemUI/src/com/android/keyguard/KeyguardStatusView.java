@@ -341,7 +341,7 @@ public class KeyguardStatusView extends GridLayout implements
         } else if (mClockSelection == 4) { // accent min
             mClockView.setFormat12Hour(Html.fromHtml("h<font color=" + getResources().getColor(R.color.accent_device_default_light) + ">:mm</font>"));
             mClockView.setFormat24Hour(Html.fromHtml("kk<font color=" + getResources().getColor(R.color.accent_device_default_light) + ">:mm</font>"));
-        } else if (mClockSelection == 5 || mClockSelection == 11 || mClockSelection == 12 || mClockSelection == 14 || mClockSelection == 15 || mClockSelection == 16) { // sammy
+        } else if (mClockSelection == 5 || mClockSelection == 11 || mClockSelection == 12 || mClockSelection == 14 || mClockSelection == 15 || mClockSelection == 16 || mClockSelection == 19 || mClockSelection == 20) { // sammy
             mClockView.setFormat12Hour("hh\nmm");
             mClockView.setFormat24Hour("kk\nmm");
         } else if (mClockSelection == 6) { // sammy bold
@@ -996,11 +996,20 @@ public class KeyguardStatusView extends GridLayout implements
 
         if (mClockSelection >= 5 && mClockSelection <= 9)
             mDefaultClockView.setLineSpacing(0, 0.8f);
+            mDefaultClockView.setBackgroundResource(0);
+            mDefaultClockView.setGravity(Gravity.CENTER);
+            mDefaultClockView.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
+            mDefaultClockView.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            mKeyguardSlice.setPadding(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
+    getResources().getDimensionPixelSize(R.dimen.widget_clock_normal_clock_padding),
+    getResources().getDisplayMetrics()),0,0);
 
         if (mClockSelection != 10 && mClockSelection != 11) {
             mTextClock.setVisibility(View.GONE);
             mSmallClockView.setVisibility(View.VISIBLE);
             params.addRule(RelativeLayout.BELOW, R.id.clock_view);
+            mDefaultClockView.setBackgroundResource(0);
+            mDefaultClockView.setGravity(Gravity.CENTER);
         } else {
             mTextClock.setVisibility(View.VISIBLE);
             mSmallClockView.setVisibility(View.GONE);
@@ -1015,6 +1024,7 @@ public class KeyguardStatusView extends GridLayout implements
                 mDefaultClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 getResources().getDimensionPixelSize(R.dimen.widget_shishu_accent_font_size));
                 mDefaultClockView.setLineSpacing(0,1f);
+                mDefaultClockView.setGravity(Gravity.CENTER);
         } else if (mClockSelection == 13) {
                 mDefaultClockView.setBackground(getResources().getDrawable(R.drawable.clock_shishu_diamondbg));
                 mDefaultClockView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
@@ -1023,6 +1033,7 @@ public class KeyguardStatusView extends GridLayout implements
                 mDefaultClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 getResources().getDimensionPixelSize(R.dimen.widget_shishu_inmensity_font_size));
                 mDefaultClockView.setPadding(20,20,20,20);
+                mDefaultClockView.setGravity(Gravity.CENTER);
         } else if (mClockSelection == 14) {
                 mDefaultClockView.setBackground(getResources().getDrawable(R.drawable.clock_shishu_nerves_bg));
                 mDefaultClockView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_nerves_width);
@@ -1031,6 +1042,7 @@ public class KeyguardStatusView extends GridLayout implements
                 mDefaultClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_nerves_font_size));
                 mDefaultClockView.setPadding(0,20,0,20);
+                mDefaultClockView.setGravity(Gravity.CENTER);
         } else if (mClockSelection == 15) {
                 mDefaultClockView.setBackground(getResources().getDrawable(R.drawable.clock_bootleg_gradient));
                 mDefaultClockView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
@@ -1043,6 +1055,7 @@ public class KeyguardStatusView extends GridLayout implements
         getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_date_padding),
         getResources().getDisplayMetrics()),0,0
                 );
+                mDefaultClockView.setGravity(Gravity.CENTER);
         } else if (mClockSelection == 16) {
                 mDefaultClockView.setBackground(getResources().getDrawable(R.drawable.clock_bootleg_gradient_shishu));
                 mDefaultClockView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
@@ -1055,6 +1068,7 @@ public class KeyguardStatusView extends GridLayout implements
         getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_date_padding),
         getResources().getDisplayMetrics()),0,0
                 );
+                mDefaultClockView.setGravity(Gravity.CENTER);
         } else if (mClockSelection == 17) {
                 mDefaultClockView.setBackground(getResources().getDrawable(R.drawable.clock_bootleg_gradient_shadow));
                 mDefaultClockView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
@@ -1067,6 +1081,7 @@ public class KeyguardStatusView extends GridLayout implements
         getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_date_padding),
         getResources().getDisplayMetrics()),0,0
                 );
+                mDefaultClockView.setGravity(Gravity.CENTER);
         } else if (mClockSelection == 18) {
                 mDefaultClockView.setBackground(getResources().getDrawable(R.drawable.clock_bootleg_qsgradient));
                 mDefaultClockView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
@@ -1079,6 +1094,29 @@ public class KeyguardStatusView extends GridLayout implements
         getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_date_padding),
         getResources().getDisplayMetrics()),0,0
                 );
+                mDefaultClockView.setGravity(Gravity.CENTER);
+        } else if (mClockSelection == 19) {
+                mDefaultClockView.setBackground(getResources().getDrawable(R.drawable.clock_tikkiui_zerotwo));
+                mDefaultClockView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
+                mDefaultClockView.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
+                mDefaultClockView.setLineSpacing(0,1f);
+                mDefaultClockView.setPadding(0,20,0,20);
+                mKeyguardSlice.setPadding(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
+        getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_date_padding),
+        getResources().getDisplayMetrics()),0,0
+                );
+                mDefaultClockView.setGravity(Gravity.CENTER);
+        } else if (mClockSelection == 20) {
+                mDefaultClockView.setBackground(getResources().getDrawable(R.drawable.clock_tikkiui_diamond));
+                mDefaultClockView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
+                mDefaultClockView.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_size);
+                mDefaultClockView.setLineSpacing(0,1f);
+                mDefaultClockView.setPadding(0,20,0,20);
+                mKeyguardSlice.setPadding(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
+        getResources().getDimensionPixelSize(R.dimen.widget_clock_shishu_date_padding),
+        getResources().getDisplayMetrics()),0,0
+                );
+                mDefaultClockView.setGravity(Gravity.CENTER);
         }
         
             final Resources res = getContext().getResources();
