@@ -6242,6 +6242,7 @@ public final class Settings {
 
         private static final Validator OMNI_AUTO_BRIGHTNESS_MIN_VALUE_VALIDATOR =
                 ANY_INTEGER_VALIDATOR;
+
         /**
          * Whether to use new QS panel bg tint or not
          * @hide
@@ -6250,6 +6251,15 @@ public final class Settings {
 
         /** @hide */
         private static final Validator QS_PANEL_BG_USE_NEW_TINT_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * Whether to show QS panels
+         * @hide
+         */
+        public static final String QS_TILE_PANELS = "qs_tile_panels";
+
+        /** @hide */
+        private static final Validator QS_TILE_PANELS_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
@@ -6746,6 +6756,7 @@ public final class Settings {
             QS_PANEL_BG_USE_NEW_TINT,
             TRANSPARENT_POWER_MENU,
             TRANSPARENT_POWER_DIALOG_DIM,
+            QS_TILE_PANELS,
             HEADS_UP_NOTIFICATION_SNOOZE,
             HEADS_UP_TIMEOUT,
             HEADS_UP_STOPLIST_VALUES,
@@ -7279,6 +7290,7 @@ public final class Settings {
             VALIDATORS.put(QS_PANEL_BG_USE_NEW_TINT, QS_PANEL_BG_USE_NEW_TINT_VALIDATOR);
             VALIDATORS.put(TRANSPARENT_POWER_MENU,TRANSPARENT_POWER_MENU_VALIDATOR);
             VALIDATORS.put(TRANSPARENT_POWER_DIALOG_DIM,TRANSPARENT_POWER_DIALOG_DIM_VALIDATOR);
+            VALIDATORS.put(QS_TILE_PANELS, QS_TILE_PANELS_VALIDATOR);
             VALIDATORS.put(HEADS_UP_NOTIFICATION_SNOOZE,HEADS_UP_NOTIFICATION_SNOOZE_VALIDATOR);
             VALIDATORS.put(HEADS_UP_TIMEOUT,HEADS_UP_TIMEOUT_VALIDATOR);
             VALIDATORS.put(HEADS_UP_STOPLIST_VALUES, HEADS_UP_STOPLIST_VALUES_VALIDATOR);

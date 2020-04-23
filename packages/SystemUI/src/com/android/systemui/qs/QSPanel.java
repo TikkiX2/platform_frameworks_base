@@ -114,6 +114,8 @@ public class QSPanel extends LinearLayout implements Callback,
     private boolean mShowMinMaxBrightness;
     private View mBrightnessPlaceholder;
 
+    private boolean mShowQSPanels;
+
     private final Vibrator mVibrator;
 
     public QSPanel(Context context) {
@@ -234,6 +236,9 @@ public class QSPanel extends LinearLayout implements Callback,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_SHOW_SECURITY),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_TILE_PANELS),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -256,6 +261,9 @@ public class QSPanel extends LinearLayout implements Callback,
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_SHOW_SECURITY))) {
                 updateSecureFooterVisibility();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_TILE_PANELS))) {
+                updateQSPanels();
             }
         }
 
@@ -267,6 +275,7 @@ public class QSPanel extends LinearLayout implements Callback,
             updateBrightnessSliderPosition();
             updateBrightnessButtonsVisibility();
             updateSecureFooterVisibility();
+            updateQSPanels();
         }
     }
 
@@ -402,6 +411,14 @@ public class QSPanel extends LinearLayout implements Callback,
                 Settings.System.QS_SHOW_SECURITY, 1,
                 UserHandle.USER_CURRENT) == 1;
         mFooter.setForceHide(!value);
+    }
+
+    private void updateQSPanels() {
+        mShowQSPanels =
+                Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_TILE_PANELS, 1,
+                UserHandle.USER_CURRENT) == 1;
+        updateSettings();
     }
 
     public void openDetails(String subPanel) {
@@ -910,15 +927,15 @@ public class QSPanel extends LinearLayout implements Callback,
         if (mTileLayout != null) {
             v.setHideLabel(!mTileLayout.isShowTitles());
             if (t.isDualTarget()) {
-                if (!mTileLayout.isShowTitles()) {
+                if (mShowQSPanels) {
                     v.setOnLongClickListener(view -> {
-                        t.secondaryClick();
-                        mHost.openPanels();
+                        t.longClick();
                         return true;
                     });
                 } else {
                     v.setOnLongClickListener(view -> {
-                        t.longClick();
+                        t.secondaryClick();
+                        mHost.openPanels();
                         return true;
                     });
                 }
@@ -950,6 +967,10 @@ public class QSPanel extends LinearLayout implements Callback,
 
     public int getNumColumns() {
         return mTileLayout.getNumColumns();
+    }
+
+    public boolean getShowQSPanels() {
+        return mShowQSPanels;
     }
 
     private void setBrightnessMinMax(boolean min) {
