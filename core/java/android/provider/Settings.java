@@ -6423,6 +6423,16 @@ public final class Settings {
                 ANY_STRING_VALIDATOR;
 
         /**
+          * Whether cool divider in lockscreen shows
+          * by.tikkiX2
+          * @hide
+          */
+         public static final String TIKKIUI_LOCK_COOL_DIVIDER_SHOW = "tikkiui_lock_cool_divider_show";
+         /** @hide */
+         private static final Validator TIKKIUI_LOCK_COOL_DIVIDER_SHOW_VALIDATOR =
+                 BOOLEAN_VALIDATOR;
+
+        /**
          * Color of the weather condition icons on the lock screen
          * @hide
          */
