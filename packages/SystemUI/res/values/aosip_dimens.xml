@@ -21,12 +21,6 @@
     <dimen name="horizontal_max_swift">3.0dp</dimen>
     <dimen name="vertical_max_swift">1.0dp</dimen>
 
-    <!-- Custom header -->
-    <dimen name="qs_header_image_offset">25dp</dimen>
-    <dimen name="qs_header_image_side_margin">8dp</dimen>
-    <dimen name="qs_header_image_top_margin">8dp</dimen>
-    <dimen name="qs_header_image_bottom_margin">8dp</dimen>
-
     <!-- Network traffic monitor -->
     <dimen name="net_traffic_multi_text_size">8dp</dimen>
     <dimen name="net_traffic_txt_img_padding">4dp</dimen>
@@ -55,7 +49,7 @@
     <!-- Volume panel -->
     <dimen name="volume_dialog_panel_transparent_padding_left">20dp</dimen>
 
-    <dimen name="fod_animation_size">280dp</dimen>
+   <dimen name="fod_animation_size">280dp</dimen>
 
     <!-- The font size for the clock in the QS -->
     <dimen name="qs_clock_size">14sp</dimen>
@@ -88,5 +82,17 @@
     <dimen name="opa_line_x_trans_bg">30dp</dimen>
     <dimen name="opa_line_x_trans_ry">15dp</dimen>
     <dimen name="opa_line_y_translation">16dp</dimen>
+    
+    <!-- QS header image -->
+    <dimen name="qs_header_image_offset">1dp</dimen>
+    <dimen name="qs_header_image_top_margin">4dp</dimen>
+    <dimen name="qs_header_image_side_margin">4dp</dimen>
+    <dimen name="qs_header_image_bottom_margin">0dp</dimen>
+
+    <!-- adding the ancient custom dimens -->
+    <dimen name="ancient_qs_margintop">150dp</dimen>
+    <dimen name="ancient_qs_margintoptop">50dp</dimen>
+    <dimen name="ancient_headerimg_size">150.95dp</dimen>
+    <dimen name="ancient_minimal_height">25dp</dimen>
 
 </resources>
