@@ -35,7 +35,6 @@ import android.annotation.Nullable;
 import android.app.Notification;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.database.ContentObserver;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -49,7 +48,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -511,39 +509,8 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
     private float mLastSentAppear;
     private float mLastSentExpandedHeight;
     private boolean mWillExpand;
-    private boolean mShowGentleHeader;
+    private boolean mShowHeaders;
     private boolean needsColorRefresh = true;
-
-    private final Handler mHandler = new Handler();
-
-    private class SettingsObserver extends ContentObserver {
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            ContentResolver resolver = getContext().getContentResolver();
-            resolver.registerContentObserver(Settings.System
-                    .getUriFor(Settings.System.SHOW_GENTLE_HEADER), false,
-                    this, UserHandle.USER_ALL);
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            updateSettings();
-        }
-    }
-
-    private SettingsObserver mSettingsObserver = new SettingsObserver(mHandler);
-
-    private void updateSettings() {
-        mShowGentleHeader = Settings.System.getIntForUser(
-                getContext().getContentResolver(), Settings.System.SHOW_GENTLE_HEADER,
-                0, UserHandle.USER_CURRENT) == 1;
-        reinflateViews();
-        updateSectionBoundaries();
-        onUiModeChanged();
-    }
 
     @Inject
     public NotificationStackScrollLayout(
@@ -574,10 +541,8 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
         mKeyguardBypassController = keyguardBypassController;
         mFalsingManager = falsingManager;
 
-        mShowGentleHeader = Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.SHOW_GENTLE_HEADER,
-                0, UserHandle.USER_CURRENT) == 1;;
-        mSettingsObserver.observe();
+        mShowHeaders = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.NOTIFICATION_HEADERS, 1, UserHandle.USER_CURRENT) == 1;
 
         mSectionsManager =
                 new NotificationSectionsManager(
@@ -586,13 +551,8 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
                         statusBarStateController,
                         configurationController,
                         NotificationUtils.useNewInterruptionModel(context),
-                        mShowGentleHeader);
+                        mShowHeaders);
         mSectionsManager.initialize(LayoutInflater.from(context));
-        mSectionsManager.setOnClearGentleNotifsClickListener(v -> {
-            // Leave the shade open if there will be other notifs left over to clear
-            final boolean closeShade = !hasActiveClearableNotifications(ROWS_HIGH_PRIORITY);
-            clearNotifications(ROWS_GENTLE, closeShade, false/*forceToLeft*/);
-        });
 
         mAmbientState = new AmbientState(context, mSectionsManager, mHeadsUpManager);
         mBgColor = context.getColor(R.color.notification_shade_background_color);
@@ -5547,7 +5507,7 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
 
     @ShadeViewRefactor(RefactorComponent.SHADE_VIEW)
     public void manageNotifications(View v) {
-        Intent intent = new Intent(mShowGentleHeader ? Settings.ACTION_ALL_APPS_NOTIFICATION_SETTINGS :
+        Intent intent = new Intent(mShowHeaders ? Settings.ACTION_ALL_APPS_NOTIFICATION_SETTINGS :
                 Settings.ACTION_NOTIFICATION_SETTINGS);
         mStatusBar.startActivity(intent, true, true, Intent.FLAG_ACTIVITY_SINGLE_TOP);
     }
