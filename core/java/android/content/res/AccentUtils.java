@@ -10,34 +10,26 @@ import java.util.Arrays;
 public class AccentUtils {
     private static final String TAG = "AccentUtils";
 
+    private static ArrayList<String> accentResources = new ArrayList<>(
+            Arrays.asList("accent_device_default",
+                    "accent_device_default_light",
+                    "accent_device_default_dark",
+                    "gradient_start"));
+
     private static final String ACCENT_COLOR_PROP = "persist.sys.theme.accentcolor";
-    private static final String GRADIENT_COLOR_PROP = "persist.sys.theme.gradientcolor";
 
-    public static boolean isResourceDarkAccent(String resName) {
-        return resName.contains("accent_device_default_dark");
-    }
-
-    public static boolean isResourceLightAccent(String resName) {
-        return resName.contains("accent_device_default_light");
-    }
-
-    public static boolean isResourceGradientStart(String resName) {
-        return resName.contains("gradient_start");
-    }
-
-    static boolean isResourceGradient(String resName) {
-        return resName.contains("gradient_end");
+    static boolean isResourceAccent(String resName) {
+        for (String ar : accentResources)
+            if (resName.contains(ar))
+                return true;
+        return false;
     }
 
     public static int getNewAccentColor(int defaultColor) {
-        return getNewColor(defaultColor, ACCENT_COLOR_PROP);
+        return getAccentColor(defaultColor, ACCENT_COLOR_PROP);
     }
 
-    public static int getNewGradientColor(int defaultColor) {
-        return getNewColor(defaultColor, GRADIENT_COLOR_PROP);
-    }
-
-    private static int getNewColor(int defaultColor, String property) {
+    private static int getAccentColor(int defaultColor, String property) {
         try {
             String colorValue = SystemProperties.get(property, "-1");
             return "-1".equals(colorValue)
