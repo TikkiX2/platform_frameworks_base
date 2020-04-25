@@ -23,11 +23,13 @@ import android.annotation.StyleableRes;
 import android.annotation.UnsupportedAppUsage;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ActivityInfo.Config;
+import android.content.res.Resources.NotFoundException;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.StrictMode;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 
 import com.android.internal.util.XmlUtils;
@@ -46,6 +48,8 @@ import java.util.Arrays;
  * the positions of the attributes given to obtainStyledAttributes.
  */
 public class TypedArray {
+
+    private static final String TAG = "TypedArray";
 
     static TypedArray obtain(Resources res, int len) {
         TypedArray attrs = res.mTypedArrayPool.acquire();
