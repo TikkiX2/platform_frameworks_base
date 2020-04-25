@@ -110,6 +110,9 @@ public class KeyguardStatusView extends GridLayout implements
     private View mCoolDividerThree;
     private boolean mShowDividers;
 
+    //Align Clock, date and weather to left -- yeah, like oneUI
+    private boolean mAlignLeft;
+
     private KeyguardUpdateMonitorCallback mInfoCallback = new KeyguardUpdateMonitorCallback() {
 
         @Override
@@ -1041,6 +1044,8 @@ public class KeyguardStatusView extends GridLayout implements
                 Settings.System.TIKKIUI_LOCK_COOL_DIVIDER_SHOW, 1, UserHandle.USER_CURRENT) == 1;
         mClockSelection = Settings.Secure.getIntForUser(resolver,
                 Settings.Secure.LOCKSCREEN_CLOCK_SELECTION, 0, UserHandle.USER_CURRENT);
+        mAlignLeft = Settings.System.getIntForUser(resolver,
+                Settings.System.TIKKIUI_ALIGN_LOCKSCREEN_LEFT, 0, UserHandle.USER_CURRENT) == 1;
         final boolean mShowClock = Settings.System.getIntForUser(resolver,
                 Settings.System.LOCKSCREEN_CLOCK, 1, UserHandle.USER_CURRENT) == 1;
 
@@ -1058,8 +1063,8 @@ public class KeyguardStatusView extends GridLayout implements
             mDefaultClockView.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
             mDefaultClockView.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
             mKeyguardSlice.setPadding(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
-    getResources().getDimensionPixelSize(R.dimen.widget_clock_normal_clock_padding),
-    getResources().getDisplayMetrics()),0,0);
+            getResources().getDimensionPixelSize(R.dimen.widget_clock_normal_clock_padding),
+            getResources().getDisplayMetrics()),0,0);
 
         if (mClockSelection != 10 && mClockSelection != 11) {
             mTextClock.setVisibility(View.GONE);
@@ -1199,6 +1204,26 @@ public class KeyguardStatusView extends GridLayout implements
             }
 
 
+        if (mAlignLeft){
+                mClockView.getLayoutParams().gravity = Gravity.TOP|Gravity.LEFT;
+                mSmallClockView.getLayoutParams().gravity = Gravity.LEFT;
+                mCoolDividerOne.getLayoutParams().gravity = Gravity.LEFT;
+                mCoolDividerTwo.getLayoutParams().gravity = Gravity.LEFT;
+                mCoolDividerThree.getLayoutParams().gravity = Gravity.LEFT;
+                mOwnerInfo.getLayoutParams().gravity = Gravity.LEFT;
+                mKeyguardSlice.getLayoutParams().gravity = Gravity.LEFT;
+                mWeatherView.getLayoutParams().gravity = Gravity.LEFT;
+        } else {
+                mClockView.getLayoutParams().gravity = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
+                mSmallClockView.getLayoutParams().gravity = Gravity.CENTER_HORIZONTAL;
+                mCoolDividerOne.getLayoutParams().gravity = Gravity.CENTER_HORIZONTAL;
+                mCoolDividerTwo.getLayoutParams().gravity = Gravity.CENTER_HORIZONTAL|Gravity.CENTER;
+                mCoolDividerThree.getLayoutParams().gravity = Gravity.CENTER_HORIZONTAL;
+                mOwnerInfo.getLayoutParams().gravity = Gravity.CENTER_HORIZONTAL;
+                mKeyguardSlice.getLayoutParams().gravity = Gravity.CENTER_HORIZONTAL;
+                mWeatherView.getLayoutParams().gravity = Gravity.CENTER_HORIZONTAL;
+
+        }
         updateDateStyles();
     }
 
