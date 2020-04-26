@@ -1203,25 +1203,34 @@ public class KeyguardStatusView extends GridLayout implements
                 mCoolDividerThree.setVisibility(View.GONE);
             }
 
-
         if (mAlignLeft){
-                mClockView.getLayoutParams().gravity = Gravity.TOP|Gravity.LEFT;
-                mSmallClockView.getLayoutParams().gravity = Gravity.LEFT;
-                mCoolDividerOne.getLayoutParams().gravity = Gravity.LEFT;
-                mCoolDividerTwo.getLayoutParams().gravity = Gravity.LEFT;
-                mCoolDividerThree.getLayoutParams().gravity = Gravity.LEFT;
-                mOwnerInfo.getLayoutParams().gravity = Gravity.LEFT;
-                mKeyguardSlice.getLayoutParams().gravity = Gravity.LEFT;
-                mWeatherView.getLayoutParams().gravity = Gravity.LEFT;
+                ((RelativeLayout.LayoutParams) mCoolDividerOne.getLayoutParams()).removeRule(RelativeLayout.CENTER_HORIZONTAL);
+                mCoolDividerOne.setLayoutParams(mCoolDividerOne.getLayoutParams());
+                ((RelativeLayout.LayoutParams) mCoolDividerTwo.getLayoutParams()).removeRule(RelativeLayout.CENTER_HORIZONTAL);
+                mCoolDividerTwo.setLayoutParams(mCoolDividerTwo.getLayoutParams());
+                ((RelativeLayout.LayoutParams) mCoolDividerThree.getLayoutParams()).removeRule(RelativeLayout.CENTER_HORIZONTAL);
+                mCoolDividerThree.setLayoutParams(mCoolDividerThree.getLayoutParams());
+                ((RelativeLayout.LayoutParams) mWeatherView.getLayoutParams()).removeRule(RelativeLayout.CENTER_HORIZONTAL);
+                mWeatherView.setLayoutParams(mWeatherView.getLayoutParams());
+                ((FrameLayout.LayoutParams) mSmallClockView.getLayoutParams()).gravity(Gravity.LEFT);
+                mSmallClockView.setLayoutParams(mSmallClockView.getLayoutParams());
+                mClockView.setGravity(Gravity.TOP|Gravity.LEFT);
+                mOwnerInfo.setGravity(Gravity.LEFT);
+                mKeyguardSlice.setGravity(Gravity.LEFT);
         } else {
-                mClockView.getLayoutParams().gravity = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
-                mSmallClockView.getLayoutParams().gravity = Gravity.CENTER_HORIZONTAL;
-                mCoolDividerOne.getLayoutParams().gravity = Gravity.CENTER_HORIZONTAL;
-                mCoolDividerTwo.getLayoutParams().gravity = Gravity.CENTER_HORIZONTAL|Gravity.CENTER;
-                mCoolDividerThree.getLayoutParams().gravity = Gravity.CENTER_HORIZONTAL;
-                mOwnerInfo.getLayoutParams().gravity = Gravity.CENTER_HORIZONTAL;
-                mKeyguardSlice.getLayoutParams().gravity = Gravity.CENTER_HORIZONTAL;
-                mWeatherView.getLayoutParams().gravity = Gravity.CENTER_HORIZONTAL;
+                ((RelativeLayout.LayoutParams) mCoolDividerOne.getLayoutParams()).addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mCoolDividerOne.setLayoutParams(mCoolDividerOne.getLayoutParams());
+                ((RelativeLayout.LayoutParams) mCoolDividerTwo.getLayoutParams()).addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mCoolDividerTwo.setLayoutParams(mCoolDividerTwo.getLayoutParams());
+                ((RelativeLayout.LayoutParams) mCoolDividerThree.getLayoutParams()).addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mCoolDividerThree.setLayoutParams(mCoolDividerThree.getLayoutParams());
+                ((RelativeLayout.LayoutParams) mWeatherView.getLayoutParams()).addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mWeatherView.setLayoutParams(mWeatherView.getLayoutParams());
+                ((FrameLayout.LayoutParams) mSmallClockView.getLayoutParams()).gravity(Gravity.CENTER_HORIZONTAL);
+                mSmallClockView.setLayoutParams(mSmallClockView.getLayoutParams());
+                mClockView.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL);
+                mOwnerInfo.setGravity(Gravity.CENTER_HORIZONTAL);
+                mKeyguardSlice.setGravity(Gravity.CENTER_HORIZONTAL);
 
         }
         updateDateStyles();
