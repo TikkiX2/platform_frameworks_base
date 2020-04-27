@@ -11785,6 +11785,12 @@ public final class Settings {
         public static final String ACCENT_COLOR_PROP = "accent_color_prop";
 
         /**
+         * Gradient color
+         * @hide
+         */
+        public static final String GRADIENT_COLOR_PROP = "gradient_color_prop";
+
+        /**
          * Whether tethering is allowed to use VPN upstreams
          * 0 = false, 1 = true
          * @hide

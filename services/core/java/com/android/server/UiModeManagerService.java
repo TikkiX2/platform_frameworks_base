@@ -78,6 +78,8 @@ final class UiModeManagerService extends SystemService {
     // Enable launching of applications when entering the dock.
     private static final boolean ENABLE_LAUNCH_DESK_DOCK_APP = true;
     private static final String SYSTEM_PROPERTY_DEVICE_THEME = "persist.sys.theme";
+    private static final String ACCENT_COLOR_PROP = "persist.sys.theme.accentcolor";
+    private static final String GRADIENT_COLOR_PROP = "persist.sys.theme.gradientcolor";
 
     private static final String ACCENT_COLOR_PROP = "persist.sys.theme.accentcolor";
 
@@ -281,6 +283,10 @@ final class UiModeManagerService extends SystemService {
                 final String accentColor = Secure.getStringForUser(
                         getContext().getContentResolver(), Secure.ACCENT_COLOR_PROP, 0);
                 SystemProperties.set(ACCENT_COLOR_PROP, accentColor);
+            } else if (uri.equals(Secure.getUriFor(Secure.GRADIENT_COLOR_PROP))) {
+                final String gradientColor = Secure.getStringForUser(
+                        getContext().getContentResolver(), Secure.GRADIENT_COLOR_PROP, 0);
+                SystemProperties.set(GRADIENT_COLOR_PROP, gradientColor);
             }
         }
     };
@@ -366,6 +372,8 @@ final class UiModeManagerService extends SystemService {
         context.getContentResolver().registerContentObserver(Secure.getUriFor(Secure.UI_NIGHT_MODE),
                 false, mDarkThemeObserver, 0);
         context.getContentResolver().registerContentObserver(Secure.getUriFor(Secure.ACCENT_COLOR_PROP),
+                false, mAccentObserver, 0);
+        context.getContentResolver().registerContentObserver(Secure.getUriFor(Secure.GRADIENT_COLOR_PROP),
                 false, mAccentObserver, 0);
     }
 
