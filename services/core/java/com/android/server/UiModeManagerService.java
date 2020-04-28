@@ -81,8 +81,6 @@ final class UiModeManagerService extends SystemService {
     private static final String ACCENT_COLOR_PROP = "persist.sys.theme.accentcolor";
     private static final String GRADIENT_COLOR_PROP = "persist.sys.theme.gradientcolor";
 
-    private static final String ACCENT_COLOR_PROP = "persist.sys.theme.accentcolor";
-
     final Object mLock = new Object();
     private int mDockState = Intent.EXTRA_DOCK_STATE_UNDOCKED;
 
