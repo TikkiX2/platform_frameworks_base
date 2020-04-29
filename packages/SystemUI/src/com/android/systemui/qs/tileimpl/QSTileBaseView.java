@@ -75,7 +75,6 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
 
     private int mColorActive;
     private int mColorActiveAlpha;
-    private final int mColorInactive;
     private final ImageView backgroundView;
     private final ImageView foregroundView;
     private final int mColorDisabled;
@@ -89,7 +88,7 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
 
     public QSTileBaseView(Context context, QSIconView icon, boolean collapsedView) {
         super(context);
-        
+
         // Default to Quick Tile padding, and QSTileView will specify its own padding.
         int padding = context.getResources().getDimensionPixelSize(R.dimen.qs_quick_tile_padding);
         mIconFrame = new FrameLayout(context);
