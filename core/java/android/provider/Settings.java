@@ -6632,6 +6632,15 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+        * Align to left the lockclock, date and weather
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String TIKKIUI_ALIGN_LOCKSCREEN_LEFT = "tikkiui_align_lockscreen_left";
+
+        private static final Validator TIKKIUI_ALIGN_LOCKSCREEN_LEFT_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
