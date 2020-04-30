@@ -6641,6 +6641,16 @@ public final class Settings {
         private static final Validator TIKKIUI_ALIGN_LOCKSCREEN_LEFT_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+        * Set OneUI date Format
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String TIKKIUI_ONEUI_DATE_FORMAT = "tikkiui_oneui_date_format";
+
+        private static final Validator TIKKIUI_ONEUI_DATE_FORMAT_VALIDATOR = BOOLEAN_VALIDATOR;
+
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
