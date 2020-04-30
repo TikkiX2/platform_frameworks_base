@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2017 The Android Open Source Project
- * Copyright (C) 2020 Ancient OS
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
  * except in compliance with the License. You may obtain a copy of the License at
@@ -244,7 +243,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mHeaderQsPanel = findViewById(R.id.quick_qs_panel);
         mSystemIconsView = findViewById(R.id.quick_status_bar_system_icons);
         mQuickQsStatusIcons = findViewById(R.id.quick_qs_status_icons);
-
         StatusIconContainer iconContainer = findViewById(R.id.statusIcons);
         iconContainer.setShouldRestrictIcons(false);
         mIconManager = new TintedIconManager(iconContainer);
@@ -398,7 +396,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 (mCustomHeaderImage != null || mCustomHeaderFile != null);
 
         int topMargin = resources.getDimensionPixelSize(
-                R.dimen.ancient_minimal_height) + (mHeaderImageEnabled ?
+                com.android.internal.R.dimen.quick_qs_offset_height) + (mHeaderImageEnabled ?
                 resources.getDimensionPixelSize(R.dimen.qs_header_image_offset) : 0);
 
         mSystemIconsView.getLayoutParams().height = topMargin;
@@ -409,7 +407,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             lp.height = topMargin;
         } else {
             int qsHeight = resources.getDimensionPixelSize(
-                    R.dimen.ancient_minimal_height);
+                    com.android.internal.R.dimen.quick_qs_total_height);
 
             if (headerImageSelected) {
                 qsHeight += resources.getDimensionPixelSize(R.dimen.qs_header_image_offset);

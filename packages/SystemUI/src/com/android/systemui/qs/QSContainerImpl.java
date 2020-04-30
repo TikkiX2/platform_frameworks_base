@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2014 The Android Open Source Project
- * Copyright (C) 2020 Ancient OS
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -303,14 +302,14 @@ public class QSContainerImpl extends FrameLayout implements
     private void updateResources() {
 
         int topMargin = mContext.getResources().getDimensionPixelSize(
-                R.dimen.ancient_qs_margintop) + (mHeaderImageEnabled ?
-                mContext.getResources().getDimensionPixelSize(R.dimen.qs_header_image_offset) : 8);
+                com.android.internal.R.dimen.quick_qs_offset_height) + (mHeaderImageEnabled ?
+                mContext.getResources().getDimensionPixelSize(R.dimen.qs_header_image_offset) : 0);
 
         int statusBarSideMargin = mHeaderImageEnabled ? mContext.getResources().getDimensionPixelSize(
                 R.dimen.qs_header_image_side_margin) : 0;
 
         int gradientTopMargin = !mHeaderImageEnabled ? mContext.getResources().getDimensionPixelSize(
-                R.dimen.ancient_qs_margintop) : 0;
+                com.android.internal.R.dimen.quick_qs_offset_height) : 0;
 
         ((LayoutParams) mQSPanel.getLayoutParams()).topMargin = topMargin;
         mQSPanel.setLayoutParams(mQSPanel.getLayoutParams());
@@ -329,8 +328,7 @@ public class QSContainerImpl extends FrameLayout implements
             mStatusBarBackground.setBackgroundColor(Color.TRANSPARENT);
         } else {
             mQsBackgroundAlpha = true;
-            //mStatusBarBackground.setBackgroundColor(getResources().getColor(R.color.quick_settings_status_bar_background_color));
-            mStatusBarBackground.setBackgroundColor(Color.TRANSPARENT);
+            mStatusBarBackground.setBackgroundColor(getResources().getColor(R.color.quick_settings_status_bar_background_color));
         }
     }
 
