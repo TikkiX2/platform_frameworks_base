@@ -6641,6 +6641,16 @@ public final class Settings {
         private static final Validator TIKKIUI_ALIGN_LOCKSCREEN_LEFT_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Align Left padding
+         * by.tikkix2
+         * @hide
+         */
+        public static final String TIKKIUI_ALIGN_LEFT_MARGIN = "tikkiui_align_left_margin";
+
+        /** @hide */
+        private static final Validator TIKKIUI_ALIGN_LEFT_MARGIN_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
         * Set OneUI date Format
         * by.tikkiX2
         * @hide
@@ -6909,6 +6919,7 @@ public final class Settings {
             BATTERY_BAR_HIGH_COLOR,
             BATTERY_BAR_LOW_COLOR,
             BATTERY_BAR_USE_GRADIENT_COLOR,
+            TIKKIUI_ALIGN_LEFT_MARGIN,
         };
 
         /**
@@ -7151,6 +7162,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(HEADS_UP_BLACKLIST_VALUES);
             PRIVATE_SETTINGS.add(DISPLAY_CUTOUT_MODE);
             PRIVATE_SETTINGS.add(STOCK_STATUSBAR_IN_HIDE);
+            PRIVATE_SETTINGS.add(TIKKIUI_ALIGN_LEFT_MARGIN);
         }
 
         /**
@@ -7454,6 +7466,7 @@ public final class Settings {
             VALIDATORS.put(BATTERY_BAR_HIGH_COLOR, BATTERY_BAR_HIGH_COLOR_VALIDATOR);
             VALIDATORS.put(BATTERY_BAR_LOW_COLOR, BATTERY_BAR_LOW_COLOR_VALIDATOR);
             VALIDATORS.put(BATTERY_BAR_USE_GRADIENT_COLOR, BATTERY_BAR_USE_GRADIENT_COLOR_VALIDATOR);
+            VALIDATORS.put(TIKKIUI_ALIGN_LEFT_MARGIN, TIKKIUI_ALIGN_LEFT_MARGIN_VALIDATOR);
         }
 
         /**
