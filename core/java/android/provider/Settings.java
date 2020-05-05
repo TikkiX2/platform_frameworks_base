@@ -6559,6 +6559,13 @@ public final class Settings {
 
         private static final Validator TIKKIUI_ONEUI_DATE_FORMAT_VALIDATOR = BOOLEAN_VALIDATOR;
 
+        /**
+        * Visualizer in QSPanel
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String SYNTHOS_VISUALIZER_QSPANEL = "synthos_visualizer_qspanel";
+
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
