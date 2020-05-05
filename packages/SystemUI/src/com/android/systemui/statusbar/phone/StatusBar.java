@@ -2394,6 +2394,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                 try {
                     mOverlayManager.setEnabled("com.extendedui.overlay.brightnessslider",
                                 mUnexpandedQSBrightnessSlider, mLockscreenUserManager.getCurrentUserId());
+                    mOverlayManager.setEnabled("com.synthos.systemui.overlay.brightnessslider",
+                                mUnexpandedQSBrightnessSlider, mLockscreenUserManager.getCurrentUserId());
                 } catch (RemoteException ignored) {
                 }
             });
