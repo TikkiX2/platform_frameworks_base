@@ -6566,6 +6566,34 @@ public final class Settings {
         */
         public static final String SYNTHOS_VISUALIZER_QSPANEL = "synthos_visualizer_qspanel";
 
+        /**
+        * SynthUI
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String SYNTHUI_GRADIENT_CLOCK_QSEXTENDED = "synthui_gradient_clock_qsextended";
+
+        /**
+        * SynthUI
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String SYNTHUI_GRADIENT_DATE_QSEXTENDED = "synthui_gradient_date_qsextended";
+
+        /**
+        * SynthUI
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String SYNTHUI_STATUSICONS_QSEXTENDED = "synthui_statusicons_qsextended";
+
+        /**
+        * SynthUI
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String SYNTHUI_STATUSINFO_QSEXTENDED = "synthui_statusinfo_qsextended";
+
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

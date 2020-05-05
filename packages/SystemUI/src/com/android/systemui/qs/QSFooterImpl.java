@@ -109,10 +109,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     private View mActionsContainer;
     private View mDragHandle;
 
-    private TextView mFooterText;
     private View mContainerFooterText;
-    private MediaMetadata mMediaMetaData;
-    private String mInfo;
 
     private OnClickListener mExpandClickListener;
 
@@ -122,7 +119,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         public void onChange(boolean selfChange, Uri uri) {
             super.onChange(selfChange, uri);
             setBuildText();
-            setFooterText();
             setDragHandle();
             setSettingsIcon();
             updateResources();
@@ -172,9 +168,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mActionsContainer = findViewById(R.id.qs_footer_actions_container);
         mEditContainer = findViewById(R.id.qs_footer_actions_edit_container);
 
-        //qs footer text by.tikkiX2
-
-        mFooterText = findViewById(R.id.footer_text);
         mContainerFooterText = findViewById(R.id.footer_text_container);
 
         // RenderThread is doing more harm than good when touching the header (to expand quick
@@ -189,78 +182,9 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
         updateEverything();
         setBuildText();
-        setFooterText();
         setDragHandle();
         setSettingsIcon();
         updateResources();
-    }
-
-    private void setFooterText() {
-
-      boolean isShow = Settings.System.getIntForUser(mContext.getContentResolver(),
-                      Settings.System.TIKKIUI_FOOTER_TEXT_SHOW, 1,
-                      UserHandle.USER_CURRENT) == 1;
-
-      boolean center = Settings.System.getIntForUser(mContext.getContentResolver(),
-                      Settings.System.TIKKIUI_FOOTER_TEXT_CENTER, 1,
-                      UserHandle.USER_CURRENT) == 1;
-
-      boolean musicalize = Settings.System.getIntForUser(mContext.getContentResolver(),
-                      Settings.System.TIKKIUI_FOOTER_TEXT_MUSICALIZE, 1,
-                      UserHandle.USER_CURRENT) == 1;
-
-      String text = Settings.System.getStringForUser(mContext.getContentResolver(),
-                      Settings.System.TIKKIUI_FOOTER_TEXT_STRING,
-                      UserHandle.USER_CURRENT);
-
-
-      mFooterText.getPaint().setShader(new LinearGradient(0, mFooterText.getHeight(), mFooterText.getWidth(), 0,
-                      mContext.getResources().getColor(com.android.internal.R.color.gradient_start),
-                      mContext.getResources().getColor(com.android.internal.R.color.gradient_end),
-                      Shader.TileMode.REPEAT));
-
-
-      if (mMediaMetaData != null) {
-          CharSequence artist = mMediaMetaData.getText(MediaMetadata.METADATA_KEY_ARTIST);
-          CharSequence title = mMediaMetaData.getText(MediaMetadata.METADATA_KEY_TITLE);
-          mInfo = artist.toString() + " - " + title.toString();
-      } else {
-          mInfo = text;
-      }
-      if (isShow) {
-          if (text == null || text == "") {
-              mFooterText.setText("#Derpfest TikkiBuild");
-              mContainerFooterText.setVisibility(View.VISIBLE);
-              mFooterText.setVisibility(View.VISIBLE);
-          } else if (musicalize) {
-              mFooterText.setText(mInfo);
-              mContainerFooterText.setVisibility(View.VISIBLE);
-              mFooterText.setVisibility(View.VISIBLE);
-          } else {
-              mFooterText.setText(text);
-              mContainerFooterText.setVisibility(View.VISIBLE);
-              mFooterText.setVisibility(View.VISIBLE);
-          }
-      } else {
-            mContainerFooterText.setVisibility(View.GONE);
-            mFooterText.setVisibility(View.GONE);
-      }
-
-      FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mFooterText.getLayoutParams();
-
-      if (center){
-        mFooterText.setGravity(Gravity.CENTER);
-        lp.setMarginStart(0);
-        lp.gravity = Gravity.CENTER;
-      } else {
-        mFooterText.setGravity(Gravity.START);
-        lp.setMarginStart(mContext.getResources().getDimensionPixelSize(
-                R.dimen.notification_section_header_padding_left));
-        lp.gravity = Gravity.START;
-      }
-
-      mFooterText.setLayoutParams(lp);
-
     }
 
     private void setBuildText() {
@@ -351,7 +275,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                 .addFloat(mActionsContainer, "alpha", 0, 1) // contains mRunningServicesButton
                 .addFloat(mEditContainer, "alpha", 0, 1)
                 .addFloat(mDragHandle, "alpha", 1, 0, 0)
-                .addFloat(mFooterText, "alpha", 1, 0, 0)
+                .addFloat(mContainerFooterText, "alpha", 1, 0, 0)
                 .addFloat(mPageIndicator, "alpha", 0, 1)
                 .setStartDelay(0.15f)
                 .build();
@@ -361,7 +285,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                 .addFloat(mActionsContainer, "alpha", 1, 1)
                 .addFloat(mEditContainer, "alpha", 0, 1)
                 .addFloat(mDragHandle, "alpha", 1, 0, 0)
-                .addFloat(mFooterText, "alpha", 1, 0, 0)
+                .addFloat(mContainerFooterText, "alpha", 1, 0, 0)
                 .addFloat(mPageIndicator, "alpha", 0, 1)
                 .setStartDelay(0.15f)
                 .build();
@@ -490,7 +414,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         else
           mSettingsButton.setVisibility(View.VISIBLE);
         mRunningServicesButton.setVisibility(isRunningServicesEnabled() ? !isDemo && mExpanded ? View.VISIBLE : View.INVISIBLE : View.GONE);
-        setFooterText();
     }
 
     private boolean showUserSwitcher() {

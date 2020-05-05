@@ -181,23 +181,10 @@
         android:layout_gravity="center_horizontal|bottom"
         android:background="@drawable/qs_footer_drag_handle" />
 
-    <FrameLayout
+    <include
+        layout="@layout/synth_qs_custom_text"
         android:id="@+id/footer_text_container"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qs_footer_action_button_size"
-        android:layout_gravity="top"
-        android:visibility="gone"
-        android:gravity="top" >
-
-        <TextView
-            android:id="@+id/footer_text"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true"
-            android:textAppearance="@style/TextAppearance.QS.Clock"
-            android:visibility="gone"/>
-
-    </FrameLayout>
+        android:paddingStart="@dimen/status_bar_padding_start"
+        android:layout_gravity="top"/>
 
 </com.android.systemui.qs.QSFooterImpl>
