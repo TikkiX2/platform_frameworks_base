@@ -38,6 +38,8 @@ import android.graphics.Shader.TileMode;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.media.AudioManager;
+import android.media.MediaMetadata;
+import android.media.session.PlaybackState;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.UserHandle;
@@ -46,6 +48,7 @@ import android.provider.CalendarContract;
 import android.provider.Settings;
 import android.service.notification.ZenModeConfig;
 import android.text.format.DateUtils;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Pair;
@@ -74,6 +77,7 @@ import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
 import com.android.systemui.qs.QSDetail.Callback;
 import com.android.systemui.omni.CurrentWeatherView;
+import com.android.systemui.statusbar.NotificationMediaManager;
 import com.android.systemui.statusbar.phone.PhoneStatusBarView;
 import com.android.systemui.statusbar.phone.StatusBarIconController;
 import com.android.systemui.statusbar.phone.StatusBarIconController.TintedIconManager;
@@ -95,8 +99,8 @@ import javax.inject.Named;
  * contents.
  */
 public class QuickStatusBarHeader extends RelativeLayout implements
-        View.OnClickListener, NextAlarmController.NextAlarmChangeCallback,
-        ZenModeController.Callback {
+        View.OnClickListener,NotificationMediaManager.MediaListener,
+        NextAlarmController.NextAlarmChangeCallback, ZenModeController.Callback {
     private static final String TAG = "QuickStatusBarHeader";
     private static final boolean DEBUG = false;
 
@@ -107,6 +111,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     public static final int MAX_TOOLTIP_SHOWN_COUNT = 2;
 
     private final Handler mHandler = new Handler();
+    private final Handler mMediaHandler = new Handler();
     private final NextAlarmController mAlarmController;
     private final ZenModeController mZenController;
     private final StatusBarIconController mStatusBarIconController;
@@ -155,6 +160,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private BatteryMeterView mBatteryMeterView;
 
     private TextView mFooterText;
+    protected NotificationMediaManager mMediaManager;
+    private CharSequence mMediaTitle;
+    private CharSequence mMediaArtist;
+    private String mInfo;
+
     private class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
@@ -194,6 +204,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.TIKKIUI_FOOTER_TEXT_CENTER), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.TIKKIUI_FOOTER_TEXT_MUSICALIZE), false,
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.TIKKIUI_FOOTER_TEXT_STRING), false,
@@ -267,6 +280,41 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mDualToneHandler = new DualToneHandler(
                 new ContextThemeWrapper(context, R.style.QSHeaderTheme));
         mSettingsObserver.observe();
+    }
+
+    @Override
+    public void onMetadataOrStateChanged(MediaMetadata metadata, @PlaybackState.State int state) {
+            boolean nextVisible = NotificationMediaManager.isPlayingState(state);
+            mMediaHandler.removeCallbacksAndMessages(null);
+                updateMediaStateLocked(metadata, state);
+
+        }
+
+    private void updateMediaStateLocked(MediaMetadata metadata, @PlaybackState.State int state) {
+        boolean nowPlayingAvailable = mMediaManager.getNowPlayingTrack() != null;
+        boolean nextVisible = NotificationMediaManager.isPlayingState(state) || nowPlayingAvailable;
+        CharSequence title = null;
+        if (metadata != null) {
+            title = metadata.getText(MediaMetadata.METADATA_KEY_TITLE);
+            if (TextUtils.isEmpty(title)) {
+                title = getContext().getResources().getString(R.string.music_controls_no_title);
+            }
+        }
+        CharSequence artist = metadata == null ? null : metadata.getText(
+                MediaMetadata.METADATA_KEY_ARTIST);
+
+        if (TextUtils.equals(title, mMediaTitle) && TextUtils.equals(artist, mMediaArtist)) {
+            return;
+        }
+        mMediaTitle = title;
+        mMediaArtist = artist;
+
+        if (mMediaTitle == null && nowPlayingAvailable) {
+            mMediaTitle = mMediaManager.getNowPlayingTrack();
+            mMediaArtist = null;
+        }
+
+        setFooterText();
     }
 
     @Override
@@ -348,6 +396,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         updateSettings();
     }
 
+   public void initDependencies(NotificationMediaManager mediaManager) {
+       mMediaManager = mediaManager;
+       mMediaManager.addCallback(this);
+   }
+
     private void updateStatusText() {
         boolean changed = updateRingerStatus() || updateAlarmStatus();
 
@@ -369,6 +422,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                       Settings.System.TIKKIUI_FOOTER_TEXT_CENTER, 1,
                       UserHandle.USER_CURRENT) == 1;
 
+      boolean musicalize = Settings.System.getIntForUser(mContext.getContentResolver(),
+                      Settings.System.TIKKIUI_FOOTER_TEXT_MUSICALIZE, 0,
+                      UserHandle.USER_CURRENT) == 1;
+
       String text = Settings.System.getStringForUser(mContext.getContentResolver(),
                       Settings.System.TIKKIUI_FOOTER_TEXT_STRING,
                       UserHandle.USER_CURRENT);
@@ -385,9 +442,17 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             mFooterText.setTextColor(mContext.getResources().getColor(com.android.internal.R.color.gradient_start));
         }
 
+      if (mMediaTitle != null || mMediaArtist != null) {
+          mInfo = mMediaTitle.toString() + " - " + mMediaArtist.toString();
+      } else {
+          mInfo = text;
+      }
       if (isShow) {
           if (text == null || text == "") {
               mFooterText.setText("#Derpfest TikkiBuild");
+              mFooterText.setVisibility(View.VISIBLE);
+          } else if (musicalize) {
+              mFooterText.setText(mInfo);
               mFooterText.setVisibility(View.VISIBLE);
           } else {
               mFooterText.setText(text);

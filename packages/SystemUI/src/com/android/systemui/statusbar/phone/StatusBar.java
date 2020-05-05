@@ -1834,6 +1834,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 }
             });
         }
+        if (mHeader != null){
+          mHeader.initDependencies(mMediaManager);
+        }
     }
 
 
