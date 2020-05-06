@@ -608,6 +608,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     private VisualizerView mVisualizerView;
     // LS visualizer on Ambient Display
     private boolean mAmbientVisualizer;
+    private boolean mQSPanelVisualizer;
 
     private boolean mWallpaperSupportsAmbientMode;
     private final BroadcastReceiver mWallpaperChangedReceiver = new BroadcastReceiver() {
@@ -863,6 +864,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.AMBIENT_VISUALIZER_ENABLED))) {
                 setAmbientVis();
             } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.SYNTHOS_VISUALIZER_QSPANEL))) {
+                setQSPanelVis();
+            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.USE_OLD_MOBILETYPE))) {
                 setOldMobileType();
             } else if (uri.equals(Settings.System.getUriFor(
@@ -958,6 +962,12 @@ public class StatusBar extends SystemUI implements DemoMode,
     private void setAmbientVis() {
         mAmbientVisualizer = Settings.Secure.getIntForUser(
                 mContext.getContentResolver(), Settings.System.AMBIENT_VISUALIZER_ENABLED, 0,
+                UserHandle.USER_CURRENT) == 1;
+    }
+
+    private void setQSPanelVis() {
+        mQSPanelVisualizer = Settings.Secure.getIntForUser(
+                mContext.getContentResolver(), Settings.System.SYNTHOS_VISUALIZER_QSPANEL, 1,
                 UserHandle.USER_CURRENT) == 1;
     }
 
@@ -1511,15 +1521,15 @@ public class StatusBar extends SystemUI implements DemoMode,
         boolean isExpanded = mNotificationPanel.isFullyExpanded();
         boolean isPlaying = mVisualizerView.getPlaying();
 
-        if (state && isPlaying && mState != StatusBarState.KEYGUARD && !isCollapsed && isVisualizerEnable()) {
+        if (state && isPlaying && mState != StatusBarState.KEYGUARD && !isCollapsed && mQSPanelVisualizer) {
             mVisualizerView.setAlpha(visualizerAlpha);
             mVisualizerView.setVisible(true);
             return;
-        } else if (state && isPlaying && mState != StatusBarState.KEYGUARD && !isExpanded) {
+        } else if (state && isPlaying && mState != StatusBarState.KEYGUARD && !isExpanded && mQSPanelVisualizer) {
             mVisualizerView.setAlpha(0);
             mVisualizerView.setVisible(false);
             return;
-        } else if (state && isPlaying && mState != StatusBarState.SHADE) {
+        } else if (state && isPlaying && mState != StatusBarState.SHADE && isVisualizerEnable()) {
             mVisualizerView.setAlpha(1);
             mVisualizerView.setVisible(true);
             return;
@@ -1543,8 +1553,8 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
     private boolean isVisualizerEnable() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SYNTHOS_VISUALIZER_QSPANEL, 1) != 0;
+        return Settings.Secure.getInt(mContext.getContentResolver(),
+                Settings.Secure.LOCKSCREEN_VISUALIZER_ENABLED, 0) != 0;
     }
 
     public void updateBlurVisibility() {

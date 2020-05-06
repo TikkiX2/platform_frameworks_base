@@ -304,7 +304,7 @@ public class QSContainerImpl extends FrameLayout implements
                 R.dimen.qs_header_image_side_margin) : 0;
 
         int gradientTopMargin = !mHeaderImageEnabled ? mContext.getResources().getDimensionPixelSize(
-                R.dimen.qs_panel_top_margin) : 0;
+                R.dimen.qs_panel_image_offset) : 0;
 
         ((LayoutParams) mQSPanel.getLayoutParams()).topMargin = topMargin;
         mQSPanel.setLayoutParams(mQSPanel.getLayoutParams());

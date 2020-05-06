@@ -300,8 +300,7 @@ public class VisualizerView extends View
 
     private void setVisualizerEnabled() {
         mVisualizerEnabled = Settings.Secure.getInt(mContext.getContentResolver(),
-                Settings.Secure.LOCKSCREEN_VISUALIZER_ENABLED, 0) == 1 || Settings.System.getInt(mContext.getContentResolver(),
-                        Settings.System.SYNTHOS_VISUALIZER_QSPANEL, 1) != 0;
+                Settings.Secure.LOCKSCREEN_VISUALIZER_ENABLED, 0) == 1;
     }
 
     private void setLavaLampEnabled() {
